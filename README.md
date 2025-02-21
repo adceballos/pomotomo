@@ -1,12 +1,12 @@
-# Pomotomo - Pomodoro Productivity Web App
+# Pomotomo - Pomodoro Productivity Web App 🍅
 
-## Overview
+## Overview 💫
 
 Pomotomo is a productivity app designed to help users manage their time effectively using the Pomodoro Technique. It includes features like customizable timers, goal tracking, and detailed analytics to boost productivity and focus.
 
 ---
 
-## Features
+## Features 🕹️
 
 - **Customizable Timers**: Set and adjust your Pomodoro and break durations.
 - **Goal Tracking**: Define and track your productivity goals.
@@ -15,7 +15,7 @@ Pomotomo is a productivity app designed to help users manage their time effectiv
 
 ---
 
-## Authors
+## Authors 🐐
 
 - [Adrian](https://github.com/adceballos)
 - [Chukwuemeka](https://github.com/chukwuemekaiweha)
