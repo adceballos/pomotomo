@@ -14,7 +14,7 @@ export default function Hero() {
     <div className="flex flex-col justify-between min-h-screen bg-[#ff7f7f] text-white px-4 py-10">
       <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-[VT323] text-center">Pomotomo!</h1>
       
-      <div className="flex-grow flex items-center justify-center pb-20">
+      <div className="flex-grow flex items-center justify-center">
         <Timer />
       </div>
 

@@ -129,20 +129,20 @@ export default function Timer() {
         <Button onClick={stop} text="Stop" />
         <Button onClick={reset} text="Reset" />
       </div>
-      <div>
-        <img src={tomatoIcon} alt="tomato" width="80" height="100" className={`absolute top-136 left-206 transform -translate-x-1/2 mt-4 w-24 h-24 transition-opacity duration-1000 ease-in-out ${
+      <div className="flex flex-row">
+        <img src={tomatoIcon} alt="tomato" width="80" height="100" className={`mt-4 w-24 h-24 transition-opacity duration-1000 ease-in-out ${
           showTomato ? "opacity-100" : "opacity-0"
         }`}
         />
-        <img src={tomatoIcon} alt="tomato" width="80" height="100" className={`absolute top-136 left-226 transform -translate-x-1/2 mt-4 w-24 h-24 transition-opacity duration-1000 ease-in-out ${
+        <img src={tomatoIcon} alt="tomato" width="80" height="100" className={`mt-4 w-24 h-24 transition-opacity duration-1000 ease-in-out ${
           showTomato2 ? "opacity-100" : "opacity-0"
         }`}
         />
-        <img src={tomatoIcon} alt="tomato" width="80" height="100" className={`absolute top-136 left-246 transform -translate-x-1/2 mt-4 w-24 h-24 transition-opacity duration-1000 ease-in-out ${
+        <img src={tomatoIcon} alt="tomato" width="80" height="100" className={`mt-4 w-24 h-24 transition-opacity duration-1000 ease-in-out ${
           showTomato3 ? "opacity-100" : "opacity-0"
         }`}
         />
-        <img src={tomatoIcon} alt="tomato" width="80" height="100" className={`absolute top-136 left-266 transform -translate-x-1/2 mt-4 w-24 h-24 transition-opacity duration-1000 ease-in-out ${
+        <img src={tomatoIcon} alt="tomato" width="80" height="100" className={`mt-4 w-24 h-24 transition-opacity duration-1000 ease-in-out ${
           showTomato4 ? "opacity-100" : "opacity-0"
         }`}
         />
