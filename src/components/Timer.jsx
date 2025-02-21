@@ -5,7 +5,7 @@ import click from "../assets/click.mp3";
 
 export default function Timer() {
   const [isRunning, setIsRunning] = useState(false);  
-  const [time, setTime] = useState(5); // 5 minutes (300 seconds)
+  const [time, setTime] = useState(5); // 5 secs for testing
   const [isPomodoro, setIsPomodoro] = useState(true);
   const [counter, setCounter] = useState(2);
   const [showTomato, setShowTomato] = useState(false);
@@ -20,7 +20,7 @@ export default function Timer() {
     if (isRunning) {
       intervalIdRef.current = setInterval(() => {
         setTime((prev) => {  // update time by subtracting 1 from the previous value. prev contains the previous state of elapsedTime. 3 -> 2 -> 1.
-          if (prev <= 1) { // when timer reaches 1 sec, clear the interval to stop updates, set isRunning to false so we don't go into negative time, and return 0 so timer displays 00:00. Otherwise, we return prev - 1, aka the next second. 
+          if (prev < 1) { // when timer reaches 1 sec, clear the interval to stop updates, set isRunning to false so we don't go into negative time, and return 0 so timer displays 00:00. Otherwise, we return prev - 1, aka the next second. 
             clearInterval(intervalIdRef.current);
             setIsRunning(false); // Stop the timer at zero
             playAlarm();
@@ -28,6 +28,7 @@ export default function Timer() {
             if (counter % 2 === 0) {
               setIsPomodoro(false);
               incrementTomato();
+
               if (counter === 2) {
                 setShowTomato(true);
               }
@@ -39,17 +40,19 @@ export default function Timer() {
               }
               else if (counter === 8) {
                 setShowTomato4(true)
+                return 10;  // long break!
               }
-              else if (counter === 9) {
-                resetCounter();
-                // on the right track, just need to make the conditional render of the tomatoes in the return below differently
-                setShowTomato(false)
-                setShowTomato2(false)
-                setShowTomato3(false)
-                setShowTomato4(false)
-                // something to destroy all tomatoes on screen, and adding state for big 30 min break (10 secs for testing).
-              }
+
               return 3;
+            }
+            else if (counter === 9) {
+              resetCounter();
+              setShowTomato(false);
+              setShowTomato2(false);
+              setShowTomato3(false);
+              setShowTomato4(false);
+              setIsPomodoro(true);
+              return 5;
             }
             else {
               setIsPomodoro(true);
@@ -131,7 +134,7 @@ export default function Timer() {
       </div>
       <div className="flex flex-row">
         <img src={tomatoIcon} alt="tomato" width="80" height="100" className={`mt-4 w-24 h-24 transition-opacity duration-1000 ease-in-out ${
-          showTomato ? "opacity-100" : "opacity-0"
+          showTomato ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
         />
         <img src={tomatoIcon} alt="tomato" width="80" height="100" className={`mt-4 w-24 h-24 transition-opacity duration-1000 ease-in-out ${
