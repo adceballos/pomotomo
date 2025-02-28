@@ -100,6 +100,7 @@ export default function Timer() {
 
   function auto() {
     setAutoPlay((prev) => !prev); // Toggle autoPlay on/off
+    clickSound();
   }
 
   function incrementCounter() {

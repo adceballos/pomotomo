@@ -29,13 +29,13 @@ export default function List() {
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-[#ff7f7f] min-h-screen text-white" id='list'>
-        <h1 className="text-3xl sm:text-2xl md:text-6xl lg:text-8xl  pb-4 font-[VT323]">Tasks goes here!</h1>
+        <h1 className="text-3xl sm:text-2xl md:text-6xl lg:text-7xl  pb-4 font-[VT323]">Tasks</h1>
             <div className="flex items-center space-x-2">
                 <input className="text-2xl px-2 py-2 pb-3 text-center text-white bg-transparent placeholder-gray  rounded-lg pt-4 border-2"
                     type="text" 
                     value={input} 
                     onChange={(e) => setInput(e.target.value)} 
-                    placeholder="Enter a task.." 
+                    placeholder="Enter a task" 
                 />
 
                 <button onClick={addTask} className="hover:text-gray-300 transition duration-200">Add Task</button>
