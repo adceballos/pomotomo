@@ -28,10 +28,12 @@ export default function List() {
     }
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-[#ff7f7f] min-h-screen text-white" id='list'>
-        <h1 className="text-3xl sm:text-2xl md:text-6xl lg:text-7xl  pb-4 font-[VT323]">Tasks</h1>
-            <div className="flex items-center space-x-2">
-                <input className="text-2xl px-2 py-2 pb-3 text-center text-white bg-transparent placeholder-gray  rounded-lg pt-4 border-2"
+        <div className="relative flex flex-col justify-between min-h-screen bg-[#ff7f7f] text-white px-4 py-20" id='list'>
+        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-[VT323] text-center">
+                Tasks
+            </h1>
+            <div className="flex justify-center items-center space-x-2">
+                <input className="text-2xl px-2 py-2 pb-3 text-center text-white bg-transparent placeholder-gray rounded-lg pt-4 border-2"
                     type="text" 
                     value={input} 
                     onChange={(e) => setInput(e.target.value)} 
@@ -40,7 +42,7 @@ export default function List() {
 
                 <button onClick={addTask} className="hover:text-gray-300 transition duration-200">Add Task</button>
                 </div>
-                <ul className="w-full pl-40">
+                <ul className="w-full pl-110">
                     {tasks.map((task, index) => (
                         <li key={index} className="py-2 flex items-center">
                             <button onClick={() => deleteTask(index)} className="text-red-800 px-0.5 ml-3 w-7 h-8">x</button>

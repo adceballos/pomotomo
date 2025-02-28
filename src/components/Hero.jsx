@@ -21,8 +21,9 @@ export default function Hero() {
         <Timer />
       </div>
 
-      <div className="pb-4 flex justify-center mb-12">
+      <div className="pb-4 flex justify-center mb-16 px-10 gap-5">
         <Button onClick={clickSound} href="#list" text="Tasks" />
+        <Button onClick={clickSound} href="#about" text="About" />
       </div>
 
       <div className="absolute top-210 right-6 p-4 text-md">
