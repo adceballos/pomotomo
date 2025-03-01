@@ -6,12 +6,13 @@ import Navbar from './components/Navbar'
 import About from './components/About'
 
 function App() {
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div>
-      <Navbar />
+      <Navbar isOpen={isOpen} setIsOpen={setIsOpen} />
       <Hero />
-      <List />
+      <List isOpen={isOpen} setIsOpen={setIsOpen} />
       <About />
     </div>
   )

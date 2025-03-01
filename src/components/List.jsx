@@ -1,18 +1,14 @@
-import Stopwatch from './Timer';
 import click from "../assets/click.mp3";
 import React, { useState } from "react";
-import Button from "./Button";
 
-
-export default function List() {
-  
+export default function List({ isOpen, setIsOpen }) { // Receive props
     const [tasks, setTasks] = useState([]);
     const [input, setInput] = useState("");
 
     function addTask() {
         if (input.trim() !== "") {
-            setTasks([...tasks, input]); // Adds new task to the list            
-            setInput(""); // Clears input after adding
+            setTasks([...tasks, input]);
+            setInput("");
             clickSound();
         }
     }
@@ -28,29 +24,47 @@ export default function List() {
     }
 
     return (
-        <div className="relative flex flex-col justify-between min-h-screen bg-[#ff7f7f] text-white px-4 py-20" id='list'>
-        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-[VT323] text-center">
-                Tasks
-            </h1>
-            <div className="flex justify-center items-center space-x-2">
-                <input className="text-2xl px-2 py-2 pb-3 text-center text-white bg-transparent placeholder-gray rounded-lg pt-4 border-2"
-                    type="text" 
-                    value={input} 
-                    onChange={(e) => setInput(e.target.value)} 
-                    placeholder="Enter a task" 
-                />
-
-                <button onClick={addTask} className="hover:text-gray-300 transition duration-200">Add Task</button>
+        <div className="relative">
+            {/* Sidebar */}
+            <div 
+                className={`fixed top-24 left-5 h-180 w-64 bg-[#ff7f7f] rounded-2xl border text-white shadow-xl transition-transform duration-300 ${
+                    isOpen ? "translate-x-0" : "-translate-x-100"
+                }`}
+            >
+                <div className="p-4">
+                    <input
+                        className="w-full text-xl px-2 py-2 text-center text-white bg-transparent placeholder-gray rounded-lg border-2"
+                        type="text"
+                        value={input}
+                        onChange={(e) => setInput(e.target.value)}
+                        placeholder="Enter a task..."
+                    />
+                    <button
+                        onClick={addTask}
+                        className="w-full mt-2 bg-white text-red-500 py-2 rounded-md"
+                    >
+                        Add Task
+                    </button>
                 </div>
-                <ul className="w-full pl-110">
+
+                {/* Task List */}
+                <ul className="p-4 space-y-2 overflow-y-auto max-h-[70vh]">
                     {tasks.map((task, index) => (
-                        <li key={index} className="py-2 flex items-center">
-                            <button onClick={() => deleteTask(index)} className="text-red-800 px-0.5 ml-3 w-7 h-8">x</button>
-                            <span className="text-2xl break-words w-full">{task}</span> 
+                        <li
+                            key={index}
+                            className="flex gap-x-3 items-center border text-lg text-white px-3 py-2 rounded-md"
+                        >
+                            <button
+                                onClick={() => deleteTask(index)}
+                                className="text-red-800 hover:text-red-600"
+                            >
+                                x
+                            </button>
+                            {task}
                         </li>
                     ))}
                 </ul>
+            </div>
         </div>
     );
 }
-
