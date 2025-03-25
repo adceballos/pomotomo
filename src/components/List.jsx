@@ -27,7 +27,7 @@ export default function List({ isOpen, setIsOpen }) { // Receive props
         <div className="relative">
             {/* Sidebar */}
             <div 
-                className={`fixed top-24 left-5 h-180 w-64 bg-[#ff7f7f] rounded-2xl border text-white shadow-xl transition-transform duration-300 ${
+                className={`fixed top-26 left-5 h-180 w-64 bg-[#ff7f7f] rounded-2xl border text-white shadow-xl shadow-red-200 transition-transform duration-300 ${
                     isOpen ? "translate-x-0" : "-translate-x-100"
                 }`}
             >

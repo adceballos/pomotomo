@@ -22,7 +22,6 @@ export default function Hero() {
       </div>
 
       <div className="pb-4 flex justify-center mb-16 px-10 gap-5">
-        <Button onClick={clickSound} href="#list" text="Tasks" />
         <Button onClick={clickSound} href="#about" text="About" />
       </div>
 
