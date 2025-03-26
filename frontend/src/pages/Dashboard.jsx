@@ -1,11 +1,23 @@
 import React from 'react'
-import Timer from './Timer'
-import Button from './Button';
-import click from "../assets/click.mp3";
-import logo from "../assets/Logo.svg";
-import List from './List';
+import Timer from '../components/Timer'
+import Button from '../components/Button'
+import logo from "../assets/Logo.svg"
+import List from '../components/List'
+import {useEffect} from 'react'
+import {useNavigate} from 'react-router-dom'
+import {useSelector} from 'react-redux'
 
-export default function Hero() {
+function Dashboard() {
+  const navigate = useNavigate()
+
+  const {user} = useSelector((state) => state.auth)
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/login')
+    }
+  }, [user, navigate])
+
   return (
     <div className="flex flex-col justify-between min-h-screen bg-[#fd8989] text-black px-4 py-10">
       <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-[VT323] text-center">Pomotomo!</h1>
@@ -25,3 +37,5 @@ export default function Hero() {
     </div>
   )
 }
+
+export default Dashboard

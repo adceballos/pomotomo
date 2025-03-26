@@ -1,5 +1,3 @@
-import tomatoIcon from "../assets/tomato.svg";
-
 export default function About() {
     return (
         <div className="relative flex flex-col justify-between min-h-screen bg-[#fd8989] text-white px-4 py-20" id="about">

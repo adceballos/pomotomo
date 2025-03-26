@@ -75,13 +75,7 @@ const loginUser = asyncHandler(async (req, res) => {
 // @route   GET //api/users/me 
 // @access  Private
 const getMe = asyncHandler(async (req, res) => {
-    const {_id, name, email} = await User.findById(req.user.id) // have access to req.user.id because we set it in the middleware
-
-    res.status(200).json({
-        id: _id,
-        name,
-        email,
-    })
+    res.status(200).json(req.user)
 })
 
 // Generate JWT. Sign a new token with the id that's passed in, with the secret used, and it expires in 30 days.

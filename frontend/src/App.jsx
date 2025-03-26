@@ -1,4 +1,4 @@
-import Hero from './components/Hero'
+import Dashboard from './pages/Dashboard'
 import About from './components/About'
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
@@ -14,7 +14,7 @@ function App() {
       <div>
         <Header />
         <Routes>
-          <Route path='/' element={<Hero />} />
+          <Route path='/' element={<Dashboard />} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
           <Route path="/about" element={<About />} />

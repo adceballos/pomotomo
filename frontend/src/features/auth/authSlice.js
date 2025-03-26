@@ -1,4 +1,9 @@
+// AuthSlice manages the Redux state based on the results from AuthService and they work together to keep track of user authentication status
+
+// createSlice creates a redux slice (state + reducers) in one place
+// createAsyncThunk handles asynchronous actions like API calls
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
+// authService handles HTTP requests to the backend (/register, /login, /logout)
 import authService from './authService'
 
 // get user from localStorage
@@ -7,16 +12,18 @@ const user = JSON.parse(localStorage.getItem('user'))
 // set initial state of the slice
 const initialState = {
     user: user ? user: null,    // if user was found in local storage, use it, otherwise return null
-    isError: false,
-    isSuccess: false,
-    isLoading: false,
-    message: ''
+    isError: false,     // if an error occurs during an async action
+    isSuccess: false,   // if an async action succeeds
+    isLoading: false,   // while waiting for a response from an API
+    message: ''     // holds error or success message
 }
 
 // register user
+// createAsyncThunk defines a async action auth/register
+// calls authService.register(user) to make a post request to register the user
 export const register = createAsyncThunk('auth/register', async (user, thunkAPI) => {
     try {
-        return await authService.register(user)     // returning payload that comes back from register function on line 48
+        return await authService.register(user)     // returning payload (response data) that comes back from register function on line 48
     } catch (error) {
         // if any of these errors exist they get put into message variable
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
@@ -34,25 +41,29 @@ export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
     }
 })
 
+// logout user
 export const logout = createAsyncThunk('auth/logout', async() => {
-    await authService.logout()
+    await authService.logout()  // logout by removing user data from the backend and local storage
 })
 
 // creates the redux slice, which consists of the state (initialState) and the reducers that modify it
 export const authSlice = createSlice({
-    name: 'auth',   // the name of the slice is auth, useful for identifying and managing the state
+    name: 'auth',   // the name of the slice is auth, useful for identifying and managing the state, becomes apart of the state object state.auth
     initialState,   // default state we defined above, used when the app first loads and has not interacted with Redux yet
-    // reducers are synchronous functions that modify the state, here, reset is our one reducer
+    // Reducers are synchronous functions that directly modify the state based on dispatched actions 
     reducers: {
-        reset: (state) => {     // resets the state, useful when the user finishes an action like logging in or registering
+        // resets the state values to their defaults(initialState), useful when the user finishes an action like logging in or registering
+        reset: (state) => {
             state.isLoading = false
             state.isError = false
             state.isSuccess = false
             state.message = ''
         }
     },
+    // extraReducers handle asynchronous actions created with createAsyncThunk
+    // They define how the state should change based on the lifecycle of the async action (pending, fulfilled, rejected).
     extraReducers: (builder) => {
-        builder
+        builder     // builder just allows adding multiple cases to the reducers
             .addCase(register.pending, (state) => {     // set state to loading when the register is fetching data
                 state.isLoading = true
             })
@@ -87,6 +98,7 @@ export const authSlice = createSlice({
     }
 })
 
-// allows us to bring the reset action to other components
+// reset can be dispatched from a component to reset the state
 export const {reset} = authSlice.actions
+// function that updates the state based on actions
 export default authSlice.reducer
