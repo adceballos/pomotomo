@@ -28,7 +28,7 @@ export default function List() {
     }
 
     return (
-        <div className="relative flex flex-col justify-between min-h-screen bg-[#ff7f7f] text-white px-4 py-20" id='list'>
+        <div className="relative flex flex-col justify-between min-h-screen bg-[#fd8989] text-white px-4 py-20" id='list'>
         <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-[VT323] text-center">
                 Tasks
             </h1>

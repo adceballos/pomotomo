@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Button from "./Button";
 import tomatoIcon from "../assets/tomato.svg";
-import click from "../assets/click.mp3";
 
 export default function Timer() {
   const [isRunning, setIsRunning] = useState(false);
@@ -71,13 +70,11 @@ export default function Timer() {
   // Start timer
   function start() {
     setIsRunning(true);
-    clickSound();
   }
 
   // Stop timer
   function stop() {
     setIsRunning(false);
-    clickSound();
   }
 
   // Reset timer
@@ -88,12 +85,10 @@ export default function Timer() {
       setTime(3);
     }
     setIsRunning(false);
-    clickSound();
   }
 
   function auto() {
     setAutoPlay((prev) => !prev); // Toggle autoPlay on/off
-    clickSound();
   }
 
   function incrementCounter() {
@@ -114,11 +109,6 @@ export default function Timer() {
     audio.play();
   }
 
-  function clickSound() {
-    const audio = new Audio(click);
-    audio.play();
-  }
-
   // Format time to MM:SS
   function formatTime() {
     let minutes = Math.floor(time / 60);
@@ -131,10 +121,10 @@ export default function Timer() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center text-white">
+    <div className="flex flex-col items-center justify-center text-black">
       <div className="text-6xl md:text-8xl p-6">{formatTime()}</div>
       <div className="flex gap-5 text-xl">
-        <Button onClick={start} text="Start" />
+        <Button onClick={start} text="Start"/>
         <Button onClick={stop} text="Stop" />
         <Button onClick={reset} text="Reset" />
         <Button onClick={auto} text={autoPlay ? "Auto Play: On" : "Auto Play: Off"} />
@@ -170,7 +160,7 @@ export default function Timer() {
         />
       </div>
 
-      <div className="absolute top-210 left-6 p-2 text-white text-2xl">
+      <div className="p-2 text-black text-2xl">
         Pomodoros Completed: <span className="text-yellow-400">{totalTomatoes}</span>
       </div>
     </div>

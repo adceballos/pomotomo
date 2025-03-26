@@ -10,3 +10,17 @@
 html {
   scroll-behavior: smooth;
 }
+
+/* For WebKit browsers */
+::-webkit-scrollbar {
+  width: 8px; /* Adjust the width of the scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #cecece; /* Dark grey color for the thumb (the part you drag) */
+  border-radius: 10px; /* Rounded corners for the scrollbar thumb */
+}
+
+::-webkit-scrollbar-track {
+  background-color: #6e6e6e; /* Light grey color for the track (background) */
+}

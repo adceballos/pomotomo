@@ -5,7 +5,7 @@ export default function Button({ text, onClick, href }) {
     <a
       href={href}
       onClick={onClick} // Apply onClick directly to <a>
-      className="px-6 py-3 border-2 border-white text-white rounded-md bg-transparent hover:bg-white cursor-pointer hover:text-black transition inline-block text-center"
+      className="active:scale-90 duration-150 px-6 text-3xl py-2 bg-black text-white rounded-md hover:bg-white cursor-pointer hover:text-black hover:border-white transition inline-block text-center"
     >
       {text}
     </a>
