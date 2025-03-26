@@ -1,14 +1,6 @@
-import tomatoIcon from "../assets/tomato.svg";
-
 export default function About() {
     return (
-        <div className="relative flex flex-col justify-between min-h-screen bg-[#ff7f7f] text-white px-4 py-20" id="about">
-            <img 
-                src={tomatoIcon} 
-                alt="Tomato Icon" 
-                className="absolute top-8 right-70 w-32 sm:w-40 md:w-48 lg:w-56 rotate-[20deg] opacity-100"
-            />
-
+        <div className="relative flex flex-col justify-between min-h-screen bg-[#fd8989] text-white px-4 py-20" id="about">
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-[VT323] text-center">
                 About the Pomodoro Technique
             </h1>
