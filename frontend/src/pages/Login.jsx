@@ -60,42 +60,42 @@ function Login() {
         <h1 className='flex items-center gap-1 text-6xl mt-16 py-4'>
           <FaSignInAlt /> Login
         </h1>
-        <p className='text-3xl text-black-500 mb-12'>
+        <p className='text-3xl text-black mb-12'>
           Login and start studying
         </p>
       </section>
 
-      <section className='flex items-center justify-center'>
+  <section className='flex items-center justify-center'>
   <form onSubmit={onSubmit} className="space-y-4 w-full max-w-md">
-    <div>
-      <input
-        type="email"
-        className="w-full border-2 border-black rounded-md p-2 focus:border-white focus:outline-none"
-        id='email'
-        name='email'
-        value={email}
-        placeholder='Enter your email'
-        onChange={onChange}
-      />
-    </div>    
-    <div>
-      <input
-        type="password"
-        className="w-full border-2 border-black rounded-md p-2 focus:border-white focus:outline-none"
-        id='password'
-        name='password'
-        value={password}
-        placeholder='Enter password'
-        onChange={onChange}
-      />
-    </div>       
-    <div>
-      <button type='submit' className='w-full text-xl bg-black text-white rounded-md p-2 hover:bg-white hover:text-black transition'>
-        Submit
-      </button>
-    </div>       
-  </form>
-</section>
+      <div>
+        <input
+          type="email"
+          className="w-full border-2 border-black rounded-md p-2 focus:border-white focus:outline-none"
+          id='email'
+          name='email'
+          value={email}
+          placeholder='Enter your email'
+          onChange={onChange}
+        />
+      </div>    
+      <div>
+        <input
+          type="password"
+          className="w-full border-2 border-black rounded-md p-2 focus:border-white focus:outline-none"
+          id='password'
+          name='password'
+          value={password}
+          placeholder='Enter password'
+          onChange={onChange}
+        />
+      </div>       
+      <div>
+        <button type='submit' className='w-full text-xl bg-black text-white rounded-md p-2 hover:bg-white hover:text-black transition'>
+          Submit
+        </button>
+      </div>       
+    </form>
+  </section>
 
     </div>
   )
