@@ -1,4 +1,4 @@
-export default function About() {
+function About() {
     return (
         <div className="relative flex flex-col justify-between min-h-screen bg-[#ee906b] text-white px-4 py-20" id="about">
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-[VT323] text-center">
@@ -30,3 +30,5 @@ export default function About() {
         </div>
     );
 }
+
+export default About
