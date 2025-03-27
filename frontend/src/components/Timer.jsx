@@ -160,8 +160,8 @@ export default function Timer() {
         />
       </div>
 
-      <div className="p-2 text-black text-2xl">
-        Pomodoros Completed: <span className="text-yellow-400">{totalTomatoes}</span>
+      <div className="p-2 text-black text-3xl">
+        Pomodoros Completed: <span className="text-yellow-300">{totalTomatoes}</span>
       </div>
     </div>
   );

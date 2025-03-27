@@ -7,10 +7,6 @@
   }
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
 /* For WebKit browsers */
 ::-webkit-scrollbar {
   width: 8px; /* Adjust the width of the scrollbar */
