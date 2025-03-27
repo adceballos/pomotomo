@@ -1,5 +1,5 @@
 import Dashboard from './pages/Dashboard'
-import About from './components/About'
+import About from './pages/About'
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'

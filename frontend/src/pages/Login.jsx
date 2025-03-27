@@ -55,7 +55,7 @@ function Login() {
   }
 
   return (
-    <div className='min-h-screen bg-[#ff7f7f]'>
+    <div className='min-h-screen bg-[#ee906b]'>
       <section className='flex flex-col justify-center items-center gap-y-2'>
         <h1 className='flex items-center gap-1 text-6xl mt-16 py-4'>
           <FaSignInAlt /> Login
