@@ -37,15 +37,26 @@ function Header() {
         </div>
 
         <div className="flex items-center justify-center gap-8">
-            <button 
-                onClick={handleScrollToTasks}
-                className="text-xl text-black hover:underline"
-            >
-                Tasks
-            </button>
-            <Link to="/about" className="text-xl text-black hover:underline">
-                About
-            </Link>
+        {user ? (
+            <>
+                <button 
+                    onClick={handleScrollToTasks}
+                    className="text-xl text-black hover:underline"
+                >
+                    Tasks
+                </button>
+                <Link to="/about" className="text-xl text-black hover:underline">
+                    About
+                </Link>
+            </>
+            ) : (
+            <>
+                <Link to="/about" className="text-xl text-black hover:underline">
+                    About
+                </Link>
+            </>
+            )
+        }
         </div>
 
         <div className="flex items-center justify-end gap-4">
@@ -63,7 +74,7 @@ function Header() {
                         Logout
                     </button>
                 </>
-            ) : (
+                ) : (
                 <>
                     <Link to="/login" className="flex items-center gap-1 text-xl text-black hover:underline">
                         <FaSignInAlt />
@@ -74,7 +85,8 @@ function Header() {
                         Register
                     </Link>
                 </>
-            )}
+                )
+            }
         </div>
     </header>
   ) 
