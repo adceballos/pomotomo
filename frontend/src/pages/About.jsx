@@ -1,5 +1,6 @@
 import BackToHome from "../components/BackToHome.jsx";
-export default function About() {
+
+function About() {
     return (
         <>
             <div className="relative flex flex-col justify-between min-h-screen bg-[#ee906b] text-white px-4 py-20" id="about">
@@ -34,3 +35,5 @@ export default function About() {
         </>
     );
 }
+
+export default About
