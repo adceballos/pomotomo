@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Button from "./Button";
 import tomatoIcon from "../assets/tomato.svg";
+import expbar from "../assets/exp1.svg"
 
 export default function Timer() {
   const [isRunning, setIsRunning] = useState(false);
@@ -162,6 +163,12 @@ export default function Timer() {
 
       <div className="p-2 text-black text-3xl">
         Pomodoros Completed: <span className="text-yellow-300">{totalTomatoes}</span>
+      </div>
+      <div className="">
+        <img 
+          src={expbar} 
+          className="">
+        </img>
       </div>
     </div>
   );
