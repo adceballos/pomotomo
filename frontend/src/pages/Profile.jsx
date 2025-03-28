@@ -2,6 +2,7 @@ import { useState } from 'react';
 import {useSelector} from 'react-redux'
 import slum from '../assets/slum.PNG'
 import PfpSelector from '../components/PfpSelector'
+import BackToHome from "../components/BackToHome.jsx";
 
 function Profile() {
 
@@ -44,7 +45,7 @@ function Profile() {
                     onImageSelect={handleImageSelect} 
                 />
             </div>
-            
+            <BackToHome />
         </div>
     )
 }
