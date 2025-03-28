@@ -86,7 +86,7 @@ function Register() {
                 <div>
                     <input
                         type="text" 
-                        className="w-full border-2 border-black rounded-md p-2 focus:border-white focus:outline-none"                        
+                        className="w-full font-sans border-2 border-black rounded-md p-2 focus:border-white focus:outline-none"                        
                         id='name' 
                         name='name' 
                         value={name} 
@@ -97,7 +97,7 @@ function Register() {
                 <div>
                     <input
                         type="email" 
-                        className="w-full border-2 border-black rounded-md p-2 focus:border-white focus:outline-none"                        
+                        className="w-full font-sans border-2 border-black rounded-md p-2 focus:border-white focus:outline-none"                        
                         id='email' 
                         name='email' 
                         value={email} 
@@ -108,7 +108,7 @@ function Register() {
                 <div>
                     <input
                         type="password" 
-                        className="w-full border-2 border-black rounded-md p-2 focus:border-white focus:outline-none"                        
+                        className="w-full font-sans border-2 border-black rounded-md p-2 focus:border-white focus:outline-none"                        
                         id='password' 
                         name='password' 
                         value={password} 
@@ -119,7 +119,7 @@ function Register() {
                 <div>
                     <input
                         type="password" 
-                        className="w-full border-2 border-black rounded-md p-2 focus:border-white focus:outline-none"                        id='password2' 
+                        className="w-full font-sans border-2 border-black rounded-md p-2 focus:border-white focus:outline-none"                        id='password2' 
                         name='password2' 
                         value={password2} 
                         placeholder='Confirm password' 

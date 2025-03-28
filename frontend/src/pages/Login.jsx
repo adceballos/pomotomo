@@ -70,7 +70,7 @@ function Login() {
       <div>
         <input
           type="email"
-          className="w-full border-2 border-black rounded-md p-2 focus:border-white focus:outline-none"
+          className="w-full border-2 font-sans border-black rounded-md p-2 focus:border-white focus:outline-none"
           id='email'
           name='email'
           value={email}
@@ -81,7 +81,7 @@ function Login() {
       <div>
         <input
           type="password"
-          className="w-full border-2 border-black rounded-md p-2 focus:border-white focus:outline-none"
+          className="w-full border-2 font-sans border-black rounded-md p-2 focus:border-white focus:outline-none"
           id='password'
           name='password'
           value={password}
