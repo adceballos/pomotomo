@@ -164,7 +164,10 @@ export default function Timer() {
       <div className="p-2 text-black text-3xl">
         Pomodoros Completed: <span className="text-yellow-300">{totalTomatoes}</span>
       </div>
-      <img src={expbar} alt="exp bar" className="w-50 h-auto" />
+      <div className="mt-4 flex items-center">
+        <h1 className="mr-2 mt-1 text-3xl">EXP</h1>
+        <img src={expbar} alt="exp bar" className="w-56 h-auto" />
+      </div>
     </div>
   );
 }
