@@ -18,7 +18,7 @@ function Profile() {
     
     return (
         <div className="flex flex-col min-h-screen text-black mx-auto max-w-4xl">
-            <div className='flex bg-gradient-to-r from-orange-100 via-orange-200 to-gray-100 w-full justify-center gap-x-6 h-80 max-h-80 mt-6'>
+            <div className='flex bg-gradient-to-r from-orange-100 via-orange-200 to-gray-100 w-full justify-center gap-x-6 h-80 max-h-80 mt-6 shadow-lg rounded-md'>
                 <div className='flex flex-shrink-0 mt-8'>
                     <img src={selectedPfp} className="w-auto h-48 md:h-64 rounded-full object-contain shadow-lg border-1"/>
                 </div>
