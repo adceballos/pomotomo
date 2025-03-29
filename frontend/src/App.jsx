@@ -7,6 +7,7 @@ import Header from './components/Header'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Profile from './pages/Profile'
+import TestTimer from './pages/TestTimer'
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path='/register' element={<Register />} />
           <Route path="/about" element={<About />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/test-timer" element={<TestTimer />} />
         </Routes>
       </div>
     </Router>
