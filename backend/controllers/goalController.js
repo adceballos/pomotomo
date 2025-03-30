@@ -3,7 +3,6 @@
 const asyncHandler = require('express-async-handler')   // use package called express-async-handler (download in terminal using "npm i express-async-handler") so we can just use our error handler instead of try/catch in our async/await functions
 
 const Goal = require('../models/goalModel')
-const User = require('../models/userModel')
 
 // @desc    Get goals, gets all goals rn, gets a specific users goal when we add auth
 // @route   GET //api/goals

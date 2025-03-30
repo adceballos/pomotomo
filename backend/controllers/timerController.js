@@ -2,8 +2,17 @@ const asyncHandler = require('express-async-handler')
 
 const Timer = require('../models/timerModel')
 
+// @desc    Get timer
+// @route   GET //api/timer
+// @access  Private
+const getTimer = asyncHandler(async (req, res) => {
+    const timer = await Timer.find({ user: req.user.id })
+
+    res.status(200).json(timer)
+})
+
 // @desc    Start timer
-// @route   POST //api/timer/
+// @route   POST //api/timer
 // @access  Private
 const startTimer = asyncHandler(async (req, res) => {
     let timer = await Timer.findOne({ user: req.user.id })    // find the timer by user id
@@ -37,7 +46,7 @@ const startTimer = asyncHandler(async (req, res) => {
 })
 
 // @desc    Stop timer
-// @route   PUT //api/timer/
+// @route   PUT //api/timer
 // @access  Private
 const stopTimer = asyncHandler(async (req, res) => {
     const timer = await Timer.findOne({ user: req.user.id })
@@ -86,4 +95,5 @@ module.exports = {
     startTimer,
     stopTimer,
     deleteTimer,
+    getTimer,
 }
