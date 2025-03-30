@@ -13,10 +13,10 @@ const initialState = {
 };
 
 // Start timer
-export const startTimer = createAsyncThunk('timer/start', async (timerData, thunkAPI) => {
+export const startTimer = createAsyncThunk('timer/start', async (_, thunkAPI) => {
     try {
         const token = thunkAPI.getState().auth.user.token;
-        return await timerService.startTimer(timerData, token);
+        return await timerService.startTimer(token);
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
         return thunkAPI.rejectWithValue(message);
@@ -38,10 +38,10 @@ export const getTimer = createAsyncThunk('timer/getTimer', async (_, thunkAPI) =
 })
 
 // Stop timer
-export const stopTimer = createAsyncThunk('timer/stop', async (timerData, thunkAPI) => {
+export const stopTimer = createAsyncThunk('timer/stop', async (_, thunkAPI) => {
     try {
         const token = thunkAPI.getState().auth.user.token;
-        return await timerService.stopTimer(timerData, token);
+        return await timerService.stopTimer(token);
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
         return thunkAPI.rejectWithValue(message);
@@ -71,7 +71,7 @@ export const timerSlice = createSlice({
             .addCase(startTimer.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = true;
-                state.isRunning = action.payload.isRunning;
+                state.isRunning = true;
                 state.timer = action.payload;
             })
             .addCase(startTimer.rejected, (state, action) => {

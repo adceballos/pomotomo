@@ -6,7 +6,12 @@ const Timer = require('../models/timerModel')
 // @route   GET //api/timer
 // @access  Private
 const getTimer = asyncHandler(async (req, res) => {
-    const timer = await Timer.find({ user: req.user.id })
+    const timer = await Timer.findOne({ user: req.user.id })    // used findOne instead of just find to fix frontend displaying values incorrectly on component mount/unmount
+
+    if (!timer) {
+        res.status(404)
+        throw new Error('No timer found')
+    }
 
     res.status(200).json(timer)
 })

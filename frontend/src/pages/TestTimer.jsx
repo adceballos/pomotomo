@@ -7,35 +7,50 @@ function TestTimer() {
   const dispatch = useDispatch()
 
   const {user} = useSelector((state) => state.auth)
-  const {timer, isLoading, isError, message} = useSelector(
-    (state) => state.timer
-  )
+  // Access timer state from Redux
+  const { timer, isRunning, elapsedTimeTotal, isLoading, isError, message } = useSelector((state) => state.timer);
 
   useEffect(() => {
     if (isError) {
       console.log(message)
     }
 
-    if (user && (!timer || timer.elapsedTimeTotal === undefined)) { // Only fetch if user exists and timer isn't loaded
-      console.log("Fetching timer...");
-      dispatch(getTimer());
+    if (user) {
+      dispatch(getTimer())
     }
 
     // when component unmounts
     return () => {
       dispatch(reset())
     }
-  }, [user, isError, message, dispatch, timer])
+  }, [user, isError, message, dispatch])
+
+  // dispatch startTimer() dispatches an action to start the timer in redux, which is a POST request that sends a req to start the timer
+  // this is why we only dispatch when the start timer is clicked, so we make the post req to set the start date time in the backend
+  const handleStart = () => {
+    dispatch(startTimer())
+  }
+
+  const handleStop = () => {
+    dispatch(stopTimer())
+  }
 
   if (isLoading) {
     return <Spinner />
   }
-  
-return (
-    <div className="flex items-center text-2xl flex-col">
-      Hello World
-    </div>
-  )
-}
+
+  return (
+      <div className="flex justify-center flex-col items-center">
+          {isError && <p style={{ color: 'red' }}>{message}</p>}
+
+          <p>Status: {isRunning ? 'RUNNING' : 'PAUSED'}</p>
+          <p>Total Time Studied: {Math.floor(elapsedTimeTotal / 1000)} seconds</p>
+
+          <button onClick={handleStart} disabled={isRunning}>Start Timer</button>
+          <button onClick={handleStop} disabled={!isRunning}>Stop Timer</button>
+      </div>
+    );
+};
+
 
 export default TestTimer

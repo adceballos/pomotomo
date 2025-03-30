@@ -3,14 +3,14 @@ import axios from "axios"
 const API_URL = 'http://localhost:5001/api/timer/'
 
 // start timer
-const startTimer = async (timerData, token) => {
+const startTimer = async (token) => {
     const config = {
         headers: {
             Authorization: `Bearer ${token}`
         }
     }
 
-    const response = await axios.post(API_URL, timerData, config)    // config contains token
+    const response = await axios.post(API_URL, {}, config)    // config contains token
 
     return response.data
 }
