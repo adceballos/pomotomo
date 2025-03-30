@@ -28,6 +28,8 @@ const startTimer = asyncHandler(async (req, res) => {
             user: req.user.id,
             startTime: new Date(),
             isRunning: true,
+            initialTime: 10000,
+            currentTime: 10000,
         })
         return res.status(200).json(timer) // return newly created timer
     }
@@ -72,6 +74,30 @@ const stopTimer = asyncHandler(async (req, res) => {
     timer.elapsedTime = timer.stopTime - timer.startTime
     timer.elapsedTimeTotal += timer.elapsedTime
     timer.startTime = null // reset start time, not sure if this is necessary, will test
+    timer.currentTime -= timer.elapsedTime
+
+    await timer.save()
+
+    res.status(200).json(timer)
+})
+
+// @desc    Reset timer
+// @route   PUT //api/timer
+// @access  Private
+const resetTimer = asyncHandler(async (req, res) => {
+    const timer = await Timer.findOne({ user: req.user.id })
+    
+    if (!timer) {
+        res.status(404) // requested resource does not exist (timer hasn't been started yet so there's nothing to stop)
+        throw new Error('Please start a timer')
+    }
+
+    timer.isRunning = false
+    timer.stopTime = new Date()
+    timer.elapsedTime = timer.stopTime - timer.startTime
+    timer.elapsedTimeTotal += timer.elapsedTime
+    timer.startTime = null // reset start time, not sure if this is necessary, will test
+    timer.currentTime = timer.initialTime
 
     await timer.save()
 
@@ -101,4 +127,5 @@ module.exports = {
     stopTimer,
     deleteTimer,
     getTimer,
+    resetTimer,
 }

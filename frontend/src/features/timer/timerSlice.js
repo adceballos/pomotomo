@@ -6,6 +6,8 @@ const initialState = {
     isRunning: false,
     elapsedTime: 0,
     elapsedTimeTotal: 0,
+    initialTime: 10000,
+    currentTime: 10000,
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -48,6 +50,17 @@ export const stopTimer = createAsyncThunk('timer/stop', async (_, thunkAPI) => {
     }
 });
 
+// Reset timer
+export const resetTimer = createAsyncThunk('timer/reset', async (_, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token;
+        return await timerService.resetTimer(token);
+    } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+        return thunkAPI.rejectWithValue(message);
+    }
+});
+
 export const timerSlice = createSlice({
     name: 'timer',
     initialState,
@@ -57,6 +70,8 @@ export const timerSlice = createSlice({
             state.isRunning = false;
             state.elapsedTime = 0;
             state.elapsedTimeTotal = 0;
+            state.initialTime = 10000;
+            state.currentTime = 10000;
             state.isError = false;
             state.isSuccess = false;
             state.isLoading = false;
@@ -88,8 +103,26 @@ export const timerSlice = createSlice({
                 state.isRunning = action.payload.isRunning;
                 state.elapsedTime = action.payload.elapsedTime;
                 state.elapsedTimeTotal = action.payload.elapsedTimeTotal;
+                state.currentTime = action.payload.currentTime;
             })
             .addCase(stopTimer.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.message = action.payload;
+            })
+            .addCase(resetTimer.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(resetTimer.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.isRunning = action.payload.isRunning;
+                state.elapsedTime = action.payload.elapsedTime;
+                state.elapsedTimeTotal = action.payload.elapsedTimeTotal;
+                state.initialTime = action.payload.initialTime;
+                state.currentTime = action.payload.currentTime;
+            })
+            .addCase(resetTimer.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.message = action.payload;
@@ -103,6 +136,8 @@ export const timerSlice = createSlice({
                 state.timer = action.payload
                 state.isRunning = action.payload.isRunning;
                 state.elapsedTimeTotal = action.payload.elapsedTimeTotal;
+                state.initialTime = action.payload.initialTime;
+                state.currentTime = action.payload.currentTime
             })
             .addCase(getTimer.rejected, (state, action) => {
                 state.isLoading = false;

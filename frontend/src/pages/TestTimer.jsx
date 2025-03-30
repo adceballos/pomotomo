@@ -8,13 +8,16 @@ function TestTimer() {
 
   const {user} = useSelector((state) => state.auth)
   // Access timer state from Redux
-  const { timer, isRunning, elapsedTimeTotal, isLoading, isError, message } = useSelector((state) => state.timer);
+  const { timer, isRunning, elapsedTimeTotal, isLoading, initialTime, currentTime, isError, message } = useSelector((state) => state.timer);
 
   useEffect(() => {
+
     if (isError) {
       console.log(message)
     }
 
+    // Adding && timer from this conditional fixed the constant get request and no timer found console error, but caused a new error that wouldn't display correct values from the backend until a timer was started and stopped
+    // Need to find a way to fix the inifinite get request loop
     if (user) {
       dispatch(getTimer())
     }
@@ -40,17 +43,21 @@ function TestTimer() {
   }
 
   return (
+    
       <div className="flex justify-center flex-col items-center">
           {isError && <p style={{ color: 'red' }}>{message}</p>}
-
-          <p>Status: {isRunning ? 'RUNNING' : 'PAUSED'}</p>
-          <p>Total Time Studied: {Math.floor(elapsedTimeTotal / 1000)} seconds</p>
-
-          <button onClick={handleStart} disabled={isRunning}>Start Timer</button>
-          <button onClick={handleStop} disabled={!isRunning}>Stop Timer</button>
+            <div>
+              <p>Status: {isRunning ? 'RUNNING' : 'PAUSED'}</p>
+              <p>Start time: {Math.floor(initialTime / 1000)} seconds</p>
+              <p>Current time: {Math.floor(currentTime / 1000)} seconds</p>
+              <p>Total Time Studied: {Math.floor(elapsedTimeTotal / 1000)} seconds</p>
+              <button onClick={handleStart} disabled={isRunning} className="p-1 border-1 hover:cursor-pointer">Start Timer</button>
+              <button onClick={handleStop} disabled={!isRunning} className="p-1 border-1 hover:cursor-pointer ml-4">Stop Timer</button>
+            </div>
       </div>
     );
 };
+
 
 
 export default TestTimer

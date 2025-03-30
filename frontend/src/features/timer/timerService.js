@@ -41,10 +41,24 @@ const stopTimer = async (token) => {
     return response.data
 }
 
+// reset timer
+const resetTimer = async (token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const response = await axios.put(API_URL + 'reset', {}, config)
+
+    return response.data
+}
+
 const timerService = {
     startTimer,
     getTimer,
     stopTimer,
+    resetTimer,
 }
 
 export default timerService

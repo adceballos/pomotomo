@@ -30,6 +30,15 @@ const timerSchema = mongoose.Schema({
         type: Number,   // Total time in milliseconds that the user spent on the current session (for tracking progress)
         default: 0
     },
+    initialTime: {
+        type: Number,
+        default: 10000
+    },
+    currentTime: {
+        // update later to calculate based on phase
+        type: Number,
+        default: 0
+    },
 }, 
 {
     timestamps: true,
