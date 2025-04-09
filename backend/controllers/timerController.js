@@ -94,8 +94,15 @@ const resetTimer = asyncHandler(async (req, res) => {
 
     timer.isRunning = false
     timer.stopTime = new Date()
-    timer.elapsedTime = timer.stopTime - timer.startTime
-    timer.elapsedTimeTotal += timer.elapsedTime
+
+    // used to fix issue where resetting timer after stopping timer would do stopTime - startTime, but start time is null from stopTimer, so it'd give an outrageous val
+    if (timer.startTime) {
+        timer.elapsedTime = timer.stopTime - timer.startTime
+        timer.elapsedTimeTotal += timer.elapsedTime
+      } else {
+        timer.elapsedTime = 0
+      }
+    
     timer.startTime = null // reset start time, not sure if this is necessary, will test
     timer.currentTime = timer.initialTime
 
@@ -109,18 +116,18 @@ const resetTimer = asyncHandler(async (req, res) => {
 // @route   DELETE //api/timer/
 // @access  Private
 const deleteTimer = asyncHandler(async (req, res) => {
-    const timer = await Timer.findOne({ user: req.user.id });  // Find the user's timer
+    const timer = await Timer.findOne({ user: req.user.id })  // Find the user's timer
 
     if (!timer) {
-        res.status(404);
-        throw new Error('No timer found to delete');
+        res.status(404)
+        throw new Error('No timer found to delete')
     }
 
     // Delete the timer instance
-    await Timer.deleteOne({ _id: timer._id });  // Delete the timer by its unique ID
+    await Timer.deleteOne({ _id: timer._id })  // Delete the timer by its unique ID
 
-    res.status(200).json({ message: 'Timer deleted successfully' });
-});
+    res.status(200).json({ message: 'Timer deleted successfully' })
+})
 
 module.exports = {
     startTimer,

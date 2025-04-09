@@ -135,6 +135,7 @@ export const timerSlice = createSlice({
                 state.isSuccess = true;
                 state.timer = action.payload
                 state.isRunning = action.payload.isRunning;
+                state.elapsedTime = action.payload.elapsedTime;
                 state.elapsedTimeTotal = action.payload.elapsedTimeTotal;
                 state.initialTime = action.payload.initialTime;
                 state.currentTime = action.payload.currentTime
