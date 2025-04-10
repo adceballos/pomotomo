@@ -39,6 +39,18 @@ const timerSchema = mongoose.Schema({
         type: Number,
         default: 0
     },
+    isPomodoro: {
+        type: Boolean,
+        default: true
+    },
+    pomodoroCount: {
+        type: Number,
+        default: 0,
+    },
+    phaseSwitched: {
+        type: Boolean,
+        default: false,
+    }
 }, 
 {
     timestamps: true,

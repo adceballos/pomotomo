@@ -8,6 +8,9 @@ const initialState = {
     elapsedTimeTotal: 0,
     initialTime: 10000,
     currentTime: 10000,
+    isPomodoro: true,
+    pomodoroCount: 0,
+    phaseSwitched: false,
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -61,6 +64,17 @@ export const resetTimer = createAsyncThunk('timer/reset', async (_, thunkAPI) =>
     }
 });
 
+// Switch timer phase
+export const switchPhase = createAsyncThunk('timer/switch', async (_, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token;
+        return await timerService.switchPhase(token);
+    } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+        return thunkAPI.rejectWithValue(message);
+    }
+});
+
 export const timerSlice = createSlice({
     name: 'timer',
     initialState,
@@ -72,6 +86,9 @@ export const timerSlice = createSlice({
             state.elapsedTimeTotal = 0;
             state.initialTime = 10000;
             state.currentTime = 10000;
+            state.pomodoroCount = 0;
+            state.isPomodoro = true;
+            state.phaseSwitched = false;
             state.isError = false;
             state.isSuccess = false;
             state.isLoading = false;
@@ -119,10 +136,25 @@ export const timerSlice = createSlice({
                 state.isRunning = action.payload.isRunning;
                 state.elapsedTime = action.payload.elapsedTime;
                 state.elapsedTimeTotal = action.payload.elapsedTimeTotal;
+                state.isPomodoro = action.payload.isPomodoro;
+                state.pomodoroCount = action.payload.pomodoroCount;
                 state.initialTime = action.payload.initialTime;
                 state.currentTime = action.payload.currentTime;
             })
             .addCase(resetTimer.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.message = action.payload;
+            })
+            .addCase(switchPhase.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(switchPhase.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.phaseSwitched = action.payload.phaseSwitched
+            })
+            .addCase(switchPhase.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.message = action.payload;
@@ -137,6 +169,8 @@ export const timerSlice = createSlice({
                 state.isRunning = action.payload.isRunning;
                 state.elapsedTime = action.payload.elapsedTime;
                 state.elapsedTimeTotal = action.payload.elapsedTimeTotal;
+                state.isPomodoro = action.payload.isPomodoro;
+                state.pomodoroCount = action.payload.pomodoroCount;
                 state.initialTime = action.payload.initialTime;
                 state.currentTime = action.payload.currentTime
             })

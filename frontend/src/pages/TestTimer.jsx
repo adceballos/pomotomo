@@ -1,18 +1,19 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Spinner from "../components/Spinner";
-import { startTimer, stopTimer, getTimer, resetTimer, reset } from "../features/timer/timerSlice";
+import { startTimer, stopTimer, getTimer, resetTimer, switchPhase, reset } from "../features/timer/timerSlice";
 
 function TestTimer() {
   const dispatch = useDispatch()
 
   const {user} = useSelector((state) => state.auth)
   // Access timer state from Redux
-  const { timer, isRunning, elapsedTimeTotal, elapsedTime, isLoading, initialTime, currentTime, isError, message } = useSelector((state) => state.timer);
+  const { timer, isRunning, pomodoroCount, elapsedTimeTotal, elapsedTime, isLoading, initialTime, currentTime, isError, message } = useSelector((state) => state.timer);
 
   //const [newUser, setNewUser] = useState(true)
   const [timeLeft, setTimeLeft] = useState(0)
   
+  // allows timer to correctly pick back up current time left after remount
   useEffect(() => {
     if (currentTime && timer?.startTime && isRunning) {
       const now = new Date();
@@ -40,6 +41,7 @@ function TestTimer() {
   useEffect(() => {
     if (timeLeft <= 0 && isRunning) {
       console.log("Time's up!")
+      dispatch(switchPhase())
       dispatch(resetTimer())
       setTimeLeft(Math.floor(currentTime / 1000))
     }
@@ -95,6 +97,7 @@ function TestTimer() {
         <p>Counting down from: {Math.floor(initialTime / 1000)} seconds</p>
         <p>Current time left: {formatTime(timeLeft)}</p>
         <p>Total time passed: {Math.floor(elapsedTimeTotal / 1000)} seconds</p>
+        <p>Total pomodoro phases completed: {pomodoroCount}</p>
         <button onClick={handleStart} disabled={isRunning} className={`p-1 border-1 ${isRunning ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'hover:bg-green-500 hover:text-white transition-colors duration-200'}`}>Start Timer</button>
         <button onClick={handleStop} disabled={!isRunning} className={`p-1 border-1 ml-4 ${!isRunning ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'hover:bg-red-500 hover:text-white transition-colors duration-200'}`}>Stop Timer</button>
         <button onClick={handleReset} className="p-1 border-1 hover:cursor-pointer ml-4 hover:bg-green-500 hover:text-white transition-colors duration-200">Reset Timer</button>
