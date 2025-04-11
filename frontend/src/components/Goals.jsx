@@ -1,17 +1,18 @@
-import {useEffect} from 'react'
-import {useSelector, useDispatch} from 'react-redux'
+import { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import GoalForm from '../components/GoalForm'
 import GoalItem from '../components/GoalItem'
 import Spinner from '../components/Spinner'
 import { getGoals, reset } from '../features/goals/goalSlice'
+import { useGoalSidebar } from '../components/GoalSidebarContext'
 
 function Goals() {
   const dispatch = useDispatch()
-
-  const {user} = useSelector((state) => state.auth)
-  const {goals, isLoading, isError, message} = useSelector(
+  const { user } = useSelector((state) => state.auth)
+  const { goals, isLoading, isError, message } = useSelector(
     (state) => state.goals
   )
+  const { isOpen } = useGoalSidebar()
 
   useEffect(() => {
     if (isError) {
@@ -22,7 +23,6 @@ function Goals() {
       dispatch(getGoals())
     }
 
-    // when component unmounts
     return () => {
       dispatch(reset())
     }
@@ -33,22 +33,29 @@ function Goals() {
   }
 
   return (
-    <div className="min-h-screen bg-[#ee906b] text-black" id='tasks'>
-      <section className='flex items-center justify-center text-6xl text-black mb-12'>
-        <h1>Tasks</h1>
-      </section>
+    <div className="relative">
+      {/* Sidebar Styled Container */}
+      <div className={`
+        fixed top-24 left-5 h-[80vh] w-72 bg-[#4934239c] rounded-2xl border border-[#fccfbd] text-white shadow-lg shadow-[#fcbba2a1] p-4 overflow-hidden z-200 transform transition-transform duration-300
+        ${isOpen ? 'translate-x-0' : '-translate-x-[500px]'}
+      `}>
+        <div>
+          <GoalForm />
+        </div>
 
-      <GoalForm />
-
-      <section className='flex flex-wrap justify-center items-center gap-4 md:px-96'>
+        {/* Scrollable Goal List */}
+        <div className="overflow-y-auto max-h-[60vh] mt-4 space-y-3 pr-2 w-full max-w-md">
         {goals.length > 0 ? (
             goals.map((goal) => (
               <GoalItem key={goal._id} goal={goal} />
             ))
-          ) : (<h3 className='text-center text-2xl'>You have not made any tasks</h3>)}
-      </section>
+          ) : (
+            <h3 className="text-center text-white text-lg">You have no tasks</h3>
+          )}
+        </div>
+      </div>
     </div>
   )
 }
-export default Goals
 
+export default Goals

@@ -4,11 +4,14 @@ import { Provider } from 'react-redux'
 import './index.css'
 import App from './App.jsx'
 import {store} from './app/store.js'
+import { GoalSidebarProvider } from './components/GoalSidebarContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Provider store={store}>
-    <App />
+    <GoalSidebarProvider>
+      <App />
+    </GoalSidebarProvider>
     </Provider>
   </StrictMode>,
 )

@@ -3,28 +3,26 @@ import {Link, useNavigate} from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux'
 import {logout, reset} from '../features/auth/authSlice'
 import defaultPFP from '../assets/slum.PNG'
+import { useGoalSidebar } from '../components/GoalSidebarContext'
 
 function Header() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const {user} = useSelector((state) => state.auth)
+    const { toggleSidebar } = useGoalSidebar()
 
     const onLogout = () => {
         dispatch(logout())
         dispatch(reset())
         navigate('/')
     }
-
-    const handleScrollToTasks = () => {
-        if (location.pathname === '/') {
-            // If already on the dashboard, just scroll down
-            document.getElementById('tasks')?.scrollIntoView({ behavior: 'smooth' })
+    
+    const handleToggleTasks = () => {
+        if (location.pathname !== '/') {
+            navigate('/')
+            setTimeout(() => toggleSidebar(), 200)
         } else {
-            // If not on the dashboard, navigate and then scroll after render
-            navigate('/');
-            setTimeout(() => {
-                document.getElementById('tasks')?.scrollIntoView({ behavior: 'smooth' })
-            }, 200) // Small delay to allow the page to load first
+            toggleSidebar()
         }
     }
 
@@ -40,7 +38,7 @@ function Header() {
         {user ? (
             <>
                 <button 
-                    onClick={handleScrollToTasks}
+                    onClick={handleToggleTasks}
                     className="text-xl text-black hover:underline"
                 >
                     Tasks

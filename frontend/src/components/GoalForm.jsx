@@ -1,43 +1,36 @@
-import {useState} from 'react'
-import {useDispatch} from 'react-redux'
-import {createGoal} from '../features/goals/goalSlice'
+import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { createGoal } from '../features/goals/goalSlice'
 
 function GoalForm() {
-    const [text, setText] = useState('')
+  const [text, setText] = useState('')
+  const dispatch = useDispatch()
 
-    const dispatch = useDispatch()
+  const onSubmit = (e) => {
+    e.preventDefault()
+    dispatch(createGoal({ text }))
+    setText('')
+  }
 
-    const onSubmit = (e) => {
-        e.preventDefault()
-
-        dispatch(createGoal({text}))
-        // clear the form
-        setText('')
-    }
-    
-    return (
-    <div>
-        <section className='flex items-center justify-center'>
-            <form onSubmit={onSubmit} className="space-y-4 w-full max-w-md">
-                <div>
-                    <label htmlFor='text' className='text-lg'>Task</label>
-                    <input 
-                        type='text' 
-                        className="w-full border-2 border-black rounded-md p-2 focus:border-white focus:outline-none"
-                        name='text' 
-                        id='text' 
-                        value={text} 
-                        onChange={(e) => setText(e.target.value)}
-                    />
-                </div>
-                <div>
-                    <button type='submit' className='w-full mb-6 text-xl bg-black text-white rounded-md p-2 hover:bg-white hover:text-black transition'>
-                        Add Task
-                    </button>
-                </div>
-            </form>
-        </section>
-    </div>
+  return (
+    <form onSubmit={onSubmit}>
+      <input
+        type="text"
+        name="text"
+        id="text"
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        placeholder="Enter a task..."
+        className="w-full text-lg px-3 py-2 text-white bg-transparent placeholder-white border-2 border-white rounded-lg focus:outline-none"
+      />
+      <button
+        type="submit"
+        className="w-full mt-2 bg-white text-black py-2 rounded-md hover:bg-[#e2e2e2] transition"
+      >
+        Add Task
+      </button>
+    </form>
   )
 }
+
 export default GoalForm
