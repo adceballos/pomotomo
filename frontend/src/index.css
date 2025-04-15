@@ -4,11 +4,19 @@
 @layer base {
   body {
     font-family: 'Pixelify Sans', sans-serif;
-    background-color: #ee906b;
+    background-color: #a0493c;
   }
 }
 .pixelify {
   font-family: 'Pixelify Sans', sans-serif;
+}
+
+@layer utilities {
+  .bg-checkerboard {
+    background-image: url('/src/assets/background.svg');
+    background-repeat: repeat;
+    background-size: 40px 40px;
+  }
 }
 
 /* For WebKit browsers */

@@ -16,7 +16,7 @@ function GoalForm() {
     }
     
     return (
-    <div>
+    <div className="text-black py-10 px-4">
         <section className='flex items-center justify-center'>
             <form onSubmit={onSubmit} className="space-y-4 w-full max-w-md">
                 <div>
