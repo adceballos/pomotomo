@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Button from "./Button";
 import tomatoIcon from "../assets/tomato.svg";
 import expbar from "../assets/exp1.svg";
+import shopIcon from "../assets/shop.svg"; 
 
 export default function Timer() {
   const [isRunning, setIsRunning] = useState(false);
@@ -120,9 +121,15 @@ export default function Timer() {
 
     return `${minutes}:${seconds}`;
   }
-
+  
   return (
-    <div className="flex flex-col items-center justify-center text-black">
+    <div className="relative flex flex-col items-center justify-center text-black">
+      <button
+        className="fixed top-32 left-10 z-50 w-40 h-40"
+      >
+        <img src={shopIcon} alt="Shop" className="w-full h-full" />
+      </button>
+
       <div className="text-6xl md:text-8xl p-6">{formatTime()}</div>
       <div className="flex gap-5 text-xl">
         <Button onClick={start} text="Start"/>
