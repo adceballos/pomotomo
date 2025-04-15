@@ -3,6 +3,7 @@ import {Link, useNavigate} from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux'
 import {logout, reset} from '../features/auth/authSlice'
 import defaultPFP from '../assets/slum.PNG'
+import shopIcon from '../assets/shop.svg'
 
 function Header() {
     const navigate = useNavigate()
@@ -30,35 +31,30 @@ function Header() {
 
     return (
         <header className="grid grid-cols-3 items-center p-4 text-white border-b border-gray-300 bg-[#D5F0C0] w-full">
-        <div className="flex items-center justify-start">
-            <Link to="/" className="text-3xl text-black">
-                Pomotomo!
-            </Link>
-        </div>
-
-        <div className="flex items-center justify-center gap-8">
+        <div className="flex items-center justify-start gap-8">
         {user ? (
             <>
                 <button 
                     onClick={handleScrollToTasks}
-                    className="text-xl text-black hover:underline"
+                    className="text-3xl text-black hover:underline"
                 >
                     Tasks
                 </button>
-                <Link to="/about" className="text-xl text-black hover:underline">
+                <Link to="/about" className="text-3xl text-black hover:underline">
                     About
                 </Link>
+                <img src={shopIcon} alt="Shop" className="w-20 h-20 ml-2" />
             </>
             ) : (
             <>
                 <Link to="/about" className="text-xl text-black hover:underline">
                     About
                 </Link>
+                
             </>
             )
         }
         </div>
-
         <div className="flex items-center justify-end gap-4">
             {user ? (
                 <>
