@@ -54,11 +54,25 @@ const resetTimer = async (token) => {
     return response.data
 }
 
+// switch timer phase
+const switchPhase = async (token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const response = await axios.put(API_URL + 'switch', {}, config)
+
+    return response.data
+}
+
 const timerService = {
     startTimer,
     getTimer,
     stopTimer,
     resetTimer,
+    switchPhase,
 }
 
 export default timerService

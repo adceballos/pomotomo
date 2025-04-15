@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Spinner from "../components/Spinner";
 import { startTimer, stopTimer, getTimer, resetTimer, switchPhase, reset } from "../features/timer/timerSlice";
@@ -8,44 +8,68 @@ function TestTimer() {
 
   const {user} = useSelector((state) => state.auth)
   // Access timer state from Redux
-  const { timer, isRunning, pomodoroCount, elapsedTimeTotal, elapsedTime, isLoading, initialTime, currentTime, isError, message } = useSelector((state) => state.timer);
+  const { timer, isRunning, pomodoroCount, elapsedTimeTotal, isLoading, initialTime, currentTime, isError, message } = useSelector((state) => state.timer);
 
   //const [newUser, setNewUser] = useState(true)
   const [timeLeft, setTimeLeft] = useState(0)
+  const suppressAutoStopRef = useRef(false)  // used to fix error that was causing the timer to be stopped more than once when timer hit 0
   
-  // allows timer to correctly pick back up current time left after remount
   useEffect(() => {
-    if (currentTime && timer?.startTime && isRunning) {
-      const now = new Date();
-      const startedAt = new Date(timer.startTime);
-      const timePassed = now - startedAt; // in ms
-      const updatedTimeLeft = Math.max(0, Math.floor((currentTime - timePassed) / 1000));
-      setTimeLeft(updatedTimeLeft);
-    } else if (currentTime && !isRunning) {
-      setTimeLeft(Math.floor(currentTime / 1000));
+    if (currentTime !== undefined) {
+      setTimeLeft(Math.floor(currentTime / 1000))
     }
-  }, [currentTime, timer?.startTime, isRunning]);  
+  }, [currentTime])   
 
   useEffect(() => {
     let interval
   
-    if (isRunning && timeLeft > 0) {
+    if (isRunning && timer?.startTime && timer?.currentTime) {
+      const start = new Date(timer.startTime).getTime()
+  
       interval = setInterval(() => {
-        setTimeLeft((prev) => Math.max(prev - 1, 0))
-      }, 1000)
+        const now = Date.now();
+        const elapsed = now - start
+        const remaining = Math.max(timer.currentTime - elapsed, 0)
+        setTimeLeft(Math.floor(remaining / 1000))
+      }, 100) // update every 100ms instead of 1000ms
     }
   
     return () => clearInterval(interval)
-  }, [isRunning, timeLeft]); 
+  }, [isRunning, timer?.startTime, timer?.currentTime])
+  
 
   useEffect(() => {
-    if (timeLeft <= 0 && isRunning) {
-      console.log("Time's up!")
-      dispatch(switchPhase())
-      dispatch(resetTimer())
-      setTimeLeft(Math.floor(currentTime / 1000))
+    if (timeLeft === 0 && isRunning) {
+      suppressAutoStopRef.current = true
+      // Wait for switchPhase and resetTimer to both complete
+      dispatch(switchPhase()).then(() => {
+        dispatch(resetTimer()).then((action) => {
+          const updated = action.payload
+          setTimeLeft(Math.floor(updated.currentTime / 1000))
+        })
+      })
     }
   }, [timeLeft, isRunning, dispatch])
+
+  useEffect(() => {
+    const handleVisibility = () => {
+      if (document.visibilityState === 'hidden' && isRunning) {
+        suppressAutoStopRef.current = true
+        dispatch(stopTimer())
+      }
+    }
+  
+    document.addEventListener('visibilitychange', handleVisibility)
+  
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibility)
+
+      if (isRunning && !suppressAutoStopRef.current) {
+        dispatch(stopTimer())
+      }
+      suppressAutoStopRef.current = false
+    }
+  }, [isRunning, dispatch])
 
   useEffect(() => {
     if (isError) {
@@ -71,12 +95,16 @@ function TestTimer() {
   }
 
   const handleStop = () => {
+    suppressAutoStopRef.current = true
     dispatch(stopTimer())
   }
 
   const handleReset = () => {
-    dispatch(resetTimer())
-    setTimeLeft(Math.floor(currentTime / 1000))
+    suppressAutoStopRef.current = true
+    dispatch(resetTimer()).then((action) => {
+      const updated = action.payload;
+      setTimeLeft(Math.floor(updated.currentTime / 1000))
+    })
   }
 
   const formatTime = (seconds) => {

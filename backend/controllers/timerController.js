@@ -109,7 +109,7 @@ const resetTimer = asyncHandler(async (req, res) => {
     timer.startTime = null // reset start time, not sure if this is necessary, will test
 
     if (timer.phaseSwitched) {
-        if (isPomodoro) {
+        if (timer.isPomodoro) {
             timer.pomodoroCount++
         }
 
@@ -174,7 +174,9 @@ const switchPhase = asyncHandler(async (req, res) => {
         throw new Error('Please start a timer')
     }
 
-    timer.phaseSwitched = true;
+    timer.phaseSwitched = true
+
+    await timer.save()
 
     res.status(200).json(timer)
 })
