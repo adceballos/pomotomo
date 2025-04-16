@@ -155,8 +155,10 @@ const fullResetTimer = asyncHandler(async (req, res) => {
       }
     
     timer.startTime = null // reset start time, not sure if this is necessary, will test
-    timer.isPomodoro ? timer.initialTime = 10000 : timer.initialTime = 5000     // set initialTime to 10 secs if pomo phase, otherwise 5 secs on break phase
+    timer.isPomodoro = true
+    timer.initialTime = 10000
     timer.currentTime = timer.initialTime
+    timer.pomodoroCount === 0
 
     await timer.save()
 
