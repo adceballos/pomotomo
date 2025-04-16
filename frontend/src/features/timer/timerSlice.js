@@ -11,6 +11,9 @@ const initialState = {
     isPomodoro: true,
     pomodoroCount: 0,
     phaseSwitched: false,
+    pomoTime: 10000,
+    breakTime: 5000,
+    longBreakTime: 15000,
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -97,6 +100,16 @@ export const enableAutoPlay = createAsyncThunk('timer/auto', async (_, thunkAPI)
     }
 })
 
+export const setCustomTimes = createAsyncThunk('timer/custom-times', async (times, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token
+      return await timerService.setCustomTimes(token, times)
+    } catch (error) {
+      const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+      return thunkAPI.rejectWithValue(message)
+    }
+})
+
 export const timerSlice = createSlice({
     name: 'timer',
     initialState,
@@ -163,6 +176,9 @@ export const timerSlice = createSlice({
                 state.initialTime = action.payload.initialTime
                 state.currentTime = action.payload.currentTime
                 state.autoPlayEnabled = action.payload.autoPlayEnabled
+                state.pomoTime = action.payload.pomoTime
+                state.breakTime = action.payload.breakTime
+                state.longBreakTime = action.payload.longBreakTime
             })
             .addCase(resetTimer.rejected, (state, action) => {
                 state.isLoading = false
@@ -182,6 +198,9 @@ export const timerSlice = createSlice({
                 state.pomodoroCount = action.payload.pomodoroCount
                 state.initialTime = action.payload.initialTime
                 state.currentTime = action.payload.currentTime
+                state.pomoTime = action.payload.pomoTime
+                state.breakTime = action.payload.breakTime
+                state.longBreakTime = action.payload.longBreakTime
             })
             .addCase(fullResetTimer.rejected, (state, action) => {
                 state.isLoading = false
@@ -214,6 +233,21 @@ export const timerSlice = createSlice({
                 state.isError = true
                 state.message = action.payload
             })
+            .addCase(setCustomTimes.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(setCustomTimes.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.pomoTime = action.payload.pomoTime
+                state.breakTime = action.payload.breakTime
+                state.longBreakTime = action.payload.longBreakTime
+            })
+            .addCase(setCustomTimes.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
             .addCase(getTimer.pending, (state) => {
                 state.isLoading = true
             })
@@ -229,6 +263,9 @@ export const timerSlice = createSlice({
                 state.initialTime = action.payload.initialTime
                 state.currentTime = action.payload.currentTime
                 state.autoPlayEnabled = action.payload.autoPlayEnabled
+                state.pomoTime = action.payload.pomoTime
+                state.breakTime = action.payload.breakTime
+                state.longBreakTime = action.payload.longBreakTime
             })
             .addCase(getTimer.rejected, (state, action) => {
                 state.isLoading = false

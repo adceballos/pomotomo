@@ -1,7 +1,7 @@
 // we could add our functionality in the body of these callback functions, but its better practice to create a controller and have our functions there (/controllers/goalController.js)
 const express = require('express')  // common js module syntax, different from ES2015 syntax where you say "import" and so on
 const router = express.Router()
-const { startTimer, stopTimer, deleteTimer, getTimer, resetTimer, switchPhase, fullResetTimer, enableAutoPlay } = require('../controllers/timerController')
+const { startTimer, stopTimer, deleteTimer, getTimer, resetTimer, switchPhase, fullResetTimer, enableAutoPlay, setCustomTimes } = require('../controllers/timerController')
 
 const {protect} = require('../middleware/authMiddleware')
 
@@ -13,6 +13,7 @@ router.put('/reset', protect, resetTimer)
 router.put('/switch', protect, switchPhase)
 router.put('/auto', protect, enableAutoPlay)
 router.put('/fullReset', protect, fullResetTimer)
+router.put('/custom-times', protect, setCustomTimes)
 router.delete('/', protect, deleteTimer)
 
 module.exports = router

@@ -30,6 +30,9 @@ const startTimer = asyncHandler(async (req, res) => {
             isRunning: true,
             initialTime: 10000,
             currentTime: 10000,
+            pomoTime: 10000,
+            breakTime: 5000,
+            longBreakTime: 15000,
             isPomodoro: true,
             pomodoroCount: 0,
             phaseSwitched: false,
@@ -109,20 +112,23 @@ const resetTimer = asyncHandler(async (req, res) => {
     
     timer.startTime = null // reset start time, not sure if this is necessary, will test
 
+    if (timer.pomodoroCount === 4) {
+        timer.pomodoroCount = 0
+    }
+
     if (timer.phaseSwitched) {
         if (timer.isPomodoro) {
             timer.pomodoroCount++
         }
 
         if (timer.pomodoroCount === 4) {
-            timer.initialTime = 15000
+            timer.initialTime = timer.longBreakTime
             timer.isPomodoro = false
-            timer.pomodoroCount = 0
             timer.autoPlayEnabled = false
         }
         else {
             timer.isPomodoro = !timer.isPomodoro
-            timer.isPomodoro ? timer.initialTime = 10000 : timer.initialTime = 5000     // set initialTime to 10 secs if pomo phase, otherwise 5 secs on break phase
+            timer.isPomodoro ? timer.initialTime = timer.pomoTime : timer.initialTime = timer.breakTime     // set initialTime to 10 secs if pomo phase, otherwise 5 secs on break phase
         }
         timer.phaseSwitched = false
     }
@@ -133,7 +139,6 @@ const resetTimer = asyncHandler(async (req, res) => {
 
     res.status(200).json(timer)
 })
-
 
 // @desc    Full reset timer back to first phase instead of just current phase
 // @route   PUT //api/timer/fullReset
@@ -159,7 +164,7 @@ const fullResetTimer = asyncHandler(async (req, res) => {
     
     timer.startTime = null // reset start time, not sure if this is necessary, will test
     timer.isPomodoro = true
-    timer.initialTime = 10000
+    timer.initialTime = timer.pomoTime
     timer.currentTime = timer.initialTime
     timer.pomodoroCount = 0
 
@@ -204,6 +209,52 @@ const enableAutoPlay = asyncHandler(async (req, res) => {
     res.status(200).json(timer)
 })
 
+// @desc    Set custom phase times
+// @route   PUT //api/timer/pomo
+// @access  Private
+const setCustomTimes = asyncHandler(async (req, res) => {
+    const timer = await Timer.findOne({ user: req.user.id })
+    
+    if (!timer) {
+        res.status(404) // requested resource does not exist (timer hasn't been started yet so there's nothing to stop)
+        throw new Error('Please start a timer')
+    }
+
+    const { pomoTime, breakTime, longBreakTime } = req.body
+
+    if (
+        !pomoTime || pomoTime < 10 || pomoTime > 60 ||
+        !breakTime || breakTime < 3 || breakTime > 30 ||
+        !longBreakTime || longBreakTime < 5 || longBreakTime > 60
+      ) {
+        res.status(400)
+        throw new Error('Invalid time ranges')
+    }
+
+    // Save times in ms
+    timer.pomoTime = pomoTime * 1000
+    timer.breakTime = breakTime * 1000
+    timer.longBreakTime = longBreakTime * 1000
+
+    if (timer.pomodoroCount === 4) {
+        timer.initialTime = timer.longBreakTime
+    }
+    else {
+    timer.isPomodoro ? timer.initialTime = timer.pomoTime : timer.initialTime = timer.breakTime
+    }
+
+    timer.currentTime = timer.initialTime
+
+    await timer.save()
+
+    res.status(200).json({
+        message: 'Custom times updated',
+        pomoTime: timer.pomoTime,
+        breakTime: timer.breakTime,
+        longBreakTime: timer.longBreakTime,
+    })
+})
+
 // dev testing purposes only
 // @desc    Delete timer
 // @route   DELETE //api/timer/
@@ -231,4 +282,5 @@ module.exports = {
     fullResetTimer,
     switchPhase,
     enableAutoPlay,
+    setCustomTimes,
 }

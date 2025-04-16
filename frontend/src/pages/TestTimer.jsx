@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import Spinner from "../components/Spinner"
+import TimerSettings from "../components/TimerSettings"
 import { startTimer, stopTimer, getTimer, resetTimer, fullResetTimer, switchPhase, enableAutoPlay, reset } from "../features/timer/timerSlice"
 
 function TestTimer() {
@@ -14,6 +15,7 @@ function TestTimer() {
   const [timeLeft, setTimeLeft] = useState(0)
   const [hasFetchedTimer, setHasFetchedTimer] = useState(false)
   const [isNewUser, setIsNewUser] = useState(false)
+  const [showSettings, setShowSettings] = useState(false)
   const suppressAutoStopRef = useRef(false)  // used to fix error that was causing the timer to be stopped more than once when timer hit 0
 
   useEffect(() => {
@@ -166,6 +168,18 @@ function TestTimer() {
         ) : (
           <button onClick={handleAutoPlay} className="p-1 border-1 hover:cursor-pointer ml-4 hover:bg-green-500 hover:text-white transition-colors duration-200">Auto Play: OFF</button>
         )}
+        <div>
+        <>
+    <button
+      onClick={() => setShowSettings(true)}
+      className="mt-4 px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-800"
+    >
+      ⚙️
+    </button>
+
+    {showSettings && <TimerSettings onClose={() => setShowSettings(false)} />}
+  </>
+        </div>
       </div>
       )}
     </div>

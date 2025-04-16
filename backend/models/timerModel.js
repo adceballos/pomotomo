@@ -55,6 +55,18 @@ const timerSchema = mongoose.Schema({
         type: Boolean,
         default: false,
     },
+    pomoTime: {
+        type: Number,
+        default: 10000
+    },
+    breakTime: {
+        type: Number,
+        default: 5000
+    },
+    longBreakTime: {
+        type: Number,
+        default: 15000
+    },
 }, 
 {
     timestamps: true,

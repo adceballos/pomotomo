@@ -93,6 +93,19 @@ const enableAutoPlay = async (token) => {
     return response.data
 }
 
+// set custom times
+const setCustomTimes = async (token, times) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  
+    const response = await axios.put(API_URL + 'custom-times', times, config)
+
+    return response.data
+  }
+
 const timerService = {
     startTimer,
     getTimer,
@@ -101,6 +114,7 @@ const timerService = {
     fullResetTimer,
     switchPhase,
     enableAutoPlay,
+    setCustomTimes,
 }
 
 export default timerService
