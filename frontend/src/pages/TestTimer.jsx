@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import Spinner from "../components/Spinner"
-import { startTimer, stopTimer, getTimer, resetTimer, switchPhase, reset } from "../features/timer/timerSlice"
+import { startTimer, stopTimer, getTimer, resetTimer, fullResetTimer, switchPhase, reset } from "../features/timer/timerSlice"
 
 function TestTimer() {
   const dispatch = useDispatch()
@@ -119,6 +119,14 @@ function TestTimer() {
     })
   }
 
+  const handleFullReset = () => {
+    suppressAutoStopRef.current = true
+    dispatch(fullResetTimer()).then((action) => {
+      const updated = action.payload
+      setTimeLeft(Math.floor(updated.currentTime / 1000))
+    })
+  }
+
   const formatTime = (seconds) => {
     const safeSeconds = Math.max(0, seconds) // never go below 0
     const minutes = String(Math.floor(safeSeconds / 60)).padStart(2, '0')
@@ -146,6 +154,7 @@ function TestTimer() {
         <button onClick={handleStart} disabled={isRunning} className={`p-1 border-1 ${isRunning ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'hover:bg-green-500 hover:text-white transition-colors duration-200'}`}>Start Timer</button>
         <button onClick={handleStop} disabled={!isRunning} className={`p-1 border-1 ml-4 ${!isRunning ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'hover:bg-red-500 hover:text-white transition-colors duration-200'}`}>Stop Timer</button>
         <button onClick={handleReset} className="p-1 border-1 hover:cursor-pointer ml-4 hover:bg-green-500 hover:text-white transition-colors duration-200">Reset Timer</button>
+        <button onClick={handleFullReset} className="p-1 border-1 hover:cursor-pointer ml-4 hover:bg-green-500 hover:text-white transition-colors duration-200">Full Reset Timer</button>
       </div>
       )
       }

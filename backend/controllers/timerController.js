@@ -158,7 +158,7 @@ const fullResetTimer = asyncHandler(async (req, res) => {
     timer.isPomodoro = true
     timer.initialTime = 10000
     timer.currentTime = timer.initialTime
-    timer.pomodoroCount === 0
+    timer.pomodoroCount = 0
 
     await timer.save()
 

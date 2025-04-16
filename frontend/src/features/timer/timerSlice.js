@@ -64,6 +64,17 @@ export const resetTimer = createAsyncThunk('timer/reset', async (_, thunkAPI) =>
     }
 })
 
+// Full reset timer
+export const fullResetTimer = createAsyncThunk('timer/fullReset', async (_, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        return await timerService.fullResetTimer(token)
+    } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
 // Switch timer phase
 export const switchPhase = createAsyncThunk('timer/switch', async (_, thunkAPI) => {
     try {
@@ -142,6 +153,25 @@ export const timerSlice = createSlice({
                 state.currentTime = action.payload.currentTime
             })
             .addCase(resetTimer.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload;
+            })
+            .addCase(fullResetTimer.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(fullResetTimer.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.isRunning = action.payload.isRunning
+                state.elapsedTime = action.payload.elapsedTime
+                state.elapsedTimeTotal = action.payload.elapsedTimeTotal
+                state.isPomodoro = action.payload.isPomodoro
+                state.pomodoroCount = action.payload.pomodoroCount
+                state.initialTime = action.payload.initialTime
+                state.currentTime = action.payload.currentTime
+            })
+            .addCase(fullResetTimer.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload;

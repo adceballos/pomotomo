@@ -54,6 +54,19 @@ const resetTimer = async (token) => {
     return response.data
 }
 
+// full reset timer
+const fullResetTimer = async (token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const response = await axios.put(API_URL + 'fullReset', {}, config)
+
+    return response.data
+}
+
 // switch timer phase
 const switchPhase = async (token) => {
     const config = {
@@ -72,6 +85,7 @@ const timerService = {
     getTimer,
     stopTimer,
     resetTimer,
+    fullResetTimer,
     switchPhase,
 }
 
