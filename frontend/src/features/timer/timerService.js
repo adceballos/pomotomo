@@ -80,6 +80,19 @@ const switchPhase = async (token) => {
     return response.data
 }
 
+// enable auto play
+const enableAutoPlay = async (token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const response = await axios.put(API_URL + 'auto', {}, config)
+
+    return response.data
+}
+
 const timerService = {
     startTimer,
     getTimer,
@@ -87,6 +100,7 @@ const timerService = {
     resetTimer,
     fullResetTimer,
     switchPhase,
+    enableAutoPlay,
 }
 
 export default timerService

@@ -1,17 +1,19 @@
 import { useEffect, useState, useRef } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import Spinner from "../components/Spinner"
-import { startTimer, stopTimer, getTimer, resetTimer, fullResetTimer, switchPhase, reset } from "../features/timer/timerSlice"
+import { startTimer, stopTimer, getTimer, resetTimer, fullResetTimer, switchPhase, enableAutoPlay, reset } from "../features/timer/timerSlice"
 
 function TestTimer() {
   const dispatch = useDispatch()
 
   const {user} = useSelector((state) => state.auth)
   // Access timer state from Redux
-  const { timer, isRunning, pomodoroCount, elapsedTimeTotal, isLoading, initialTime, currentTime, isError, message } = useSelector((state) => state.timer)
+  const { timer, isRunning, pomodoroCount, autoPlayEnabled, elapsedTimeTotal, isLoading, initialTime, currentTime, isError, message } = useSelector((state) => state.timer)
 
   //const [newUser, setNewUser] = useState(true)
   const [timeLeft, setTimeLeft] = useState(0)
+  const [hasFetchedTimer, setHasFetchedTimer] = useState(false)
+  const [isNewUser, setIsNewUser] = useState(false)
   const suppressAutoStopRef = useRef(false)  // used to fix error that was causing the timer to be stopped more than once when timer hit 0
 
   useEffect(() => {
@@ -31,7 +33,7 @@ function TestTimer() {
         const elapsed = now - start
         const remaining = Math.max(timer.currentTime - elapsed, 0)
         setTimeLeft(Math.floor(remaining / 1000))
-      }, 100) // update every 100ms instead of 1000ms
+      }, 100)
     }
   
     return () => clearInterval(interval)
@@ -41,15 +43,19 @@ function TestTimer() {
   useEffect(() => {
     if (timeLeft === 0 && isRunning) {
       suppressAutoStopRef.current = true
-      // Wait for switchPhase and resetTimer to both complete
+  
       dispatch(switchPhase()).then(() => {
         dispatch(resetTimer()).then((action) => {
           const updated = action.payload
           setTimeLeft(Math.floor(updated.currentTime / 1000))
+  
+          if (autoPlayEnabled) {
+            dispatch(startTimer())
+          }
         })
       })
     }
-  }, [timeLeft, isRunning, dispatch])
+  }, [timeLeft, isRunning, autoPlayEnabled, dispatch])
 
   useEffect(() => {
     const handleVisibility = () => {
@@ -70,9 +76,6 @@ function TestTimer() {
       suppressAutoStopRef.current = false
     }
   }, [isRunning, dispatch])
-
-  const [hasFetchedTimer, setHasFetchedTimer] = useState(false)
-  const [isNewUser, setIsNewUser] = useState(false)
   
   useEffect(() => {
     const fetchTimer = async () => {
@@ -105,6 +108,9 @@ function TestTimer() {
     setIsNewUser(false)
   }
   
+  const handleAutoPlay = () => {
+    dispatch(enableAutoPlay())
+  }
 
   const handleStop = () => {
     suppressAutoStopRef.current = true
@@ -155,9 +161,13 @@ function TestTimer() {
         <button onClick={handleStop} disabled={!isRunning} className={`p-1 border-1 ml-4 ${!isRunning ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'hover:bg-red-500 hover:text-white transition-colors duration-200'}`}>Stop Timer</button>
         <button onClick={handleReset} className="p-1 border-1 hover:cursor-pointer ml-4 hover:bg-green-500 hover:text-white transition-colors duration-200">Reset Timer</button>
         <button onClick={handleFullReset} className="p-1 border-1 hover:cursor-pointer ml-4 hover:bg-green-500 hover:text-white transition-colors duration-200">Full Reset Timer</button>
+        {autoPlayEnabled ? (
+          <button onClick={handleAutoPlay} className="p-1 border-1 hover:cursor-pointer ml-4 hover:bg-green-500 hover:text-white transition-colors duration-200">Auto Play: ON</button>
+        ) : (
+          <button onClick={handleAutoPlay} className="p-1 border-1 hover:cursor-pointer ml-4 hover:bg-green-500 hover:text-white transition-colors duration-200">Auto Play: OFF</button>
+        )}
       </div>
-      )
-      }
+      )}
     </div>
   )
 }

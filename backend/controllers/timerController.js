@@ -33,6 +33,7 @@ const startTimer = asyncHandler(async (req, res) => {
             isPomodoro: true,
             pomodoroCount: 0,
             phaseSwitched: false,
+            autoPlayEnabled: false,
         })
         return res.status(200).json(timer) // return newly created timer
     }
@@ -115,7 +116,9 @@ const resetTimer = asyncHandler(async (req, res) => {
 
         if (timer.pomodoroCount === 4) {
             timer.initialTime = 15000
+            timer.isPomodoro = false
             timer.pomodoroCount = 0
+            timer.autoPlayEnabled = false
         }
         else {
             timer.isPomodoro = !timer.isPomodoro
@@ -183,6 +186,24 @@ const switchPhase = asyncHandler(async (req, res) => {
     res.status(200).json(timer)
 })
 
+// @desc    Enable auto play for timer
+// @route   PUT //api/timer/auto
+// @access  Private
+const enableAutoPlay = asyncHandler(async (req, res) => {
+    const timer = await Timer.findOne({ user: req.user.id })
+    
+    if (!timer) {
+        res.status(404) // requested resource does not exist (timer hasn't been started yet so there's nothing to stop)
+        throw new Error('Please start a timer')
+    }
+
+    timer.autoPlayEnabled = !timer.autoPlayEnabled
+
+    await timer.save()
+
+    res.status(200).json(timer)
+})
+
 // dev testing purposes only
 // @desc    Delete timer
 // @route   DELETE //api/timer/
@@ -209,4 +230,5 @@ module.exports = {
     resetTimer,
     fullResetTimer,
     switchPhase,
+    enableAutoPlay,
 }

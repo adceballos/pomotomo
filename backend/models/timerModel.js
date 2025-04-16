@@ -50,7 +50,11 @@ const timerSchema = mongoose.Schema({
     phaseSwitched: {
         type: Boolean,
         default: false,
-    }
+    },
+    autoPlayEnabled: {
+        type: Boolean,
+        default: false,
+    },
 }, 
 {
     timestamps: true,

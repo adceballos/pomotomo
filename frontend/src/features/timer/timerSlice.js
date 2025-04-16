@@ -86,6 +86,17 @@ export const switchPhase = createAsyncThunk('timer/switch', async (_, thunkAPI) 
     }
 })
 
+// enable auto play
+export const enableAutoPlay = createAsyncThunk('timer/auto', async (_, thunkAPI) => {
+    try {
+        const token = thunkAPI.getState().auth.user.token;
+        return await timerService.enableAutoPlay(token)
+    } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
 export const timerSlice = createSlice({
     name: 'timer',
     initialState,
@@ -151,6 +162,7 @@ export const timerSlice = createSlice({
                 state.pomodoroCount = action.payload.pomodoroCount
                 state.initialTime = action.payload.initialTime
                 state.currentTime = action.payload.currentTime
+                state.autoPlayEnabled = action.payload.autoPlayEnabled
             })
             .addCase(resetTimer.rejected, (state, action) => {
                 state.isLoading = false
@@ -189,6 +201,19 @@ export const timerSlice = createSlice({
                 state.isError = true
                 state.message = action.payload
             })
+            .addCase(enableAutoPlay.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(enableAutoPlay.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.autoPlayEnabled = action.payload.autoPlayEnabled
+            })
+            .addCase(enableAutoPlay.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
             .addCase(getTimer.pending, (state) => {
                 state.isLoading = true
             })
@@ -203,6 +228,7 @@ export const timerSlice = createSlice({
                 state.pomodoroCount = action.payload.pomodoroCount
                 state.initialTime = action.payload.initialTime
                 state.currentTime = action.payload.currentTime
+                state.autoPlayEnabled = action.payload.autoPlayEnabled
             })
             .addCase(getTimer.rejected, (state, action) => {
                 state.isLoading = false
