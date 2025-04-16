@@ -220,6 +220,11 @@ const setCustomTimes = asyncHandler(async (req, res) => {
         throw new Error('Please start a timer')
     }
 
+    if (timer.isRunning) {
+        res.status(400)
+        throw new Error('Please stop timer before setting custom times')
+    }
+
     const { pomoTime, breakTime, longBreakTime } = req.body
 
     if (

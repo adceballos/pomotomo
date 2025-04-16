@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setCustomTimes, getTimer } from '../features/timer/timerSlice'
+import {toast} from 'react-toastify'
 
 function TimerSettings({ onClose }) {
   const dispatch = useDispatch()
@@ -9,7 +10,6 @@ function TimerSettings({ onClose }) {
   const [pomo, setPomo] = useState(10)
   const [shortBreak, setShortBreak] = useState(5)
   const [longBreak, setLongBreak] = useState(15)
-  const [message, setMessage] = useState('')
 
   // load values from backend
   useEffect(() => {
@@ -19,28 +19,22 @@ function TimerSettings({ onClose }) {
   }, [pomoTime, breakTime, longBreakTime])
 
   const handleSave = async () => {
-    if (pomo < 10 || pomo > 60 || shortBreak < 3 || shortBreak > 30 || longBreak < 5 || longBreak > 60) {
-      setMessage('❌ Invalid range:\n• Pomodoro (10–60)\n• Short Break (3–30)\n• Long Break (5–60)')
-      return
-    }
-
     try {
       await dispatch(setCustomTimes({
         pomoTime: pomo,
         breakTime: shortBreak,
         longBreakTime: longBreak,
       })).unwrap()
-
-      await dispatch(getTimer()).unwrap()
-
-      setMessage('✅ Custom times updated successfully!')
+  
+      // Only fetch updated timer if custom times were saved successfully
+      dispatch(getTimer())
     } catch (err) {
-      setMessage('❌ Failed to update times')
+      toast.error(err)
     }
-  }
-
+  }  
+  
   return (
-<div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 transition-opacity duration-300">
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 transition-opacity duration-300">
       <div className="bg-white rounded-lg p-6 w-full max-w-md shadow-lg transform transition-all scale-100">
         <h2 className="text-lg mb-3">Customize Timer Durations (minutes)</h2>
 
@@ -95,12 +89,6 @@ function TimerSettings({ onClose }) {
             Close
           </button>
         </div>
-
-        {message && (
-          <p className="mt-3 text-sm text-gray-600 whitespace-pre-line">
-            {message}
-          </p>
-        )}
       </div>
     </div>
   )
