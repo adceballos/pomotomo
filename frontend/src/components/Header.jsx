@@ -29,7 +29,7 @@ function Header() {
     }
 
     return (
-        <header className="grid grid-cols-3 items-center p-4 text-white border-b border-gray-300 bg-[#D5F0C0] w-full">
+        <header className="grid grid-cols-3 items-center p-4 text-white border-b-4 border-[#6e2e2b] bg-[#eee0b4] bg-[url('/textures/cream-pixels.png')] bg-repeat w-full">
         <div className="flex items-center justify-start">
             <Link to="/" className="text-3xl text-black">
                 Pomotomo!
@@ -47,9 +47,6 @@ function Header() {
                 </button>
                 <Link to="/about" className="text-xl text-black hover:underline">
                     About
-                </Link>
-                <Link to="/test-timer" className="text-xl text-black hover:underline">
-                    Test-Timer
                 </Link>
             </>
             ) : (
