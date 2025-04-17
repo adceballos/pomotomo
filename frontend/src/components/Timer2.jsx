@@ -158,7 +158,7 @@ function Timer2() {
   }
   
   return (
-    <div className="flex flex-col items-center justify-center text-black border-4 border-[#6e2e2b] max-w-6xl mx-auto rounded-lg mt-6 bg-[#eee0b4] bg-[url('/textures/cream-pixels.png')] bg-repeat">
+    <div className="flex flex-col items-center justify-center text-black border-4 border-[#6e2e2b] max-w-6xl mx-auto mt-6 bg-[#eee0b4] bg-[url('/textures/cream-pixels.png')] bg-repeat shadow-lg">
         
     <div className="relative flex items-center w-full">
         <div className="absolute left-1/2 transform -translate-x-1/2">

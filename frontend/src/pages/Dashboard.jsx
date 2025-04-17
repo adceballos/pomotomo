@@ -1,17 +1,51 @@
 import React from 'react'
-import Timer from '../components/Timer'
 import Timer2 from '../components/Timer2'
-import Button from '../components/Button'
 import logo from "../assets/Logo.svg"
-import {useEffect} from 'react'
+import { useEffect, useState } from 'react'
 import {useNavigate} from 'react-router-dom'
 import {useSelector} from 'react-redux'
 import Goals from '../components/Goals'
+import SpeechBubble from "../components/SpeechBubble";
 
 function Dashboard() {
   const navigate = useNavigate()
 
   const {user} = useSelector((state) => state.auth)
+
+  const [quote, setQuote] = useState("")
+
+  const quotes = [
+    "Ready to focus, knight?",
+    "Discipline is your sword.",
+    "A short break fuels long battles.",
+    "Time is your most precious weapon.",
+    "Conquer this Pomodoro, claim the next!",
+    "Steel your mind, it’s time to work.",
+    "The grind is noble.",
+    "Guard your focus like treasure.",
+    "Breaks are earned, fight for them.",
+    "Progress isn’t loud. It’s consistent.",
+    "One tomato at a time.",
+    "Sow effort, reap mastery.",
+    "Every tick is one step closer.",
+    "Don’t fear the timer, embrace the challenge.",
+    "Even the smallest task can be your training arc.",
+    "You are not distracted, you are preparing.",
+    "Slay distractions. Protect your time.",
+    "Consistency is your most powerful combo.",
+    "You’ve got this, focus up, warrior.",
+    "Every Pomodoro is a victory.",
+    "Take a break. But don’t break the streak.",
+    "A wandering mind is a defeated knight.",
+    "Stay sharp. Stay strong.",
+    "Your quest today: deep focus.",
+    "Forge your future, 25 minutes at a time.",
+  ]
+
+  useEffect(() => {
+    const randomIndex = Math.floor(Math.random() * quotes.length);
+    setQuote(quotes[randomIndex])
+  }, [])
 
   // user can only access dashboard page if they are logged in
   useEffect(() => {
@@ -22,18 +56,19 @@ function Dashboard() {
 
   return (
     <>
-    <div className="flex flex-col min-h-screen text-black py-10 max-w-6xl mx-auto">
-      <div className='flex items-start mt-4'>
-        <img src={logo} alt='pomotomo logo' max-width='100%' height='100' width='180'/>
+      <div className="flex flex-col min-h-screen text-black py-10 max-w-6xl mx-auto">
+        <div className="flex items-start mt-6 relative">
+          <SpeechBubble text={quote} />
+            <img src={logo} alt="pomotomo logo" width="180" height="100" />
+        </div>
+        <div>
+          <Timer2 />
+        </div>
       </div>
-      <div className="">
-        <Timer2 />
+      <div className="flex justify-center px-24">
+          <div className="border-1 border-[#D5F0C0] w-full my-6 mb-18" />
       </div>
-    </div>
-    <div className="flex justify-center px-24">
-        <div className="border-1 border-[#D5F0C0] w-full my-6 mb-18" />
-    </div>
-    <Goals />
+      <Goals />
     </>
   )
 }

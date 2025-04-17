@@ -29,7 +29,7 @@ function Header() {
     }
 
     return (
-        <header className="grid grid-cols-3 items-center p-4 text-white border-b-4 border-[#6e2e2b] bg-[#eee0b4] bg-[url('/textures/cream-pixels.png')] bg-repeat w-full">
+        <header className="grid grid-cols-3 items-center p-4 text-white border-b-4 border-[#6e2e2b] bg-[#eee0b4] bg-[url('/textures/cream-pixels.png')] bg-repeat w-full shadow-lg">
         <div className="flex items-center justify-start">
             <Link to="/" className="text-3xl text-black">
                 Pomotomo!

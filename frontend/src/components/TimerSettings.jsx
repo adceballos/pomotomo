@@ -28,6 +28,7 @@ function TimerSettings({ onClose }) {
   
       // Only fetch updated timer if custom times were saved successfully
       dispatch(getTimer())
+      onClose()
     } catch (err) {
       toast.error(err)
     }
@@ -35,46 +36,46 @@ function TimerSettings({ onClose }) {
   
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 transition-opacity duration-300">
-      <div className="bg-white rounded-lg p-6 w-full max-w-md shadow-lg transform transition-all scale-100">
-        <h2 className="text-lg mb-3">Customize Timer Durations (minutes)</h2>
+      <div className="bg-gray-100 rounded-lg p-10 w-full max-w-lg shadow-lg transform transition-all scale-100">
+        <h2 className="text-2xl mb-4">Customize Timer Durations</h2>
 
-        <div className="flex space-x-4 text-sm text-gray-700">
+        <div className="flex space-x-6 text-sm text-gray-700">
           <div className="flex flex-col items-center">
-            <label className="mb-1">Pomodoro</label>
+            <label className="mb-2 text-lg">Pomodoro</label>
             <input
               type="number"
               min={10}
               max={60}
               value={pomo}
               onChange={(e) => setPomo(Number(e.target.value))}
-              className="w-20 text-center p-1 rounded bg-gray-100"
+              className="w-20 font-sans text-center p-1 rounded bg-gray-200 border-2"
             />
           </div>
           <div className="flex flex-col items-center">
-            <label className="mb-1">Short Break</label>
+            <label className="mb-2 text-lg">Short Break</label>
             <input
               type="number"
               min={3}
               max={30}
               value={shortBreak}
               onChange={(e) => setShortBreak(Number(e.target.value))}
-              className="w-20 text-center p-1 rounded bg-gray-100"
+              className="w-20 font-sans text-center p-1 rounded bg-gray-200 border-2"
             />
           </div>
           <div className="flex flex-col items-center">
-            <label className="mb-1">Long Break</label>
+            <label className="mb-2 text-lg">Long Break</label>
             <input
               type="number"
               min={5}
               max={60}
               value={longBreak}
               onChange={(e) => setLongBreak(Number(e.target.value))}
-              className="w-20 text-center p-1 rounded bg-gray-100"
+              className="w-20 font-sans text-center p-1 rounded bg-gray-200 border-2"
             />
           </div>
         </div>
 
-        <div className="mt-4 flex justify-between items-center">
+        <div className="mt-6 flex justify-between items-center">
           <button
             onClick={handleSave}
             disabled={isLoading}
@@ -84,7 +85,7 @@ function TimerSettings({ onClose }) {
           </button>
           <button
             onClick={onClose}
-            className="ml-4 text-sm text-red-500 hover:underline"
+            className="ml-4 text-md text-red-500 hover:underline"
           >
             Close
           </button>
