@@ -11,7 +11,7 @@ function Timer2() {
 
   const {user} = useSelector((state) => state.auth)
   // Access timer state from Redux
-  const { timer, isRunning, pomodoroCount, isPomodoro, autoPlayEnabled, elapsedTimeTotal, isLoading, initialTime, currentTime, isError, message } = useSelector((state) => state.timer)
+  const { timer, isRunning, pomodoroCount, isPomodoro, autoPlayEnabled, isLoading, initialTime, currentTime, isError, message } = useSelector((state) => state.timer)
 
   //const [newUser, setNewUser] = useState(true)
   const [timeLeft, setTimeLeft] = useState(0)

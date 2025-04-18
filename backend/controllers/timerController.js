@@ -83,6 +83,10 @@ const stopTimer = asyncHandler(async (req, res) => {
     timer.startTime = null // reset start time, not sure if this is necessary, will test
     timer.currentTime -= timer.elapsedTime
 
+    if (timer.isPomodoro) {
+        timer.elapsedTimePomodoro += timer.elapsedTime
+    }
+
     await timer.save()
 
     res.status(200).json(timer)
@@ -106,6 +110,9 @@ const resetTimer = asyncHandler(async (req, res) => {
     if (timer.startTime) {
         timer.elapsedTime = timer.stopTime - timer.startTime
         timer.elapsedTimeTotal += timer.elapsedTime
+        if (timer.isPomodoro) {
+            timer.elapsedTimePomodoro += timer.elapsedTime
+        }
       } else {
         timer.elapsedTime = 0
       }
@@ -158,6 +165,9 @@ const fullResetTimer = asyncHandler(async (req, res) => {
     if (timer.startTime) {
         timer.elapsedTime = timer.stopTime - timer.startTime
         timer.elapsedTimeTotal += timer.elapsedTime
+        if (timer.isPomodoro) {
+            timer.elapsedTimePomodoro += timer.elapsedTime
+        }
       } else {
         timer.elapsedTime = 0
       }

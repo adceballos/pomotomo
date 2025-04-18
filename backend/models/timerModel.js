@@ -67,6 +67,10 @@ const timerSchema = mongoose.Schema({
         type: Number,
         default: 15000
     },
+    elapsedTimePomodoro: {
+        type: Number,
+        default: 0,
+    },
 }, 
 {
     timestamps: true,

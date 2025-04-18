@@ -6,6 +6,7 @@ const initialState = {
     isRunning: false,
     elapsedTime: 0,
     elapsedTimeTotal: 0,
+    elapsedTimePomodoro: 0,
     initialTime: 10000,
     currentTime: 10000,
     isPomodoro: true,
@@ -119,6 +120,7 @@ export const timerSlice = createSlice({
             state.isRunning = false
             state.elapsedTime = 0
             state.elapsedTimeTotal = 0
+            state.elapsedTimePomodoro = 0
             state.initialTime = 10000
             state.currentTime = 10000
             state.pomodoroCount = 0
@@ -155,6 +157,7 @@ export const timerSlice = createSlice({
                 state.isRunning = action.payload.isRunning
                 state.elapsedTime = action.payload.elapsedTime
                 state.elapsedTimeTotal = action.payload.elapsedTimeTotal
+                state.elapsedTimePomodoro = action.payload.elapsedTimePomodoro
                 state.currentTime = action.payload.currentTime
             })
             .addCase(stopTimer.rejected, (state, action) => {
@@ -171,6 +174,7 @@ export const timerSlice = createSlice({
                 state.isRunning = action.payload.isRunning
                 state.elapsedTime = action.payload.elapsedTime
                 state.elapsedTimeTotal = action.payload.elapsedTimeTotal
+                state.elapsedTimePomodoro = action.payload.elapsedTimePomodoro
                 state.isPomodoro = action.payload.isPomodoro
                 state.pomodoroCount = action.payload.pomodoroCount
                 state.initialTime = action.payload.initialTime
@@ -194,6 +198,7 @@ export const timerSlice = createSlice({
                 state.isRunning = action.payload.isRunning
                 state.elapsedTime = action.payload.elapsedTime
                 state.elapsedTimeTotal = action.payload.elapsedTimeTotal
+                state.elapsedTimePomodoro = action.payload.elapsedTimePomodoro
                 state.isPomodoro = action.payload.isPomodoro
                 state.pomodoroCount = action.payload.pomodoroCount
                 state.initialTime = action.payload.initialTime
@@ -258,6 +263,7 @@ export const timerSlice = createSlice({
                 state.isRunning = action.payload.isRunning
                 state.elapsedTime = action.payload.elapsedTime
                 state.elapsedTimeTotal = action.payload.elapsedTimeTotal
+                state.elapsedTimePomodoro = action.payload.elapsedTimePomodoro
                 state.isPomodoro = action.payload.isPomodoro
                 state.pomodoroCount = action.payload.pomodoroCount
                 state.initialTime = action.payload.initialTime

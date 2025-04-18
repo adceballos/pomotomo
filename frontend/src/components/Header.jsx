@@ -41,7 +41,7 @@ function Header() {
             <>
                 <button 
                     onClick={handleScrollToTasks}
-                    className="text-xl text-black hover:underline"
+                    className="text-xl text-black hover:underline hover:cursor-pointer"
                 >
                     Tasks
                 </button>
