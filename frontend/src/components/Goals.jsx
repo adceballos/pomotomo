@@ -33,7 +33,7 @@ function Goals() {
   }
 
   return (
-    <div className="min-h-screen bg-[#ee906b] text-black" id='tasks'>
+    <div className="min-h-screen text-black" id='tasks'>
       <section className='flex items-center justify-center text-6xl text-black mb-12'>
         <h1>Tasks</h1>
       </section>

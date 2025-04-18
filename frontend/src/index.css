@@ -1,10 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans&display=swap');
 @import "tailwindcss";
 
 @layer base {
   body {
-    font-family: 'VT323', monospace;
+    font-family: 'Pixelify Sans', sans-serif;
     background-color: #ee906b;
+    background-image: url("https://www.transparenttextures.com/patterns/ps-neutral.png");
   }
 }
 

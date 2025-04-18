@@ -29,7 +29,7 @@ function Header() {
     }
 
     return (
-        <header className="grid grid-cols-3 items-center p-4 text-white border-b border-gray-300 bg-[#D5F0C0] w-full">
+        <header className="grid grid-cols-3 items-center p-4 text-white border-b-4 border-[#6e2e2b] bg-[#eee0b4] bg-[url('/textures/cream-pixels.png')] bg-repeat w-full shadow-lg">
         <div className="flex items-center justify-start">
             <Link to="/" className="text-3xl text-black">
                 Pomotomo!
@@ -41,7 +41,7 @@ function Header() {
             <>
                 <button 
                     onClick={handleScrollToTasks}
-                    className="text-xl text-black hover:underline"
+                    className="text-xl text-black hover:underline hover:cursor-pointer"
                 >
                     Tasks
                 </button>
@@ -68,7 +68,7 @@ function Header() {
                     </Link>
                     <button
                         onClick={onLogout}
-                        className="flex text-md items-center gap-1 bg-black text-white rounded-md p-2 hover:bg-white hover:text-black transition px-4"
+                        className="flex text-md items-center gap-1 p-2 px-3 border-2 hover:cursor-pointer border-[#1c1b19] text-[#eee0b4] bg-[#6a512d] hover:bg-[#6e2e2b] transition-colors duration-200"
                     >
                         <FaSignOutAlt />
                         Logout
