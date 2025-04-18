@@ -2,7 +2,6 @@ import { useEffect, useState, useRef } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { FaGear } from 'react-icons/fa6'
 import Spinner from "../components/Spinner"
-import Button from "./Button"
 import tomatoIcon from "../assets/tomato2.png"
 import TimerSettings from "../components/TimerSettings"
 import { startTimer, stopTimer, getTimer, resetTimer, fullResetTimer, switchPhase, enableAutoPlay, reset } from "../features/timer/timerSlice"
@@ -20,7 +19,9 @@ function Timer2() {
   const [isNewUser, setIsNewUser] = useState(false)
   const [showSettings, setShowSettings] = useState(false)
   const suppressAutoStopRef = useRef(false)  // used to fix error that was causing the timer to be stopped more than once when timer hit 0
-
+  const [quote, setQuote] = useState("");
+  const quoteSetRef = useRef(false);
+  
   const progress = initialTime > 0 ? timeLeft / (initialTime / 1000) : 1
 
   useEffect(() => {
@@ -49,8 +50,6 @@ function Timer2() {
   
     return () => cancelAnimationFrame(animationFrameId)
   }, [isRunning, timer?.startTime, timer?.currentTime])
-  
-  
 
   useEffect(() => {
     if (timeLeft === 0 && isRunning) {
@@ -111,7 +110,21 @@ function Timer2() {
       dispatch(reset())
     }
   }, [user, dispatch])
-  
+
+  useEffect(() => {
+    if (hasFetchedTimer && !quoteSetRef.current) {
+      const quotes = [
+        "Time is your blade. Sharpen it wisely.",
+        "One Pomodoro at a time, warrior.",
+        "Your focus is your flame.",
+        "Slay distractions, keep the streak.",
+        "Let no second be wasted.",
+      ];
+      const random = Math.floor(Math.random() * quotes.length);
+      setQuote(quotes[random]);
+      quoteSetRef.current = true;
+    }
+  }, [hasFetchedTimer]);
 
   // dispatch startTimer() dispatches an action to start the timer in redux, which is a POST request that sends a req to start the timer
   // this is why we only dispatch when the start timer is clicked, so we make the post req to set the start date time in the backend
@@ -151,7 +164,6 @@ function Timer2() {
     const secs = String(safeSeconds % 60).padStart(2, '0')
     return `${minutes}:${secs}`
   }
-  
 
   if (!hasFetchedTimer) {
     return <Spinner />
@@ -175,11 +187,7 @@ function Timer2() {
 
     <hr className="w-full border-2 border-[#6e2e2b]" />
 
-    {isNewUser ? (
-    <div>
-        <p>Welcome to Pomotomo!</p>
-        <button onClick={handleStart} disabled={isRunning} className={`p-1 border-1 ${isRunning ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'hover:bg-green-500 hover:text-white transition-colors duration-200'}`}>Start Your First Timer</button>
-    </div> ) : (
+
     <div className="max-w-4xl mt-6">
         <div className="flex justify-between px-8 mb-12">
             <div className="relative w-92 h-92">
@@ -218,14 +226,14 @@ function Timer2() {
         </div>
 
         <div className="flex gap-5 text-xl">
-            <button onClick={handleStart} disabled={isRunning} className={`py-2 px-6 text-2xl border-3 border-[#1c1b19] text-[#eee0b4] bg-[#6a512d] ${isRunning ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'hover:bg-[#6e2e2b] transition-colors duration-200'}`}>Start</button>
-            <button onClick={handleStop} disabled={!isRunning} className={`py-2 px-6 text-2xl border-3 ml-4 border-[#1c1b19] text-[#eee0b4] bg-[#6a512d] ${!isRunning ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'hover:bg-[#6e2e2b] transition-colors duration-200'}`}>Stop</button>
-            <button onClick={handleReset} className="py-2 px-6 text-2xl border-3 hover:cursor-pointer ml-4 border-[#1c1b19] text-[#eee0b4] bg-[#6a512d] hover:bg-[#6e2e2b] transition-colors duration-200">Reset</button>
-            <button onClick={handleFullReset} className="py-2 px-6 text-2xl whitespace-nowrap border-3 hover:cursor-pointer ml-4 border-[#1c1b19] text-[#eee0b4] bg-[#6a512d] hover:bg-[#6e2e2b] transition-colors duration-200">Full Reset</button>
+        <button onClick={handleStart} disabled={isRunning} className={`py-2 px-6 text-2xl border-3 border-[#1c1b19] text-[#eee0b4] bg-[#6a512d] ${isRunning ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'hover:bg-[#6e2e2b] hover:cursor-pointer transition-colors duration-200'} ${isNewUser ? 'animate-bounce' : ''}`}>Start</button>
+        <button onClick={handleStop} disabled={!isRunning} className={`py-2 px-6 text-2xl border-3 ml-4 border-[#1c1b19] text-[#eee0b4] bg-[#6a512d] ${!isRunning ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'hover:bg-[#6e2e2b] hover:cursor-pointer transition-colors duration-200'}`}>Stop</button>
+            <button onClick={handleReset} disabled={isNewUser} className={`py-2 px-6 text-2xl border-3 ml-4 border-[#1c1b19] text-[#eee0b4] bg-[#6a512d] ${isNewUser ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'hover:bg-[#6e2e2b] hover:cursor-pointer transition-colors duration-200'}`}>Reset</button>
+            <button onClick={handleFullReset} disabled={isNewUser} className={`py-2 px-6 text-2xl whitespace-nowrap border-3 ml-4 border-[#1c1b19] text-[#eee0b4] bg-[#6a512d] ${isNewUser ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'hover:bg-[#6e2e2b] hover:cursor-pointer transition-colors duration-200'}`}>Full Reset</button>
             {autoPlayEnabled ? (
-            <button onClick={handleAutoPlay} className="min-w-[14rem] py-2 px-6 text-2xl border-3 hover:cursor-pointer ml-4 border-[#1c1b19] text-[#eee0b4] bg-[#6a512d] hover:bg-[#6e2e2b] transition-colors duration-200">Auto Play: ON</button>
+            <button onClick={handleAutoPlay} disabled={isNewUser} className={`min-w-[14rem] py-2 px-6 text-2xl border-3 ml-4 border-[#1c1b19] text-[#eee0b4] bg-[#6a512d] ${isNewUser ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'hover:bg-[#6e2e2b] hover:cursor-pointer transition-colors duration-200'}`}>Auto Play: ON</button>
             ) : (
-            <button onClick={handleAutoPlay} className="min-w-[14rem] py-2 px-6 text-2xl border-3 whitespace-nowrap hover:cursor-pointer ml-4 border-[#1c1b19] text-[#eee0b4] bg-[#6a512d] hover:bg-[#6e2e2b] transition-colors duration-200">Auto Play: OFF</button>
+            <button onClick={handleAutoPlay} disabled={isNewUser} className={`min-w-[14rem] py-2 px-6 text-2xl border-3 ml-4 border-[#1c1b19] text-[#eee0b4] bg-[#6a512d] ${isNewUser ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'hover:bg-[#6e2e2b] hover:cursor-pointer transition-colors duration-200'}`}>Auto Play: OFF</button>
             )}
         </div>
 
@@ -235,7 +243,7 @@ function Timer2() {
             ))}
         </div>
     </div>
-    )}
+
     </div>
   )
 }

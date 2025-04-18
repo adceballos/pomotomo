@@ -68,7 +68,7 @@ function Header() {
                     </Link>
                     <button
                         onClick={onLogout}
-                        className="flex text-md items-center gap-1 bg-black text-white rounded-md p-2 hover:bg-white hover:text-black transition px-4"
+                        className="flex text-md items-center gap-1 p-2 px-3 border-2 hover:cursor-pointer border-[#1c1b19] text-[#eee0b4] bg-[#6a512d] hover:bg-[#6e2e2b] transition-colors duration-200"
                     >
                         <FaSignOutAlt />
                         Logout
