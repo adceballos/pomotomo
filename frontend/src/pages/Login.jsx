@@ -70,7 +70,7 @@ function Login() {
       <div>
         <input
           type="email"
-          className="w-full border-2 font-sans border-black rounded-md p-2 focus:border-white focus:outline-none"
+          className="w-full border-2 font-sans border-[#1c1b19] p-2 focus:outline-none bg-gray-200"
           id='email'
           name='email'
           value={email}
@@ -81,7 +81,7 @@ function Login() {
       <div>
         <input
           type="password"
-          className="w-full border-2 font-sans border-black rounded-md p-2 focus:border-white focus:outline-none"
+          className="w-full border-2 font-sans border-[#1c1b19] p-2 focus:outline-none bg-gray-200"
           id='password'
           name='password'
           value={password}
@@ -90,7 +90,7 @@ function Login() {
         />
       </div>       
       <div>
-        <button type='submit' className='w-full text-xl bg-black text-white rounded-md p-2 hover:bg-white hover:text-black transition'>
+        <button type='submit' className='w-full border-2 text-xl border-[#1c1b19] text-[#eee0b4] bg-[#6a512d] p-2 hover:bg-[#6e2e2b] hover:cursor-pointer transition-colors duration-200'>
           Submit
         </button>
       </div>       

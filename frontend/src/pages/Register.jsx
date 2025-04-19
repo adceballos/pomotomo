@@ -86,7 +86,7 @@ function Register() {
                 <div>
                     <input
                         type="text" 
-                        className="w-full font-sans border-2 border-black rounded-md p-2 focus:border-white focus:outline-none"                        
+                        className="w-full font-sans border-2 border-[#1c1b19] p-2 focus:outline-none bg-gray-200"                        
                         id='name' 
                         name='name' 
                         value={name} 
@@ -97,7 +97,7 @@ function Register() {
                 <div>
                     <input
                         type="email" 
-                        className="w-full font-sans border-2 border-black rounded-md p-2 focus:border-white focus:outline-none"                        
+                        className="w-full font-sans border-2 border-[#1c1b19] p-2 focus:outline-none bg-gray-200"                        
                         id='email' 
                         name='email' 
                         value={email} 
@@ -108,7 +108,7 @@ function Register() {
                 <div>
                     <input
                         type="password" 
-                        className="w-full font-sans border-2 border-black rounded-md p-2 focus:border-white focus:outline-none"                        
+                        className="w-full font-sans border-2 border-[#1c1b19] p-2 focus:outline-none bg-gray-200"                        
                         id='password' 
                         name='password' 
                         value={password} 
@@ -119,7 +119,7 @@ function Register() {
                 <div>
                     <input
                         type="password" 
-                        className="w-full font-sans border-2 border-black rounded-md p-2 focus:border-white focus:outline-none"                        id='password2' 
+                        className="w-full font-sans border-2 border-[#1c1b19] p-2 focus:outline-none bg-gray-200"                        id='password2' 
                         name='password2' 
                         value={password2} 
                         placeholder='Confirm password' 
@@ -127,7 +127,7 @@ function Register() {
                     />
                 </div>
                 <div>
-                    <button type='submit' className='w-full text-xl bg-black text-white rounded-md p-2 hover:bg-white hover:text-black transition'>Submit</button>
+                    <button type='submit' className='w-full text-xl border-2 border-[#1c1b19] text-[#eee0b4] bg-[#6a512d] p-2 hover:bg-[#6e2e2b] hover:cursor-pointer transition-colors duration-200'>Submit</button>
                 </div>       
             </form>
         </section>

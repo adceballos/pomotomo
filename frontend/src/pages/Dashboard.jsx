@@ -107,8 +107,8 @@ function Dashboard() {
           <Timer2 />
         </div>
       </div>
-      <div className="flex justify-center px-24">
-          <div className="border-1 border-[#D5F0C0] w-full my-6 mb-18" />
+      <div className="flex justify-center mx-auto max-w-6xl">
+          <hr className="border-2 border-[#6e2e2b] w-full mb-18" />
       </div>
       <Goals />
     </>

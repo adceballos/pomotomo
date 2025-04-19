@@ -23,7 +23,7 @@ function GoalForm() {
                     <label htmlFor='text' className='text-lg'>Task</label>
                     <input 
                         type='text' 
-                        className="w-full border-2 border-black rounded-md p-2 focus:border-white focus:outline-none"
+                        className="w-full border-2 border-[#1c1b19] p-2 focus:outline-none bg-gray-200"
                         name='text' 
                         id='text' 
                         value={text} 
@@ -31,7 +31,7 @@ function GoalForm() {
                     />
                 </div>
                 <div>
-                    <button type='submit' className='w-full mb-6 text-xl bg-black text-white rounded-md p-2 hover:bg-white hover:text-black transition'>
+                    <button type='submit' className='w-full border-2 mb-6 text-xl border-[#1c1b19] text-[#eee0b4] bg-[#6a512d] p-2 hover:bg-[#6e2e2b] hover:cursor-pointer transition-colors duration-200'>
                         Add Task
                     </button>
                 </div>
