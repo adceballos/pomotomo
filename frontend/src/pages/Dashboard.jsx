@@ -12,7 +12,7 @@ function Dashboard() {
   const navigate = useNavigate()
 
   const {user} = useSelector((state) => state.auth)
-  const { timer } = useSelector((state) => state.timer)
+  const { timer, pomodoroCount, } = useSelector((state) => state.timer)
 
   const [show, setShow] = useState(false)
 
@@ -64,13 +64,6 @@ function Dashboard() {
     "Only the focused transcend the fog of mediocrity.",
   ]
 
-  const [quote] = useState(() => {
-    const randomIndex = Math.floor(Math.random() * quotes.length)
-    return quotes[randomIndex]
-  })
-  
-  const firstQuote = "Ah, a new warrior enters the garden. Welcome to Pomotomo! My name is Solanum. Start your first timer below."
-
   // user can only access dashboard page if they are logged in
   useEffect(() => {
     if (!user) {
@@ -91,13 +84,34 @@ function Dashboard() {
     return () => clearTimeout(timeout)
   }, [location.pathname])
 
+  const [quote] = useState(() => {
+    const randomIndex = Math.floor(Math.random() * quotes.length)
+    return quotes[randomIndex]
+  })
+  
+  const firstQuote = "Ah, a new warrior enters the garden. Welcome to Pomotomo! My name is Solanum. Start your first timer below."
+
+  let speechText
+
+  if (!timer) {
+    speechText = firstQuote
+  } else if (pomodoroCount === 4) {
+    speechText = (
+      <>
+      <span className="rainbow-wave inline-block">Well fought!</span> You've conquered four pomodoros and earned your long break, warrior. Yet, even in rest, the mind must remain vigilant.
+      </>
+    )
+  } else {
+    speechText = quote
+  }
+
   return (
     <>
       <div className="flex flex-col min-h-screen text-black py-10 max-w-6xl mx-auto">
         <div className="flex items-start mt-6 relative">
 
           <div className={`transition-opacity duration-300 ease-in ${show ? 'opacity-100' : 'opacity-0'}`}>
-            <SpeechBubble text={!timer ? firstQuote : quote} />
+            <SpeechBubble text={speechText} />
           </div>
 
           <img src={logo} alt="pomotomo logo" className='w-auto h-46'/>

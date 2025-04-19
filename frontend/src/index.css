@@ -22,3 +22,24 @@
 ::-webkit-scrollbar-track {
   background-color: #6e6e6e; /* Light grey color for the track (background) */
 }
+
+@keyframes rainbow {
+  0% { color: red; }
+  16% { color: orange; }
+  32% { color: yellow; }
+  48% { color: green; }
+  64% { color: blue; }
+  80% { color: indigo; }
+  100% { color: violet; }
+}
+
+@keyframes wave {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.rainbow-wave {
+  animation:
+    rainbow 2s infinite linear,
+    wave 1.5s infinite ease-in-out;
+}

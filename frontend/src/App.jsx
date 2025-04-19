@@ -7,6 +7,8 @@ import Header from './components/Header'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Profile from './pages/Profile'
+import Quests from './pages/Quests'
+import Insights from './pages/Insights'
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
           <Route path="/about" element={<About />} />
+          <Route path="/quests" element={<Quests />} />
+          <Route path="/insights" element={<Insights />} />
           <Route path="/profile" element={<Profile />} />
         </Routes>
       </div>

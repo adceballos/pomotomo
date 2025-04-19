@@ -19,8 +19,6 @@ function Timer2() {
   const [isNewUser, setIsNewUser] = useState(false)
   const [showSettings, setShowSettings] = useState(false)
   const suppressAutoStopRef = useRef(false)  // used to fix error that was causing the timer to be stopped more than once when timer hit 0
-  const [quote, setQuote] = useState("");
-  const quoteSetRef = useRef(false);
   
   const progress = initialTime > 0 ? timeLeft / (initialTime / 1000) : 1
 
@@ -110,21 +108,6 @@ function Timer2() {
       dispatch(reset())
     }
   }, [user, dispatch])
-
-  useEffect(() => {
-    if (hasFetchedTimer && !quoteSetRef.current) {
-      const quotes = [
-        "Time is your blade. Sharpen it wisely.",
-        "One Pomodoro at a time, warrior.",
-        "Your focus is your flame.",
-        "Slay distractions, keep the streak.",
-        "Let no second be wasted.",
-      ];
-      const random = Math.floor(Math.random() * quotes.length);
-      setQuote(quotes[random]);
-      quoteSetRef.current = true;
-    }
-  }, [hasFetchedTimer]);
 
   // dispatch startTimer() dispatches an action to start the timer in redux, which is a POST request that sends a req to start the timer
   // this is why we only dispatch when the start timer is clicked, so we make the post req to set the start date time in the backend

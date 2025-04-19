@@ -48,6 +48,12 @@ function Header() {
                 <Link to="/about" className="text-xl text-black hover:underline">
                     About
                 </Link>
+                <Link to="/quests" className="text-xl text-black hover:underline">
+                    Quests
+                </Link>
+                <Link to="/insights" className="text-xl text-black hover:underline">
+                    Insights
+                </Link>
             </>
             ) : (
             <>
