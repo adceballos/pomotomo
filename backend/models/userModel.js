@@ -15,6 +15,25 @@ const userSchema = mongoose.Schema({
         type: String,
         required: [true, 'Please add a password'],
     },
+    questsCompleted: {
+        type: [String], // array of quest IDs
+        default: []
+    },
+    level: {
+        type: Number,
+        default: 1
+    },
+    xp: {
+        type: Number,
+        default: 0
+    },
+    coins: {
+        type: Number,
+        default: 0
+    },
+    badges: [{
+        type: String,
+    }],
 }, 
 {
     timestamps: true,

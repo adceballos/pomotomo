@@ -11,6 +11,8 @@ const initialState = {
     currentTime: 10000,
     isPomodoro: true,
     pomodoroCount: 0,
+    pomodoroCountTotal: 0,
+    sessionsCompleted: 0,
     phaseSwitched: false,
     pomoTime: 10000,
     breakTime: 5000,
@@ -124,6 +126,8 @@ export const timerSlice = createSlice({
             state.initialTime = 10000
             state.currentTime = 10000
             state.pomodoroCount = 0
+            state.pomodoroCountTotal = 0
+            state.sessionsCompleted = 0
             state.isPomodoro = true
             state.phaseSwitched = false
             state.isError = false
@@ -177,12 +181,14 @@ export const timerSlice = createSlice({
                 state.elapsedTimePomodoro = action.payload.elapsedTimePomodoro
                 state.isPomodoro = action.payload.isPomodoro
                 state.pomodoroCount = action.payload.pomodoroCount
+                state.pomodoroCountTotal = action.payload.pomodoroCountTotal
                 state.initialTime = action.payload.initialTime
                 state.currentTime = action.payload.currentTime
                 state.autoPlayEnabled = action.payload.autoPlayEnabled
                 state.pomoTime = action.payload.pomoTime
                 state.breakTime = action.payload.breakTime
                 state.longBreakTime = action.payload.longBreakTime
+                state.sessionsCompleted = action.payload.sessionsCompleted
             })
             .addCase(resetTimer.rejected, (state, action) => {
                 state.isLoading = false
@@ -201,11 +207,13 @@ export const timerSlice = createSlice({
                 state.elapsedTimePomodoro = action.payload.elapsedTimePomodoro
                 state.isPomodoro = action.payload.isPomodoro
                 state.pomodoroCount = action.payload.pomodoroCount
+                state.pomodoroCountTotal = action.payload.pomodoroCountTotal
                 state.initialTime = action.payload.initialTime
                 state.currentTime = action.payload.currentTime
                 state.pomoTime = action.payload.pomoTime
                 state.breakTime = action.payload.breakTime
                 state.longBreakTime = action.payload.longBreakTime
+                state.sessionsCompleted = action.payload.sessionsCompleted
             })
             .addCase(fullResetTimer.rejected, (state, action) => {
                 state.isLoading = false
@@ -266,12 +274,14 @@ export const timerSlice = createSlice({
                 state.elapsedTimePomodoro = action.payload.elapsedTimePomodoro
                 state.isPomodoro = action.payload.isPomodoro
                 state.pomodoroCount = action.payload.pomodoroCount
+                state.pomodoroCountTotal = action.payload.pomodoroCountTotal
                 state.initialTime = action.payload.initialTime
                 state.currentTime = action.payload.currentTime
                 state.autoPlayEnabled = action.payload.autoPlayEnabled
                 state.pomoTime = action.payload.pomoTime
                 state.breakTime = action.payload.breakTime
                 state.longBreakTime = action.payload.longBreakTime
+                state.sessionsCompleted = action.payload.sessionsCompleted
             })
             .addCase(getTimer.rejected, (state, action) => {
                 state.isLoading = false

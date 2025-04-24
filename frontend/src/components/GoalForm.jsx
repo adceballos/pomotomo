@@ -31,7 +31,7 @@ function GoalForm() {
                     />
                 </div>
                 <div>
-                    <button type='submit' className='w-full border-2 mb-6 text-xl border-[#1c1b19] text-[#eee0b4] bg-[#6a512d] p-2 hover:bg-[#6e2e2b] hover:cursor-pointer transition-colors duration-200'>
+                    <button type='submit' className='w-full border-2 mb-10 text-xl border-[#1c1b19] text-[#eee0b4] bg-[#6a512d] p-2 hover:bg-[#6e2e2b] hover:cursor-pointer transition-colors duration-200'>
                         Add Task
                     </button>
                 </div>

@@ -35,6 +35,8 @@ const startTimer = asyncHandler(async (req, res) => {
             longBreakTime: 15000,
             isPomodoro: true,
             pomodoroCount: 0,
+            pomodoroCountTotal: 0,
+            sessionsCompleted: 0,
             phaseSwitched: false,
             autoPlayEnabled: false,
         })
@@ -126,9 +128,11 @@ const resetTimer = asyncHandler(async (req, res) => {
     if (timer.phaseSwitched) {
         if (timer.isPomodoro) {
             timer.pomodoroCount++
+            timer.pomodoroCountTotal++
         }
 
         if (timer.pomodoroCount === 4) {
+            timer.sessionsCompleted++
             timer.initialTime = timer.longBreakTime
             timer.isPomodoro = false
             timer.autoPlayEnabled = false
