@@ -47,6 +47,10 @@ const timerSchema = mongoose.Schema({
         type: Number,
         default: 0,
     },
+    pomodoroCountTotal: {
+        type: Number,
+        default: 0,
+    },
     phaseSwitched: {
         type: Boolean,
         default: false,
@@ -68,6 +72,10 @@ const timerSchema = mongoose.Schema({
         default: 15000
     },
     elapsedTimePomodoro: {
+        type: Number,
+        default: 0,
+    },
+    sessionsCompleted: {
         type: Number,
         default: 0,
     },

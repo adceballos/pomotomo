@@ -41,6 +41,20 @@ export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
     }
 })
 
+// get user
+export const getMe = createAsyncThunk('auth/getMe', async (_, thunkAPI) => {
+    try {
+        const user = thunkAPI.getState().auth.user
+        if (!user) throw new Error('User not authenticated')
+
+        const token = user.token
+        return await authService.getMe(token)
+    } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
 // logout user
 export const logout = createAsyncThunk('auth/logout', async() => {
     await authService.logout()  // logout by removing user data from the backend and local storage
@@ -91,6 +105,22 @@ export const authSlice = createSlice({
                 state.isError = true
                 state.message = action.payload
                 state.user = null
+            })
+            .addCase(getMe.pending, (state) => {     // set state to loading when the login is fetching data
+                state.isLoading = true
+            })
+            .addCase(getMe.fulfilled, (state, action) => {   // update state when login fetched data
+                state.isLoading = false
+                state.isSuccess = true
+                state.user = {
+                    ...action.payload,
+                    token: state.user?.token    // preserve existing token
+                }
+            })
+            .addCase(getMe.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
             })
             .addCase(logout.fulfilled, (state) => {
                 state.user = null

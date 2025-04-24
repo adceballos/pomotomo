@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { FaGear } from 'react-icons/fa6'
 import Spinner from "../components/Spinner"
-import tomatoIcon from "../assets/tomato2.png"
+import tomatoIcon from "../assets/tomato.png"
 import TimerSettings from "../components/TimerSettings"
 import { startTimer, stopTimer, getTimer, resetTimer, fullResetTimer, switchPhase, enableAutoPlay, reset } from "../features/timer/timerSlice"
 
@@ -220,9 +220,9 @@ function Timer2() {
             )}
         </div>
 
-        <div className="flex py-10 mx-auto items-center justify-center gap-10 mt-6 min-h-[64px] transition-all duration-300">
+        <div className="flex py-10 mx-auto items-center justify-center gap-12 mt-6 min-h-[64px] transition-all duration-300">
             {[...Array(4)].map((_, index) => (
-                <img key={index} src={tomatoIcon} alt="tomato" className={`w-auto h-16 transition-opacity duration-300 ${index < pomodoroCount ? 'opacity-100' : 'opacity-0'}`}/>
+                <img key={index} src={tomatoIcon} alt="tomato" className={`w-auto h-24 transition-opacity duration-300 ${index < pomodoroCount ? 'opacity-100' : 'opacity-0'}`}/>
             ))}
         </div>
     </div>

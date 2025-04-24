@@ -19,6 +19,7 @@ app.use(express.urlencoded({extended: false}))
 app.use('/api/goals', require('./routes/goalRoutes'))
 app.use('/api/users', require('./routes/userRoutes'))
 app.use('/api/timer', require('./routes/timerRoutes'))
+app.use('/api/quests', require('./routes/questRoutes'))
 
 app.use(errorHandler)   // overwrite default express error handler
 

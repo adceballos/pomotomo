@@ -51,9 +51,6 @@ function Header() {
                 <Link to="/quests" className="text-xl text-black hover:underline">
                     Quests
                 </Link>
-                <Link to="/insights" className="text-xl text-black hover:underline">
-                    Insights
-                </Link>
             </>
             ) : (
             <>
@@ -97,4 +94,5 @@ function Header() {
     </header>
   ) 
 }
+
 export default Header
