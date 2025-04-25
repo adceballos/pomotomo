@@ -7,20 +7,23 @@ import Header from './components/Header'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Profile from './pages/Profile'
-import Quests from './pages/Quests'
+import MusicPlayer from './components/MusicPlayer'
+import {useSelector, useDispatch} from 'react-redux'
 
 function App() {
+  const {user} = useSelector((state) => state.auth)
+
   return (
   <>
     <Router>
       <div>
         <Header />
+        {user ? <MusicPlayer /> : null}
         <Routes>
           <Route path='/' element={<Dashboard />} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
           <Route path="/about" element={<About />} />
-          <Route path="/quests" element={<Quests />} />
           <Route path="/profile" element={<Profile />} />
         </Routes>
       </div>
