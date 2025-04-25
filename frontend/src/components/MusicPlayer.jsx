@@ -1,8 +1,5 @@
 import { useRef, useState, useEffect } from 'react';
-import { FaPause } from 'react-icons/fa'
-import { FaPlay } from 'react-icons/fa'
-import { FaBackward } from 'react-icons/fa'
-import { FaForward } from 'react-icons/fa'
+import { FaPause, FaPlay, FaBackward, FaForward, FaVolumeMute, FaVolumeDown, FaVolumeUp } from 'react-icons/fa'
 
 const tracks = [
     { name: 'Track 1', artist: 'Singer', img: '', src: '/music/track1.mp3' },
@@ -15,6 +12,7 @@ const tracks = [
     const [currentTrack, setCurrentTrack] = useState(0);
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
+    const [volume, setVolume] = useState(100);
 
     // Update time and duration
     useEffect(() => {
@@ -59,8 +57,8 @@ const tracks = [
     };
 
     const backTrack = () => {
-        const previous = (currentTrack - 1) % tracks.length;
-        setCurrentTime(previous);
+        const previous = (currentTrack - 1 + tracks.length) % tracks.length;
+        setCurrentTrack(previous);
         setPlaying(false);
         setTimeout(() => {
             audioRef.current.play();
@@ -80,6 +78,12 @@ const tracks = [
       return `${minutes}:${seconds}`;
     };
 
+    const handleVolumeChange = (e) => {
+        const newVolume = parseFloat(e.target.value);
+        setVolume(newVolume);
+        audioRef.current.volume = newVolume / 100; // Convert to a value between 0 and 1
+      };
+        
     return (
       <div className="fixed bottom-0 left-0 w-full bg-black/90 text-white px-6 py-3 flex flex-col shadow-md z-50">
         <audio ref={audioRef} src={tracks[currentTrack].src} autoPlay loop />
@@ -104,10 +108,26 @@ const tracks = [
             {/* Right Side: Volume Control */}
             <div className="flex justify-end items-center w-1/3">
                 <button onClick={toggleMute}>
-                    {muted ? '🔇' : '🔊'}
+                    {muted || volume === 0 ? (
+                        <FaVolumeMute />
+                    ) : volume < 50 ? (
+                        <FaVolumeDown />
+                    ) : (
+                        <FaVolumeUp />      
+                    )}
                 </button>
+                <input
+                    type="range"
+                    min="0"
+                    max="100"
+                    value={volume}
+                    onChange={handleVolumeChange}
+                    className="w-24 h-1 appearance-none bg-gray-600 rounded-lg cursor-pointer ml-2 accent-white focus:outline-none"
+                    style={{
+                    background: `linear-gradient(to right, #ffffff ${volume}%, #4e4e4e ${volume}%)`,
+                    }}
+                />
             </div>
-
         </div>
 
 
@@ -120,7 +140,10 @@ const tracks = [
             max={duration}
             value={currentTime}
             onChange={handleSeek}
-            className="w-full h-1 bg-gray-600 rounded-lg cursor-pointer"
+            className="w-full h-1 appearance-none bg-gray-600 rounded-lg cursor-pointer accent-white focus:outline-none"
+            style={{
+            background: `linear-gradient(to right, #ffffff ${currentTime / duration * 100}%, #4e4e4e ${currentTime / duration * 100}%)`,    
+            }}
           />
           <span className="text-xs w-300">{formatTime(duration)}</span>
         </div>
