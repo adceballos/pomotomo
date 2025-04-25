@@ -33,7 +33,7 @@ function About() {
                         ➢ The Pomodoro Technique helps reduce mental fatigue, fight procrastination, and sharpen focus. By creating a sense of urgency and building in regular breaks, it boosts productivity while supporting a healthy workflow.
                         </p>
                         <p className="tagesschrift">
-                        ➢ Gamification in Pomotomo adds a fun layer of reward — turning consistent focus into visible progress you can track and feel good about.
+                        ➢ Gamification in Pomotomo adds a fun layer of reward, turning consistent focus into visible progress you can track and feel good about.
                         </p>
                     </ul>
                 </div>
