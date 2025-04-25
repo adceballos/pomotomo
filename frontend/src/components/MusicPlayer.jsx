@@ -12,11 +12,7 @@ import {
 } from "react-icons/fa";
 
 const tracks = [
-  { name: "Track 1", 
-    artist: "Singer",
-    img: "", 
-    src: "/music/track1.mp3" 
-  },
+  { name: "Track 1", artist: "Singer", img: "", src: "/music/track1.mp3" },
 ];
 
 const MusicPlayer = () => {
@@ -112,7 +108,7 @@ const MusicPlayer = () => {
       <button
         onClick={toggleExpand}
         className={`fixed ${
-          isExpanded ? "bottom-18" : "bottom-1"
+          isExpanded ? "bottom-22" : "bottom-1"
         } right-5 flex items-center justify-center m-2 p-1 text-white transition-all ease-in-out duration-300`}
       >
         {isExpanded ? <FaChevronDown /> : <FaChevronUp />}
@@ -125,25 +121,32 @@ const MusicPlayer = () => {
         {/* Top Row: Music Controls */}
         <div className="flex justify-between items-center w-full">
           {/* Left Side: Track Info */}
-          <div className="flex flex-col w-1/3 min-w-0">
-            <span className="text-sm truncate">
-              {tracks[currentTrack].name}
-            </span>
-            <span className="text-sm text-gray-300 truncate">
-              {tracks[currentTrack].artist}
-            </span>
+          <div className="flex items-center w-1/3 min-w-0">
+            <img
+              src={tracks[currentTrack].img}
+              alt={tracks[currentTrack].name}
+              className="w-12 h-12 rounded-lg mr-4 relative top-1 object-cover"
+            />
+            <div className="flex flex-col">
+              <span className="text-sm truncate">
+                {tracks[currentTrack].name}
+              </span>
+              <span className="text-sm text-gray-300 truncate">
+                {tracks[currentTrack].artist}
+              </span>
+            </div>
           </div>
 
           {/* Center: Playback Controls */}
-          <div className="flex gap-8 items-center justify-center w-1/3">
+          <div className="flex gap-12 items-center justify-center w-1/3">
             <button onClick={backTrack}>
-              <FaBackward />
+              <FaBackward size={16} />
             </button>
             <button onClick={togglePlay}>
               {playing ? <FaPause size={24} /> : <FaPlay size={24} />}
             </button>
             <button onClick={skipTrack}>
-              <FaForward />
+              <FaForward size={16} />
             </button>
           </div>
 
@@ -151,11 +154,11 @@ const MusicPlayer = () => {
           <div className="flex justify-end items-center w-1/3">
             <button onClick={toggleMute}>
               {muted || volume === 0 ? (
-                <FaVolumeMute />
+                <FaVolumeMute size={16} />
               ) : volume < 50 ? (
-                <FaVolumeDown />
+                <FaVolumeDown size={16} />
               ) : (
-                <FaVolumeUp />
+                <FaVolumeUp size={16} />
               )}
             </button>
             <input
@@ -164,7 +167,7 @@ const MusicPlayer = () => {
               max="100"
               value={volume}
               onChange={handleVolumeChange}
-              className="w-24 h-1 appearance-none bg-gray-600 rounded-lg cursor-pointer ml-2 accent-white focus:outline-none"
+              className="w-30 h-1 appearance-none bg-gray-600 rounded-lg cursor-pointer ml-2 accent-white focus:outline-none"
               style={{
                 background: `linear-gradient(to right, #ffffff ${volume}%, #4e4e4e ${volume}%)`,
               }}
