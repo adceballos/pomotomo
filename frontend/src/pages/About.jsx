@@ -3,14 +3,14 @@ import BackToHome from "../components/BackToHome.jsx";
 function About() {
     return (
         <>
-            <div className="flex flex-col min-h-screen mt-12 text-black">
+            <div className="flex flex-col min-h-screen mt-14 text-black">
                 <BackToHome />
-                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-9xl text-center">
-                    𓆝 𓆟 𓆞 𓆝 𓆟
+                <h1 className="text-6xl text-center mb-6">
+                    About
                 </h1>
                 
                 <div className="max-w-2xl mx-auto text-2xl mt-12 text-left">
-                <h2 className="tagesschrift text-6xl font-semi-bold text-[#6e2e2b] mb-2">About</h2>
+                <h2 className="tagesschrift text-6xl font-semi-bold text-[#6e2e2b] mb-2">What is Pomotomo?</h2>
                     <p className="tagesschrift mb-10">
                         Pomotomo is a productivity app that combines the Pomodoro Technique with gamification to help you 
                         stay focused and motivated. It allows you to set tasks, track your progress, and earn rewards for 
@@ -32,7 +32,7 @@ function About() {
                         <p className="tagesschrift">
                         ➢ The Pomodoro Technique helps reduce mental fatigue, fight procrastination, and sharpen focus. By creating a sense of urgency and building in regular breaks, it boosts productivity while supporting a healthy workflow.
                         </p>
-                        <p className="tagesschrift mb-10">
+                        <p className="tagesschrift">
                         ➢ Gamification in Pomotomo adds a fun layer of reward — turning consistent focus into visible progress you can track and feel good about.
                         </p>
                     </ul>
