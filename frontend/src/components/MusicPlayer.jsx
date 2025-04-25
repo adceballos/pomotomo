@@ -126,7 +126,7 @@ const MusicPlayer = () => {
         <div className="flex justify-between items-center w-full">
           {/* Left Side: Track Info */}
           <div className="flex flex-col w-1/3 min-w-0">
-            <span className="text-sm font-semibold truncate">
+            <span className="text-sm truncate">
               {tracks[currentTrack].name}
             </span>
             <span className="text-sm text-gray-300 truncate">
