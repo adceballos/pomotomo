@@ -12,7 +12,12 @@ import {
 } from "react-icons/fa";
 
 const tracks = [
-  { name: "Track 1", artist: "Singer", img: "", src: "/music/track1.mp3" },
+  {
+    name: "Track 1",
+    artist: "Artist",
+    img: "/music covers/track1.jpg",
+    src: "/music/track1.mp3",
+  },
 ];
 
 const MusicPlayer = () => {
@@ -31,15 +36,25 @@ const MusicPlayer = () => {
 
     const updateTime = () => setCurrentTime(audio.currentTime);
     const setTotalDuration = () => setDuration(audio.duration);
-
+    const handleTrackEnd = () => {
+      const nextTrack = (currentTrack + 1) % tracks.length;
+      setCurrentTrack(nextTrack);
+      setPlaying(false);
+      setTimeout(() => {
+        audioRef.current.play();
+        setPlaying(true);
+      }, 0);
+    };
     audio.addEventListener("timeupdate", updateTime);
     audio.addEventListener("loadedmetadata", setTotalDuration);
+    audio.addEventListener("ended", handleTrackEnd);
 
     return () => {
       audio.removeEventListener("timeupdate", updateTime);
       audio.removeEventListener("loadedmetadata", setTotalDuration);
+      audio.removeEventListener("ended", handleTrackEnd);
     };
-  }, [currentTrack]);
+  }, [currentTrack, tracks.length]);
 
   const togglePlay = () => {
     const audio = audioRef.current;
@@ -103,7 +118,7 @@ const MusicPlayer = () => {
 
   return (
     <>
-      <audio ref={audioRef} src={tracks[currentTrack].src} autoPlay loop />
+      <audio ref={audioRef} src={tracks[currentTrack].src} autoPlay/>
       {/* Expand/Collapse Button */}
       <button
         onClick={toggleExpand}
