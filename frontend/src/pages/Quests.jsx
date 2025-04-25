@@ -49,7 +49,7 @@ function Quests() {
 
   return (
     <div className="flex flex-col justify-center h-screen max-w-4xl mx-auto">
-      <h1 className="text-4xl text-black mb-2 flex items-start">Quests</h1>
+      <h1 className="text-6xl text-black mb-18 -mt-18 flex justify-center">Quests</h1>
       <div className="text-black border-4 w-full border-[#6e2e2b] bg-[#eee0b4] bg-[url('/textures/cream-pixels.png')] bg-repeat shadow-lg p-6 h-[75vh] overflow-y-auto">
           
             <div className=" text-[#eee0b4]">

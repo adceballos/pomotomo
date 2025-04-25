@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Tagesschrift&display=swap');
 @import "tailwindcss";
 
 @layer base {
@@ -7,6 +8,9 @@
     background-color: #ee906b;
     background-image: url("https://www.transparenttextures.com/patterns/ps-neutral.png");
   }
+}
+.tagesschrift {
+    font-family: 'Tagesschrift', system-ui;
 }
 
 /* For WebKit browsers */

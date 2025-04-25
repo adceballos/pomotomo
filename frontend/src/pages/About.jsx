@@ -3,33 +3,38 @@ import BackToHome from "../components/BackToHome.jsx";
 function About() {
     return (
         <>
-            <div className="flex flex-col min-h-screen mt-12 text-black">
+            <div className="flex flex-col min-h-screen mt-14 text-black">
                 <BackToHome />
-                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-center">
-                    About the Pomodoro Technique
+                <h1 className="text-6xl text-center mb-6">
+                    About
                 </h1>
                 
-                <div className="max-w-2xl mx-auto text-2xl mt-12">
-                <h2 className="text-4xl font-semi-bold text-[#D5F0C0] mb-2">What is it?</h2>
-                    <p className="font-sans">
-                        The Pomodoro Technique is a time management method that helps you focus and boost productivity 
-                        by breaking work into intervals, traditionally 25 minutes in length, separated by short breaks.
+                <div className="max-w-2xl mx-auto text-2xl mt-12 text-left">
+                <h2 className="tagesschrift text-6xl font-semi-bold text-[#6e2e2b] mb-2">What is Pomotomo?</h2>
+                    <p className="tagesschrift mb-10">
+                        Pomotomo is a productivity app that combines the Pomodoro Technique with gamification to help you 
+                        stay focused and motivated. It allows you to set tasks, track your progress, and earn rewards for 
+                        completing your work sessions. With Pomotomo, you can break your work into manageable chunks, take regular breaks, 
+                        and build a sustainable workflow that keeps you energized and productive.       
                     </p>
 
-                    <h2 className="text-4xl font-semi-bold text-[#D5F0C0] mt-12 mb-2">How it works</h2>
-                    <ol className="font-sans list-decimal list-inside space-y-2">
-                        <li>Choose a task you want to work on</li>
-                        <li>Set a timer for 25 minutes and focus on the task</li>
-                        <li>When the timer rings, take a 5-minute break</li>
-                        <li>Repeat the cycle four times, then take a longer break (15-30 minutes)</li>
-                    </ol>
+                    <h2 className="tagesschrift text-6xl font-semi-bold text-[#6e2e2b] mb-2">Focus. Break. Repeat!</h2>
+                    <ul className="tagesschrift mb-10">
+                        <li>➢ Create a task that you would like to work on</li>
+                        <li>➢ Adjust your study time using the ⚙︎ icon</li>
+                        <li>➢ Start the timer and commit fully until it rings</li>
+                        <li>➢ Take a short break</li>
+                        <li>➢ After four Pomodoros, take a longer break</li>
+                    </ul>
 
-                    <h2 className="text-4xl font-semi-bold text-[#D5F0C0] mt-12 mb-2">Why it's effective</h2>
+                    <h2 className="tagesschrift text-6xl font-semi-bold text-[#6e2e2b] mb-2">Why use Pomotomo?</h2>
                     <ul className="font-sans *:list-disc list-inside space-y-2">
-                        <li>Reduces procrastination and distractions</li>
-                        <li>Helps improve time estimation skills</li>
-                        <li>Enhances focus and deep work</li>
-                        <li>Prevents burnout by scheduling breaks</li>
+                        <p className="tagesschrift">
+                        ➢ The Pomodoro Technique helps reduce mental fatigue, fight procrastination, and sharpen focus. By creating a sense of urgency and building in regular breaks, it boosts productivity while supporting a healthy workflow.
+                        </p>
+                        <p className="tagesschrift">
+                        ➢ Gamification in Pomotomo adds a fun layer of reward, turning consistent focus into visible progress you can track and feel good about.
+                        </p>
                     </ul>
                 </div>
             </div>
