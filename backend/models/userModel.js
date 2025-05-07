@@ -41,7 +41,13 @@ const userSchema = mongoose.Schema({
     lastActiveDate: {
         type: Date,
         default: null
-    }
+    },
+    dailyStudyLog: {
+        type: Map,
+        of: Number,
+        default: {},
+    },
+      
 }, 
 {
     timestamps: true,
