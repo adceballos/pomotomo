@@ -170,7 +170,6 @@ function Timer2() {
 
     <hr className="w-full border-2 border-[#6e2e2b]" />
 
-
     <div className="max-w-4xl mt-6">
         <div className="flex justify-between px-8 mb-12">
             <div className="relative w-92 h-92">

@@ -34,6 +34,20 @@ const userSchema = mongoose.Schema({
     badges: [{
         type: String,
     }],
+    streakCount: {
+        type: Number,
+        default: 0
+    },
+    lastActiveDate: {
+        type: Date,
+        default: null
+    },
+    dailyStudyLog: {
+        type: Map,
+        of: Number,
+        default: {},
+    },
+      
 }, 
 {
     timestamps: true,
