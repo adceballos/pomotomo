@@ -3,6 +3,7 @@ import authReducer from '../features/auth/authSlice'
 import goalReducer from '../features/goals/goalSlice'
 import timerReducer from '../features/timer/timerSlice'
 import questReducer from '../features/quests/questSlice'
+import shopReducer from '../features/shop/shopSlice'
 
 // configureStore creates the redux store and accepts reducer objects
 // the reducer object defines different slices of our state
@@ -13,5 +14,6 @@ export const store = configureStore({
         goals: goalReducer,
         timer: timerReducer,
         quests: questReducer,
+        shop: shopReducer,
     },
 })

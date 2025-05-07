@@ -10,6 +10,7 @@ import badge2 from "../assets/Endure_the_Fire.gif"
 import badge3 from "../assets/The_Oath_Begins.gif"
 import badge4 from "../assets/The_Disciplined.gif"
 import badge5 from "../assets/Soul_of_the_Scholar.gif"
+import { FaGear } from 'react-icons/fa6'
 
 function Profile() {
     const dispatch = useDispatch()

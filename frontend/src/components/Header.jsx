@@ -51,6 +51,9 @@ function Header() {
                 <Link to="/quests" className="text-xl text-black hover:underline">
                     Quests
                 </Link>
+                <Link to="/shop" className="text-xl text-black hover:underline">
+                    Shop
+                </Link>
             </>
             ) : (
             <>

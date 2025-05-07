@@ -56,7 +56,7 @@ function Quests() {
                 const isCompleted = getProgress(quest)
                 const isClaimed = claimedQuests.includes(quest.id)
                 return (
-                <div key={quest.id} className="bg-[#6a512d] p-4 rounded mb-4 border-2 border-[#1c1b19]">
+                <div key={quest.id} className="bg-[#6a512d] p-4 mb-4 border-2 border-[#1c1b19]">
                     <h2 className="text-3xl mb-2">{quest.name}</h2>
                     <p className="text-xl">{quest.desc}</p>
                     <p className="text-md mt-2 ">Reward:</p>

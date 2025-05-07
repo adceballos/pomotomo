@@ -19,6 +19,10 @@ const userSchema = mongoose.Schema({
         type: [String], // array of quest IDs
         default: []
     },
+    itemsPurchased: {
+        type: [String], // array of item IDs
+        default: []
+    },      
     level: {
         type: Number,
         default: 1
