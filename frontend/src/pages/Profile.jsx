@@ -33,12 +33,13 @@ function Profile() {
 
     useEffect(() => {
     dispatch(getMe())
+    console.log(user?.streakCount)
     console.log(user?.level)
     }, [dispatch])
     
     return (
         <div className="flex flex-col min-h-screen text-black mx-auto max-w-4xl">
-            <div className='flex bg-gradient-to-r from-orange-100 via-orange-200 to-gray-100 w-full justify-center gap-x-6 h-80 max-h-80 mt-6 shadow-lg'>
+            <div className='flex border-4 border-[#6e2e2b] bg-gradient-to-r from-orange-100 via-orange-200 to-gray-100 w-full justify-center gap-x-6 h-80 max-h-80 mt-6 shadow-lg'>
                 <div className='flex flex-shrink-0 mt-8'>
                     <img src={selectedPfp} className="w-auto h-48 md:h-64 rounded-full object-contain shadow-lg border-1"/>
                 </div>
@@ -51,7 +52,7 @@ function Profile() {
                             Lvl<span className='text-blue-400'> {user?.level}</span>
                         </h2>
                     </div>
-                    <div className="bg-gray-100 p-4 pb-16 rounded-md max-w-lg w-lg h-39 ml-4 shadow-lg border-1">
+                    <div className="bg-gray-100 p-4 pb-16 rounded-md max-w-lg w-lg h-39 ml-4 shadow-lg border-1 border-[#6e2e2b]">
                         <p className="break-all font-sans text-md">
                             bio
                         </p>
@@ -59,10 +60,13 @@ function Profile() {
                 </div>
             </div>
 
-            <div className="flex flex-col bg-gradient-to-r from-orange-100 via-orange-200 to-gray-100 w-full h-60 max-h-60 mt-6 shadow-lg">
+            <div className="flex flex-col border-4 border-[#6e2e2b] bg-gradient-to-r from-orange-100 via-orange-200 to-gray-100 w-full h-60 max-h-60 mt-6 shadow-lg">
                 <div className="bg-white h-12 max-h-12 flex items-center py-2 px-2 text-xl">
                     Badges
                 </div>
+
+                <hr className="w-full border-2 border-[#6e2e2b]" />
+
                 <div className="flex flex-1 gap-16 items-center justify-center">
                     {user?.questsCompleted?.map((questId) => {
                     const badge = BADGES[questId]
@@ -74,6 +78,16 @@ function Profile() {
                     })}
                 </div>
             </div>
+
+            <div className="flex flex-col border-4 border-[#6e2e2b] bg-gradient-to-r from-orange-100 via-orange-200 to-gray-100 w-full h-60 max-h-60 mt-6 shadow-lg">
+                <div className="bg-white h-12 max-h-12 flex items-center py-2 px-2 text-xl">
+                    Report
+                </div>
+
+                <hr className="w-full border-2 border-[#6e2e2b]" />
+
+            </div>
+            <h2 className="text-2xl mb-4 text-center">Current Streak: {user?.streakCount} days</h2>
 
             <div className="flex justify-center mt-8">
                 <PfpSelector 

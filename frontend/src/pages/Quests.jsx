@@ -22,9 +22,8 @@ function Quests() {
       case 'quest2':
         return sessionsCompleted >= quest.target
       case 'quest3':
-        return false
       case 'quest4':
-        return false
+        return user?.streakCount >= quest.target
       case 'quest5':
         return elapsedTimePomodoro >= quest.target // 10 hours in ms = 36000000ms, using 80 seconds in ms = 80000, temporarily
       default:

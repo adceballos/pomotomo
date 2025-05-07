@@ -1,6 +1,7 @@
 const asyncHandler = require('express-async-handler')
 
 const Timer = require('../models/timerModel')
+const User = require('../models/userModel')
 
 // @desc    Get timer
 // @route   GET //api/timer
@@ -54,6 +55,23 @@ const startTimer = asyncHandler(async (req, res) => {
         timer.isRunning = true
         timer.startTime = new Date()
         timer.elapsedTime = 0
+    }
+
+    const user = await User.findById(req.user.id)
+    const today = new Date().toDateString()
+    const lastActive = user.lastActiveDate ? new Date(user.lastActiveDate).toDateString() : null
+
+    if (lastActive !== today) {
+    const yesterday = new Date(Date.now() - 86400000).toDateString()
+
+    if (lastActive === yesterday) {
+        user.streakCount += 1
+    } else {
+        user.streakCount = 1
+    }
+
+    user.lastActiveDate = new Date()
+    await user.save()
     }
 
     await timer.save()

@@ -25,7 +25,7 @@ const claimQuest = asyncHandler(async (req, res) => {
         pomodoroCount: timer.pomodoroCount,
         sessionsCompleted: timer.sessionsCompleted,
         elapsedTimePomodoro: timer.elapsedTimePomodoro,
-        // Add streak logic if implemented
+        streakCount: user.streakCount,
     }
 
     const isEligible = (() => {
@@ -34,6 +34,9 @@ const claimQuest = asyncHandler(async (req, res) => {
                 return progress.pomodoroCountTotal >= quest.target
             case 'quest2':
                 return progress.sessionsCompleted >= quest.target
+            case 'quest3':
+            case 'quest4':
+                    return progress.streakCount >= quest.target
             case 'quest5':
                 return progress.elapsedTimePomodoro >= quest.target
             default:
