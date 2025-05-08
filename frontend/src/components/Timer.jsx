@@ -1,3 +1,4 @@
+// THIS PAGE IS OUTDATED, OLD TIMER COMPONENT THAT IS NOT CONNECTED TO SERVER
 import React, { useState, useEffect, useRef } from "react";
 import Button from "./Button";
 import tomatoIcon from "../assets/tomato.svg";

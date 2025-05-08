@@ -6,6 +6,7 @@ import { claimQuest } from '../features/quests/questSlice'
 import { getTimer } from '../features/timer/timerSlice'
 import { getMe } from "../features/auth/authSlice.js"
 import Spinner from "../components/Spinner"
+import claimed from "../assets/sounds/claimed.wav"
 
 function Quests() {
   const dispatch = useDispatch()
@@ -14,6 +15,12 @@ function Quests() {
   const { user, isLoading } = useSelector((state) => state.auth)
 
   const claimedQuests = user?.questsCompleted || []
+
+  const claimSoundRef = useRef(null)
+
+  useEffect(() => {
+    claimSoundRef.current = new Audio(claimed)
+  }, [])
 
   const getProgress = (quest) => {
     switch (quest.id) {
@@ -37,9 +44,14 @@ function Quests() {
   }, [dispatch])
 
   const handleClaim = async (questId) => {
-    await dispatch(claimQuest(questId)).unwrap()
-    dispatch(getMe())
-  }
+    try {
+      await dispatch(claimQuest(questId)).unwrap()
+      dispatch(getMe())
+      claimSoundRef.current?.play()
+    } catch (err) {
+      console.error('Failed to claim quest:', err)
+    }
+  }  
 
   if (isLoading) {
     return <Spinner />
