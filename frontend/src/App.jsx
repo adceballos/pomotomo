@@ -8,8 +8,21 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Profile from './pages/Profile'
 import Quests from './pages/Quests'
+import Shop from './pages/Shop'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { getMe } from './features/auth/authSlice'
 
 function App() {
+  const dispatch = useDispatch()
+  const { user } = useSelector((state) => state.auth)
+
+  useEffect(() => {
+    if (user?.token) {
+      dispatch(getMe())
+    }
+  }, [dispatch])
+
   return (
   <>
     <Router>
@@ -21,6 +34,7 @@ function App() {
           <Route path='/register' element={<Register />} />
           <Route path="/about" element={<About />} />
           <Route path="/quests" element={<Quests />} />
+          <Route path="/shop" element={<Shop />} />
           <Route path="/profile" element={<Profile />} />
         </Routes>
       </div>

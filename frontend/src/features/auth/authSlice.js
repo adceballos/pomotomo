@@ -60,6 +60,36 @@ export const logout = createAsyncThunk('auth/logout', async() => {
     await authService.logout()  // logout by removing user data from the backend and local storage
 })
 
+export const setProfilePicture = createAsyncThunk(
+    'auth/setProfilePicture',
+    async (selectedPfp, thunkAPI) => {
+        try {
+        const token = thunkAPI.getState().auth.user.token
+        const response = await authService.setProfilePicture(selectedPfp, token)
+        return response.selectedPfp
+        } catch (error) {
+        const message =
+            (error.response && error.response.data && error.response.data.message) ||
+            error.message ||
+            error.toString()
+        return thunkAPI.rejectWithValue(message)
+        }
+    }
+)
+
+export const setBio = createAsyncThunk(
+    'auth/setBio',
+    async (bio, thunkAPI) => {
+        try {
+        const token = thunkAPI.getState().auth.user.token
+        return await authService.updateBio(bio, token)
+        } catch (error) {
+        const message = (error.response?.data?.message || error.message || error.toString())
+        return thunkAPI.rejectWithValue(message)
+        }
+    }
+)  
+
 // creates the redux slice, which consists of the state (initialState) and the reducers that modify it
 export const authSlice = createSlice({
     name: 'auth',   // the name of the slice is auth, useful for identifying and managing the state, becomes apart of the state object state.auth
@@ -125,6 +155,32 @@ export const authSlice = createSlice({
             .addCase(logout.fulfilled, (state) => {
                 state.user = null
             })
+            .addCase(setProfilePicture.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(setProfilePicture.fulfilled, (state, action) => {
+                if (state.user) {
+                    state.user.selectedPfp = action.payload
+                }
+            })
+            .addCase(setProfilePicture.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })  
+            .addCase(setBio.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(setBio.fulfilled, (state, action) => {
+                if (state.user) {
+                    state.user.bio = action.payload.bio
+                }
+            })
+            .addCase(setBio.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })             
     }
 })
 

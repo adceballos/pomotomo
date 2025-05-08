@@ -2,7 +2,7 @@ import {FaSignInAlt, FaSignOutAlt, FaUser} from 'react-icons/fa'
 import {Link, useNavigate} from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux'
 import {logout, reset} from '../features/auth/authSlice'
-import defaultPFP from '../assets/slum.PNG'
+import { PFP_IMAGES } from '../utils/pfpMap'
 
 function Header() {
     const navigate = useNavigate()
@@ -51,6 +51,9 @@ function Header() {
                 <Link to="/quests" className="text-xl text-black hover:underline">
                     Quests
                 </Link>
+                <Link to="/shop" className="text-xl text-black hover:underline">
+                    Shop
+                </Link>
             </>
             ) : (
             <>
@@ -66,7 +69,7 @@ function Header() {
             {user ? (
                 <>
                     <Link to="/profile" className="flex items-center gap-2 text-xl text-black hover:underline">
-                        <img src={defaultPFP} className="w-8 h-8 rounded-full object-contain" />
+                        <img src={PFP_IMAGES[user?.selectedPfp] || PFP_IMAGES.slum} className="w-8 h-8 rounded-full object-contain" alt="Profile Picture"/>
                         {user.name}
                     </Link>
                     <button

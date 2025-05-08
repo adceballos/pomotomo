@@ -19,6 +19,10 @@ const userSchema = mongoose.Schema({
         type: [String], // array of quest IDs
         default: []
     },
+    itemsPurchased: {
+        type: [String], // array of item IDs
+        default: []
+    },      
     level: {
         type: Number,
         default: 1
@@ -47,7 +51,15 @@ const userSchema = mongoose.Schema({
         of: Number,
         default: {},
     },
-      
+    selectedPfp: {
+        type: String,
+        default: 'slum'
+    },      
+    bio: {
+        type: String,
+        maxlength: 160,
+        default: '',
+    }, 
 }, 
 {
     timestamps: true,

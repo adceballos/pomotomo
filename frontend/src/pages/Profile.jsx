@@ -5,11 +5,15 @@ import PfpSelector from '../components/PfpSelector'
 import BackToHome from "../components/BackToHome.jsx"
 import { getMe } from "../features/auth/authSlice.js"
 import { getTimer } from '../features/timer/timerSlice'
+import { setBio } from "../features/auth/authSlice.js"
 import badge1 from "../assets/Ignition.gif"
 import badge2 from "../assets/Endure_the_Fire.gif"
 import badge3 from "../assets/The_Oath_Begins.gif"
 import badge4 from "../assets/The_Disciplined.gif"
 import badge5 from "../assets/Soul_of_the_Scholar.gif"
+import { FaGear } from 'react-icons/fa6'
+import { PFP_IMAGES } from '../utils/pfpMap'
+import { setProfilePicture } from '../features/auth/authSlice'
 
 function Profile() {
     const dispatch = useDispatch()
@@ -17,9 +21,14 @@ function Profile() {
     const {user} = useSelector((state) => state.auth)
     const { pomodoroCountTotal, elapsedTimePomodoro } = useSelector((state) => state.timer)
     
-    
-    // State to store the selected profile picture
-    const [selectedPfp, setSelectedPfp] = useState(slum); // Default to slum image
+    const [showPfpSelector, setShowPfpSelector] = useState(false)
+
+    const [bioEdit, setBioEdit] = useState(user?.bio || '')
+    const [editing, setEditing] = useState(false)
+
+    const handleBioSave = () => {
+        dispatch(setBio(bioEdit)).then(() => setEditing(false))
+    }
 
     const BADGES = {
         quest1: badge1,
@@ -27,11 +36,6 @@ function Profile() {
         quest3: badge3,
         quest4: badge4,
         quest5: badge5,
-    }
-
-    // Function to handle image selection
-    const handleImageSelect = (image) => {
-        setSelectedPfp(image); // Update the profile picture
     }
 
     const log = user?.dailyStudyLog || {}
@@ -54,23 +58,74 @@ function Profile() {
     
     return (
         <div className="flex flex-col min-h-screen text-black mx-auto max-w-4xl">
-            <div className='flex border-4 border-[#6e2e2b] bg-gradient-to-r from-orange-100 via-orange-200 to-gray-100 w-full justify-center gap-x-6 h-80 max-h-80 mt-6 shadow-lg'>
-                <div className='flex flex-shrink-0 mt-8'>
-                    <img src={selectedPfp} className="w-auto h-48 md:h-64 rounded-full object-contain shadow-lg border-1"/>
+            <div className='flex border-4 border-[#6e2e2b] bg-gradient-to-r from-orange-100 via-orange-200 to-gray-100 w-full justify-center gap-x-16 h-82 max-h-82 mt-6 shadow-lg'>
+                <div className="relative flex-shrink-0 mt-8">
+                    <img
+                        src={PFP_IMAGES[user?.selectedPfp] || slum}
+                        alt="Profile"
+                        className="w-auto h-48 md:h-64 rounded-full object-contain shadow-lg border-2 border-[#6e2e2b]"
+                    />
+                    <button
+                        onClick={() => setShowPfpSelector(!showPfpSelector)}
+                        className="absolute top-0 right-0 p-2 bg-white rounded-full shadow hover:bg-gray-100"
+                    >
+                        <FaGear className="text-xl text-[#6e2e2b]" />
+                    </button>
                 </div>
+
                 <div className='flex flex-col items-start gap-y-4 mt-16'>
                     <div className='flex justify-between items-center w-full'>
-                        <h1 className='text-5xl ml-4'>
+                        <h1 className='text-5xl truncate'>
                             {user.name}
                         </h1>
-                        <h2 className='text-4xl'>
+                        <h2 className='text-4xl mt-2'>
                             Lvl<span className='text-blue-400'> {user?.level}</span>
                         </h2>
                     </div>
-                    <div className="bg-gray-100 p-4 pb-16 rounded-md max-w-lg w-lg h-39 ml-4 shadow-lg border-1 border-[#6e2e2b]">
-                        <p className="break-all font-sans text-md">
-                            bio
-                        </p>
+                    <div className="relative bg-gray-100 p-4 rounded-md w-[28rem] shadow-lg border border-[#6e2e2b] min-h-[120px]">
+                        <div className="absolute top-1 right-1">
+                            <button
+                            onClick={() => setEditing(true)}
+                            className="text-orange-600 hover:text-orange-800 hover:scale-110 transition-all duration-200 cursor-pointer"
+                            title="Edit Bio"
+                            >
+                            ✏️
+                            </button>
+                        </div>
+
+                        {editing ? (
+                            <div className="flex flex-col gap-2 mt-4">
+                            <textarea
+                                value={bioEdit}
+                                onChange={(e) => setBioEdit(e.target.value.slice(0, 160))}
+                                className="tagesschrift w-full p-2 border border-gray-300 rounded resize-none text-gray-800"
+                                rows={3}
+                                maxLength={160}
+                                placeholder="Write something about yourself..."
+                            />
+                            <div className="flex justify-end gap-2">
+                                <button
+                                onClick={handleBioSave}
+                                className="px-4 py-1 bg-green-600 text-white rounded hover:bg-green-700"
+                                >
+                                Save
+                                </button>
+                                <button
+                                onClick={() => {
+                                    setEditing(false)
+                                    setBioEdit(user?.bio || '')
+                                }}
+                                className="px-4 py-1 bg-gray-500 text-white rounded hover:bg-gray-600"
+                                >
+                                Cancel
+                                </button>
+                            </div>
+                            </div>
+                        ) : (
+                            <p className="text-gray-800 mt-2 break-words whitespace-pre-wrap text-md tagesschrift">
+                            {user?.bio || 'No bio set. Click the pencil to add one!'}
+                            </p>
+                        )}
                     </div>
                 </div>
             </div>
@@ -116,12 +171,30 @@ function Profile() {
                 </div>
             </div>
 
-            <div className="flex justify-center mt-8">
-                <PfpSelector 
-                    selectedPfp={selectedPfp} 
-                    onImageSelect={handleImageSelect} 
-                />
-            </div>
+            {showPfpSelector && (
+                <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
+                    <div className="bg-white p-6 rounded-lg shadow-lg w-[90%] max-w-md">
+                        <h2 className="text-2xl mb-4 text-center">Choose a Profile Picture</h2>
+                        <PfpSelector
+                        currentPfp={user.selectedPfp}
+                        owned={user.itemsPurchased || []}
+                        onSelect={(pfpId) => {
+                            dispatch(setProfilePicture(pfpId))
+                            .then(() => dispatch(getMe()))
+                            .then(() => setShowPfpSelector(false))
+                        }}
+                        />
+                        <div className="mt-4 text-center">
+                        <button
+                            onClick={() => setShowPfpSelector(false)}
+                            className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+                        >
+                            Cancel
+                        </button>
+                        </div>
+                    </div>
+                </div>
+            )}
             <BackToHome />
         </div>
     )

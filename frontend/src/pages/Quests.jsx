@@ -6,6 +6,7 @@ import { claimQuest } from '../features/quests/questSlice'
 import { getTimer } from '../features/timer/timerSlice'
 import { getMe } from "../features/auth/authSlice.js"
 import Spinner from "../components/Spinner"
+import claimed from "../assets/sounds/claimed.wav"
 
 function Quests() {
   const dispatch = useDispatch()
@@ -14,6 +15,12 @@ function Quests() {
   const { user, isLoading } = useSelector((state) => state.auth)
 
   const claimedQuests = user?.questsCompleted || []
+
+  const claimSoundRef = useRef(null)
+
+  useEffect(() => {
+    claimSoundRef.current = new Audio(claimed)
+  }, [])
 
   const getProgress = (quest) => {
     switch (quest.id) {
@@ -34,13 +41,17 @@ function Quests() {
   useEffect(() => {
     dispatch(getTimer())
     dispatch(getMe())
-    console.log(user?.questsCompleted)
   }, [dispatch])
 
   const handleClaim = async (questId) => {
-    await dispatch(claimQuest(questId)).unwrap()
-    dispatch(getMe())
-  }
+    try {
+      await dispatch(claimQuest(questId)).unwrap()
+      dispatch(getMe())
+      claimSoundRef.current?.play()
+    } catch (err) {
+      console.error('Failed to claim quest:', err)
+    }
+  }  
 
   if (isLoading) {
     return <Spinner />
@@ -56,7 +67,7 @@ function Quests() {
                 const isCompleted = getProgress(quest)
                 const isClaimed = claimedQuests.includes(quest.id)
                 return (
-                <div key={quest.id} className="bg-[#6a512d] p-4 rounded mb-4 border-2 border-[#1c1b19]">
+                <div key={quest.id} className="bg-[#6a512d] p-4 mb-4 border-2 border-[#1c1b19]">
                     <h2 className="text-3xl mb-2">{quest.name}</h2>
                     <p className="text-xl">{quest.desc}</p>
                     <p className="text-md mt-2 ">Reward:</p>
