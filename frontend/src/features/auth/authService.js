@@ -61,6 +61,14 @@ const setProfilePicture = async (selectedPfp, token) => {
     return response.data
 }  
 
+const updateBio = async (bio, token) => {
+    const config = {
+      headers: { Authorization: `Bearer ${token}` }
+    }
+    const response = await axios.put(API_URL + 'bio', { bio }, config)
+    return response.data
+}  
+
 // put any functions we want to export here
 const authService = {
     register,
@@ -68,6 +76,7 @@ const authService = {
     login,
     getMe,
     setProfilePicture,
+    updateBio,
 }
 
 export default authService

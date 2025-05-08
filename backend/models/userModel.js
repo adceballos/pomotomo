@@ -55,6 +55,11 @@ const userSchema = mongoose.Schema({
         type: String,
         default: 'slum'
     },      
+    bio: {
+        type: String,
+        maxlength: 160,
+        default: '',
+    }, 
 }, 
 {
     timestamps: true,

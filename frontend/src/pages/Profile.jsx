@@ -5,6 +5,7 @@ import PfpSelector from '../components/PfpSelector'
 import BackToHome from "../components/BackToHome.jsx"
 import { getMe } from "../features/auth/authSlice.js"
 import { getTimer } from '../features/timer/timerSlice'
+import { setBio } from "../features/auth/authSlice.js"
 import badge1 from "../assets/Ignition.gif"
 import badge2 from "../assets/Endure_the_Fire.gif"
 import badge3 from "../assets/The_Oath_Begins.gif"
@@ -21,6 +22,13 @@ function Profile() {
     const { pomodoroCountTotal, elapsedTimePomodoro } = useSelector((state) => state.timer)
     
     const [showPfpSelector, setShowPfpSelector] = useState(false)
+
+    const [bioEdit, setBioEdit] = useState(user?.bio || '')
+    const [editing, setEditing] = useState(false)
+
+    const handleBioSave = () => {
+        dispatch(setBio(bioEdit)).then(() => setEditing(false))
+    }
 
     const BADGES = {
         quest1: badge1,
@@ -50,7 +58,7 @@ function Profile() {
     
     return (
         <div className="flex flex-col min-h-screen text-black mx-auto max-w-4xl">
-            <div className='flex border-4 border-[#6e2e2b] bg-gradient-to-r from-orange-100 via-orange-200 to-gray-100 w-full justify-center gap-x-6 h-80 max-h-80 mt-6 shadow-lg'>
+            <div className='flex border-4 border-[#6e2e2b] bg-gradient-to-r from-orange-100 via-orange-200 to-gray-100 w-full justify-center gap-x-16 h-82 max-h-82 mt-6 shadow-lg'>
                 <div className="relative flex-shrink-0 mt-8">
                     <img
                         src={PFP_IMAGES[user?.selectedPfp] || slum}
@@ -67,17 +75,57 @@ function Profile() {
 
                 <div className='flex flex-col items-start gap-y-4 mt-16'>
                     <div className='flex justify-between items-center w-full'>
-                        <h1 className='text-5xl ml-4'>
+                        <h1 className='text-5xl truncate'>
                             {user.name}
                         </h1>
-                        <h2 className='text-4xl'>
+                        <h2 className='text-4xl mt-2'>
                             Lvl<span className='text-blue-400'> {user?.level}</span>
                         </h2>
                     </div>
-                    <div className="bg-gray-100 p-4 pb-16 rounded-md max-w-lg w-lg h-39 ml-4 shadow-lg border-1 border-[#6e2e2b]">
-                        <p className="break-all font-sans text-md">
-                            bio
-                        </p>
+                    <div className="relative bg-gray-100 p-4 rounded-md w-[28rem] shadow-lg border border-[#6e2e2b] min-h-[120px]">
+                        <div className="absolute top-1 right-1">
+                            <button
+                            onClick={() => setEditing(true)}
+                            className="text-orange-600 hover:text-orange-800 hover:scale-110 transition-all duration-200 cursor-pointer"
+                            title="Edit Bio"
+                            >
+                            ✏️
+                            </button>
+                        </div>
+
+                        {editing ? (
+                            <div className="flex flex-col gap-2 mt-4">
+                            <textarea
+                                value={bioEdit}
+                                onChange={(e) => setBioEdit(e.target.value.slice(0, 160))}
+                                className="tagesschrift w-full p-2 border border-gray-300 rounded resize-none text-gray-800"
+                                rows={3}
+                                maxLength={160}
+                                placeholder="Write something about yourself..."
+                            />
+                            <div className="flex justify-end gap-2">
+                                <button
+                                onClick={handleBioSave}
+                                className="px-4 py-1 bg-green-600 text-white rounded hover:bg-green-700"
+                                >
+                                Save
+                                </button>
+                                <button
+                                onClick={() => {
+                                    setEditing(false)
+                                    setBioEdit(user?.bio || '')
+                                }}
+                                className="px-4 py-1 bg-gray-500 text-white rounded hover:bg-gray-600"
+                                >
+                                Cancel
+                                </button>
+                            </div>
+                            </div>
+                        ) : (
+                            <p className="text-gray-800 mt-2 break-words whitespace-pre-wrap text-md tagesschrift">
+                            {user?.bio || 'No bio set. Click the pencil to add one!'}
+                            </p>
+                        )}
                     </div>
                 </div>
             </div>

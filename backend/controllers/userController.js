@@ -100,9 +100,25 @@ const updateProfilePicture = asyncHandler(async (req, res) => {
     res.status(200).json({ selectedPfp })
 })
 
+const updateBio = asyncHandler(async (req, res) => {
+    const { bio } = req.body
+    const user = await User.findById(req.user.id)
+  
+    if (!user) {
+      res.status(404)
+      throw new Error('User not found')
+    }
+  
+    user.bio = bio.slice(0, 160) // ensure it doesn't exceed 160
+    await user.save()
+  
+    res.status(200).json({ bio: user.bio })
+})  
+
 module.exports = {
     registerUser,
     loginUser,
     getMe,
     updateProfilePicture,
+    updateBio,
 }

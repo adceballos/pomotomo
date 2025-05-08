@@ -76,7 +76,19 @@ export const setProfilePicture = createAsyncThunk(
         }
     }
 )
-  
+
+export const setBio = createAsyncThunk(
+    'auth/setBio',
+    async (bio, thunkAPI) => {
+        try {
+        const token = thunkAPI.getState().auth.user.token
+        return await authService.updateBio(bio, token)
+        } catch (error) {
+        const message = (error.response?.data?.message || error.message || error.toString())
+        return thunkAPI.rejectWithValue(message)
+        }
+    }
+)  
 
 // creates the redux slice, which consists of the state (initialState) and the reducers that modify it
 export const authSlice = createSlice({
@@ -155,7 +167,20 @@ export const authSlice = createSlice({
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload
-            })            
+            })  
+            .addCase(setBio.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(setBio.fulfilled, (state, action) => {
+                if (state.user) {
+                    state.user.bio = action.payload.bio
+                }
+            })
+            .addCase(setBio.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })             
     }
 })
 
