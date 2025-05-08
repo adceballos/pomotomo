@@ -38,6 +38,8 @@ function Profile() {
         quest5: badge5,
     }
 
+    const requiredXP = user?.level * 100
+
     const log = user?.dailyStudyLog || {}
 
     const last7Days = [...Array(7)].map((_, i) => {
@@ -75,12 +77,15 @@ function Profile() {
 
                 <div className='flex flex-col items-start gap-y-4 mt-16'>
                     <div className='flex justify-between items-center w-full'>
-                        <h1 className='text-5xl truncate'>
+                        <h1 className='text-5xl truncate mt-2'>
                             {user.name}
                         </h1>
-                        <h2 className='text-4xl mt-2'>
-                            Lvl<span className='text-blue-400'> {user?.level}</span>
-                        </h2>
+                        <div className="flex flex-col items-end">
+                            <p className="tagesschrift text-sm text-gray-500 mb-1">{user?.xp} / {requiredXP} xp</p>
+                            <h2 className='text-4xl -mt-2'>
+                                Lvl<span className='text-blue-400 tracking-wider'> {user?.level}</span>
+                            </h2>
+                        </div>
                     </div>
                     <div className="relative bg-gray-100 p-4 rounded-md w-[28rem] shadow-lg border border-[#6e2e2b] min-h-[120px]">
                         <div className="absolute top-1 right-1">

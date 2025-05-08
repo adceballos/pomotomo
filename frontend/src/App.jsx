@@ -12,6 +12,7 @@ import Shop from './pages/Shop'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getMe } from './features/auth/authSlice'
+import Footer from "./components/Footer"
 
 function App() {
   const dispatch = useDispatch()
@@ -37,6 +38,7 @@ function App() {
           <Route path="/shop" element={<Shop />} />
           <Route path="/profile" element={<Profile />} />
         </Routes>
+        <Footer />
       </div>
     </Router>
     <ToastContainer />
