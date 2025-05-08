@@ -5,7 +5,7 @@ import BackToHome from "../components/BackToHome.jsx"
 import { getMe } from "../features/auth/authSlice"
 import { purchaseItem, reset } from "../features/shop/shopSlice"
 import Spinner from "../components/Spinner"
-import claimed from "../assets/sounds/claimed.wav"
+import claimed from "../assets/sounds/claimed.wav" // Acquire by Kenneth_Cooney -- https://freesound.org/s/781199/ -- License: Creative Commons 0
 import { useRef } from "react"
 
 function Shop() {

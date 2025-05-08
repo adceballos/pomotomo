@@ -6,7 +6,7 @@ import { claimQuest } from '../features/quests/questSlice'
 import { getTimer } from '../features/timer/timerSlice'
 import { getMe } from "../features/auth/authSlice.js"
 import Spinner from "../components/Spinner"
-import claimed from "../assets/sounds/claimed.wav"
+import claimed from "../assets/sounds/claimed.wav" // Acquire by Kenneth_Cooney -- https://freesound.org/s/781199/ -- License: Creative Commons 0
 
 function Quests() {
   const dispatch = useDispatch()
