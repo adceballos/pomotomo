@@ -31,10 +31,10 @@ function Shop() {
 
   return (
     <div className="flex flex-col justify-center h-screen max-w-4xl mx-auto text-black">
-      <h1 className="text-6xl text-black mb-18 -mt-18 flex justify-center">Shop</h1>
+      <h1 className="text-6xl text-black mb-14 -mt-26 flex justify-center">Shop</h1>
       <div className="tagesschrift text-xl text-center mb-6">🪙 Pomocoins: <span className="text-yellow-400 font-bold">{coins}</span></div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-6 border-4 border-[#6e2e2b] bg-[#eee0b4] bg-[url('/textures/cream-pixels.png')] bg-repeat shadow-lg">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mx-4 md:mx-0 gap-6 p-6 border-4 border-[#6e2e2b] bg-[#eee0b4] bg-[url('/textures/cream-pixels.png')] bg-repeat shadow-lg h-[68vh] overflow-y-auto ">
         {SHOP_ITEMS.map((item) => {
           const isOwned = purchasedItems.includes(item.id)
           const canAfford = coins >= item.price
@@ -44,6 +44,7 @@ function Shop() {
               <img src={item.preview} alt={item.name} className="w-32 h-32 object-contain mb-2 border-2 border-[#6e2e2b]" />
               <h2 className="text-2xl text-white text-center">{item.name}</h2>
               <p className="tagesschrift text-md text-center mt-1">{item.desc}</p>
+              <p className="tagesschrift text-sm text-gray-200 italic mt-1">(use in your profile)</p>
               <p className="text-lg text-yellow-400 mt-2">🪙 {item.price}</p>
 
               {isOwned ? (

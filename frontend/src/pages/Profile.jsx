@@ -11,6 +11,8 @@ import badge3 from "../assets/The_Oath_Begins.gif"
 import badge4 from "../assets/The_Disciplined.gif"
 import badge5 from "../assets/Soul_of_the_Scholar.gif"
 import { FaGear } from 'react-icons/fa6'
+import { PFP_IMAGES } from '../utils/pfpMap'
+import { setProfilePicture } from '../features/auth/authSlice'
 
 function Profile() {
     const dispatch = useDispatch()
@@ -18,9 +20,7 @@ function Profile() {
     const {user} = useSelector((state) => state.auth)
     const { pomodoroCountTotal, elapsedTimePomodoro } = useSelector((state) => state.timer)
     
-    
-    // State to store the selected profile picture
-    const [selectedPfp, setSelectedPfp] = useState(slum); // Default to slum image
+    const [showPfpSelector, setShowPfpSelector] = useState(false)
 
     const BADGES = {
         quest1: badge1,
@@ -28,11 +28,6 @@ function Profile() {
         quest3: badge3,
         quest4: badge4,
         quest5: badge5,
-    }
-
-    // Function to handle image selection
-    const handleImageSelect = (image) => {
-        setSelectedPfp(image); // Update the profile picture
     }
 
     const log = user?.dailyStudyLog || {}
@@ -56,9 +51,20 @@ function Profile() {
     return (
         <div className="flex flex-col min-h-screen text-black mx-auto max-w-4xl">
             <div className='flex border-4 border-[#6e2e2b] bg-gradient-to-r from-orange-100 via-orange-200 to-gray-100 w-full justify-center gap-x-6 h-80 max-h-80 mt-6 shadow-lg'>
-                <div className='flex flex-shrink-0 mt-8'>
-                    <img src={selectedPfp} className="w-auto h-48 md:h-64 rounded-full object-contain shadow-lg border-1"/>
+                <div className="relative flex-shrink-0 mt-8">
+                    <img
+                        src={PFP_IMAGES[user?.selectedPfp] || slum}
+                        alt="Profile"
+                        className="w-auto h-48 md:h-64 rounded-full object-contain shadow-lg border-2 border-[#6e2e2b]"
+                    />
+                    <button
+                        onClick={() => setShowPfpSelector(!showPfpSelector)}
+                        className="absolute top-0 right-0 p-2 bg-white rounded-full shadow hover:bg-gray-100"
+                    >
+                        <FaGear className="text-xl text-[#6e2e2b]" />
+                    </button>
                 </div>
+
                 <div className='flex flex-col items-start gap-y-4 mt-16'>
                     <div className='flex justify-between items-center w-full'>
                         <h1 className='text-5xl ml-4'>
@@ -117,12 +123,30 @@ function Profile() {
                 </div>
             </div>
 
-            <div className="flex justify-center mt-8">
-                <PfpSelector 
-                    selectedPfp={selectedPfp} 
-                    onImageSelect={handleImageSelect} 
-                />
-            </div>
+            {showPfpSelector && (
+                <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
+                    <div className="bg-white p-6 rounded-lg shadow-lg w-[90%] max-w-md">
+                        <h2 className="text-2xl mb-4 text-center">Choose a Profile Picture</h2>
+                        <PfpSelector
+                        currentPfp={user.selectedPfp}
+                        owned={user.itemsPurchased || []}
+                        onSelect={(pfpId) => {
+                            dispatch(setProfilePicture(pfpId))
+                            .then(() => dispatch(getMe()))
+                            .then(() => setShowPfpSelector(false))
+                        }}
+                        />
+                        <div className="mt-4 text-center">
+                        <button
+                            onClick={() => setShowPfpSelector(false)}
+                            className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+                        >
+                            Cancel
+                        </button>
+                        </div>
+                    </div>
+                </div>
+            )}
             <BackToHome />
         </div>
     )

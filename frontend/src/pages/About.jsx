@@ -37,6 +37,9 @@ function About() {
                         </p>
                     </ul>
                 </div>
+                <div>
+                    
+                </div>
             </div>
         </>
     );

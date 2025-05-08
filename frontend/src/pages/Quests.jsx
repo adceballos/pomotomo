@@ -34,7 +34,6 @@ function Quests() {
   useEffect(() => {
     dispatch(getTimer())
     dispatch(getMe())
-    console.log(user?.questsCompleted)
   }, [dispatch])
 
   const handleClaim = async (questId) => {

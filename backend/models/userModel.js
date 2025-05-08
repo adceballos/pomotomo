@@ -51,7 +51,10 @@ const userSchema = mongoose.Schema({
         of: Number,
         default: {},
     },
-      
+    selectedPfp: {
+        type: String,
+        default: 'slum'
+    },      
 }, 
 {
     timestamps: true,

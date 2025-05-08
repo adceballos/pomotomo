@@ -49,12 +49,25 @@ const logout = () => {
     localStorage.removeItem('user')
 }
 
+const setProfilePicture = async (selectedPfp, token) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  
+    const response = await axios.put(API_URL + 'pfp', { selectedPfp }, config)
+  
+    return response.data
+}  
+
 // put any functions we want to export here
 const authService = {
     register,
     logout,
     login,
     getMe,
+    setProfilePicture,
 }
 
 export default authService

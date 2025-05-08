@@ -85,8 +85,24 @@ const generateToken = (id) => {
     })
 }
 
+const updateProfilePicture = asyncHandler(async (req, res) => {
+    const { selectedPfp } = req.body
+    const user = await User.findById(req.user.id)
+  
+    if (!user.itemsPurchased.includes(selectedPfp) && selectedPfp !== 'slum') {
+      res.status(403)
+      throw new Error('You do not own this profile picture.')
+    }
+  
+    user.selectedPfp = selectedPfp
+    await user.save()
+  
+    res.status(200).json({ selectedPfp })
+})
+
 module.exports = {
     registerUser,
     loginUser,
     getMe,
+    updateProfilePicture,
 }

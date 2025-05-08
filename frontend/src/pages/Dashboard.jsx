@@ -3,13 +3,15 @@ import Timer2 from '../components/Timer2'
 import logo from "../assets/Logo.svg"
 import { useEffect, useState } from 'react'
 import {useNavigate} from 'react-router-dom'
-import {useSelector} from 'react-redux'
+import {useSelector, useDispatch } from 'react-redux'
 import Goals from '../components/Goals'
 import SpeechBubble from "../components/SpeechBubble"
 import { useLocation } from 'react-router-dom'
+import { getMe } from "../features/auth/authSlice.js"
 
 function Dashboard() {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const {user} = useSelector((state) => state.auth)
   const { timer, pomodoroCount, } = useSelector((state) => state.timer)
@@ -74,6 +76,12 @@ function Dashboard() {
   useEffect(() => {
     setShow(true)
   }, [])
+
+  useEffect(() => {
+    if (user) {
+      dispatch(getMe())
+    }
+  }, [dispatch])
 
   const location = useLocation()
 
