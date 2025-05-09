@@ -1,6 +1,7 @@
 const asyncHandler = require('express-async-handler')
 
 const Timer = require('../models/timerModel')
+const User = require('../models/userModel')
 
 // @desc    Get timer
 // @route   GET //api/timer
@@ -21,6 +22,7 @@ const getTimer = asyncHandler(async (req, res) => {
 // @access  Private
 const startTimer = asyncHandler(async (req, res) => {
     let timer = await Timer.findOne({ user: req.user.id })    // find the timer by user id
+    const user = await User.findById(req.user.id)
 
     // create a new timer if none exists
     if (!timer) {
@@ -56,6 +58,22 @@ const startTimer = asyncHandler(async (req, res) => {
         timer.elapsedTime = 0
     }
 
+    const today = new Date().toDateString()
+    const lastActive = user.lastActiveDate ? new Date(user.lastActiveDate).toDateString() : null
+
+    if (lastActive !== today) {
+    const yesterday = new Date(Date.now() - 86400000).toDateString()
+
+    if (lastActive === yesterday) {
+        user.streakCount += 1
+    } else {
+        user.streakCount = 1
+    }
+
+    user.lastActiveDate = new Date()
+    await user.save()
+    }
+
     await timer.save()
 
     res.status(200).json(timer)
@@ -66,6 +84,7 @@ const startTimer = asyncHandler(async (req, res) => {
 // @access  Private
 const stopTimer = asyncHandler(async (req, res) => {
     const timer = await Timer.findOne({ user: req.user.id })
+    const user = await User.findById(req.user.id)
     
     if (!timer) {
         res.status(404) // requested resource does not exist (timer hasn't been started yet so there's nothing to stop)
@@ -87,6 +106,10 @@ const stopTimer = asyncHandler(async (req, res) => {
 
     if (timer.isPomodoro) {
         timer.elapsedTimePomodoro += timer.elapsedTime
+        const localDateKey = new Date().toLocaleDateString('en-CA') // "YYYY-MM-DD"
+        const todayTime = user.dailyStudyLog.get(localDateKey) || 0
+        user.dailyStudyLog.set(localDateKey, todayTime + timer.elapsedTime)
+        await user.save()
     }
 
     await timer.save()
@@ -99,6 +122,7 @@ const stopTimer = asyncHandler(async (req, res) => {
 // @access  Private
 const resetTimer = asyncHandler(async (req, res) => {
     const timer = await Timer.findOne({ user: req.user.id })
+    const user = await User.findById(req.user.id)
     
     if (!timer) {
         res.status(404) // requested resource does not exist (timer hasn't been started yet so there's nothing to stop)
@@ -114,6 +138,10 @@ const resetTimer = asyncHandler(async (req, res) => {
         timer.elapsedTimeTotal += timer.elapsedTime
         if (timer.isPomodoro) {
             timer.elapsedTimePomodoro += timer.elapsedTime
+            const localDateKey = new Date().toLocaleDateString('en-CA') // "YYYY-MM-DD"
+            const todayTime = user.dailyStudyLog.get(localDateKey) || 0
+            user.dailyStudyLog.set(localDateKey, todayTime + timer.elapsedTime)
+            await user.save()
         }
       } else {
         timer.elapsedTime = 0
@@ -156,6 +184,7 @@ const resetTimer = asyncHandler(async (req, res) => {
 // @access  Private
 const fullResetTimer = asyncHandler(async (req, res) => {
     const timer = await Timer.findOne({ user: req.user.id })
+    const user = await User.findById(req.user.id)
     
     if (!timer) {
         res.status(404) // requested resource does not exist (timer hasn't been started yet so there's nothing to stop)
@@ -171,6 +200,10 @@ const fullResetTimer = asyncHandler(async (req, res) => {
         timer.elapsedTimeTotal += timer.elapsedTime
         if (timer.isPomodoro) {
             timer.elapsedTimePomodoro += timer.elapsedTime
+            const localDateKey = new Date().toLocaleDateString('en-CA') // "YYYY-MM-DD"
+            const todayTime = user.dailyStudyLog.get(localDateKey) || 0
+            user.dailyStudyLog.set(localDateKey, todayTime + timer.elapsedTime)
+            await user.save()
         }
       } else {
         timer.elapsedTime = 0

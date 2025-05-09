@@ -3,7 +3,7 @@ import {FaSign, FaSignInAlt} from 'react-icons/fa'
 import {useSelector, useDispatch} from 'react-redux'    // useSelector is used to select something from the state like isLoading or isError, useDispatch to dispatch function like register or reset
 import { useNavigate } from 'react-router-dom'
 import {toast} from 'react-toastify'
-import {login, reset} from '../features/auth/authSlice'
+import {login, reset, getMe } from '../features/auth/authSlice'
 import Spinner from '../components/Spinner'
 
 function Login() {
@@ -24,10 +24,6 @@ function Login() {
       toast.error(message)
     }
 
-    if (isSuccess || user) {
-      navigate('/')
-    }
-
     // reset the state after we check everything by dispatching the reset reducer from authSlice which just sets all these states back to false
     dispatch(reset())
   }, [user, isError, isSuccess, message, navigate, dispatch])
@@ -39,15 +35,21 @@ function Login() {
     }))
   }
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault()
-
+  
     const userData = {
       email,
       password
     }
+  
+    try {
+      await dispatch(login(userData)).unwrap()
+      await dispatch(getMe()).unwrap()
+      navigate('/')
+    } catch (err) {
 
-    dispatch(login(userData))
+    }
   }
 
   if (isLoading) {

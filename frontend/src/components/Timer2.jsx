@@ -5,6 +5,7 @@ import Spinner from "../components/Spinner"
 import tomatoIcon from "../assets/tomato.png"
 import TimerSettings from "../components/TimerSettings"
 import { startTimer, stopTimer, getTimer, resetTimer, fullResetTimer, switchPhase, enableAutoPlay, reset } from "../features/timer/timerSlice"
+import completed from "../assets/sounds/completed.wav" // Completed.wav by Kenneth_Cooney -- https://freesound.org/s/609336/ -- License: Creative Commons 0
 
 function Timer2() {
   const dispatch = useDispatch()
@@ -29,7 +30,7 @@ function Timer2() {
   }, [currentTime])    
 
   useEffect(() => {
-    let animationFrameId;
+    let animationFrameId
   
     const tick = () => {
       if (isRunning && timer?.startTime && timer?.currentTime) {
@@ -52,6 +53,9 @@ function Timer2() {
   useEffect(() => {
     if (timeLeft === 0 && isRunning) {
       suppressAutoStopRef.current = true
+
+      const sound = new Audio(completed)
+      sound.play()
   
       dispatch(switchPhase()).then(() => {
         dispatch(resetTimer()).then((action) => {
@@ -169,7 +173,6 @@ function Timer2() {
     </div>
 
     <hr className="w-full border-2 border-[#6e2e2b]" />
-
 
     <div className="max-w-4xl mt-6">
         <div className="flex justify-between px-8 mb-12">
