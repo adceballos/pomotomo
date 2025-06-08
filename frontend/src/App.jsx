@@ -12,7 +12,6 @@ import {useSelector, useDispatch} from 'react-redux'
 import Quests from './pages/Quests'
 import Shop from './pages/Shop'
 import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { getMe } from './features/auth/authSlice'
 import Footer from "./components/Footer"
 
@@ -31,7 +30,6 @@ function App() {
     <Router>
       <div>
         <Header />
-        {user ? <MusicPlayer /> : null}
         <Routes>
           <Route path='/' element={<Dashboard />} />
           <Route path='/login' element={<Login />} />
