@@ -35,11 +35,11 @@ function TimerSettings({ onClose }) {
   }  
   
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 transition-opacity duration-300">
+    <div className="fixed px-4 inset-0 bg-black/50 flex items-center justify-center z-50 transition-opacity duration-300">
       <div className="bg-gray-100 rounded-lg p-10 w-full max-w-lg shadow-lg transform transition-all scale-100">
-        <h2 className="text-2xl mb-4">Customize Timer Durations</h2>
+        <h2 className="text-2xl mb-4 max-md:text-center">Customize Timer Durations</h2>
 
-        <div className="flex space-x-6 text-sm text-gray-700">
+        <div className="flex max-md:flex-col md:space-x-6 text-sm text-gray-700">
           <div className="flex flex-col items-center">
             <label className="mb-2 text-lg">Pomodoro</label>
             <input

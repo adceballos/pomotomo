@@ -107,14 +107,14 @@ function Dashboard() {
 
   return (
     <>
-      <div className="flex flex-col min-h-screen text-black py-10 max-w-6xl mx-auto">
-        <div className="flex items-start mt-6 relative">
+      <div className="flex flex-col min-h-screen text-black py-4 md:py-10 max-w-6xl mx-auto">
+        <div className="flex items-start md:mt-6 relative">
 
-          <div className={`transition-opacity duration-300 ease-in ${show ? 'opacity-100' : 'opacity-0'}`}>
+          <div className={`max-md:hidden transition-opacity duration-300 ease-in ${show ? 'opacity-100' : 'opacity-0'}`}>
             <SpeechBubble text={speechText} />
           </div>
 
-          <img src={logo} alt="pomotomo logo" className='w-auto h-46'/>
+          <img src={logo} alt="pomotomo logo" className='w-auto max-md:mx-auto h-32 md:h-46'/>
 
         </div>
         <div>
@@ -122,7 +122,7 @@ function Dashboard() {
         </div>
       </div>
       <div className="flex justify-center mx-auto max-w-6xl">
-          <hr className="border-2 border-[#6e2e2b] w-full mb-18" />
+          <hr className="hidden md:block border-2 border-[#6e2e2b] w-full mb-18" />
       </div>
       <Goals />
     </>

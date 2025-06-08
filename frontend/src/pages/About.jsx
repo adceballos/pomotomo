@@ -5,14 +5,14 @@ import bonfire from "../assets/bonfire.gif"
 function About() {
     return (
         <>
-            <div className="flex flex-col min-h-screen mt-14 text-black">
+            <div className="flex flex-col min-h-screen mt-14 text-black px-2">
                 <BackToHome />
                 <h1 className="text-6xl text-center mb-6">
                     About
                 </h1>
                 
-                <div className="max-w-2xl mx-auto text-2xl mt-12 text-left">
-                <h2 className="tagesschrift text-6xl font-semi-bold text-[#6e2e2b] mb-2">What is Pomotomo?</h2>
+                <div className="max-w-2xl mx-auto text-xl md:text-2xl mt-12 text-left">
+                <h2 className="tagesschrift text-4xl md:text-6xl font-semi-bold text-[#6e2e2b] mb-2">What is Pomotomo?</h2>
                     <p className="tagesschrift mb-12">
                         Pomotomo is a productivity app that combines the Pomodoro Technique with gamification to help you 
                         stay focused and motivated. It allows you to set tasks, track your progress, and earn rewards for 
@@ -20,7 +20,7 @@ function About() {
                         and build a sustainable workflow that keeps you energized and productive.       
                     </p>
 
-                    <h2 className="tagesschrift text-6xl font-semi-bold text-[#6e2e2b] mb-2">Focus. Break. Repeat!</h2>
+                    <h2 className="tagesschrift text-4xl md:text-6xl font-semi-bold text-[#6e2e2b] mb-2">Focus. Break. Repeat!</h2>
                     <ul className="tagesschrift mb-12">
                         <li>➢ Create a task that you would like to work on</li>
                         <li>➢ Adjust your study time using the ⚙︎ icon</li>
@@ -29,7 +29,7 @@ function About() {
                         <li>➢ After four Pomodoros, take a longer break</li>
                     </ul>
 
-                    <h2 className="tagesschrift text-6xl font-semi-bold text-[#6e2e2b] mb-2">Why use Pomotomo?</h2>
+                    <h2 className="tagesschrift text-4xl md:text-6xl font-semi-bold text-[#6e2e2b] mb-2">Why use Pomotomo?</h2>
                     <ul className="font-sans *:list-disc list-inside space-y-2">
                         <p className="tagesschrift">
                         ➢ The Pomodoro Technique helps reduce mental fatigue, fight procrastination, and sharpen focus. By creating a sense of urgency and building in regular breaks, it boosts productivity while supporting a healthy workflow.
@@ -38,10 +38,10 @@ function About() {
                         ➢ Gamification in Pomotomo adds a fun layer of reward, turning consistent focus into visible progress you can track and feel good about.
                         </p>
                     </ul>
-                    <div className="flex flex-col items-center mt-12 mb-4">
+                    <div className="flex flex-col items-center mt-12">
                         <div className="flex items-end gap-8">
-                            <img src={bonfire} alt="bonfire" className="h-68 w-auto" />
-                            <img src={logo} alt="pomotomo logo (solanum)" className="h-46 w-auto" />
+                            <img src={bonfire} alt="bonfire" className="h-48 md:h-68 w-auto" />
+                            <img src={logo} alt="pomotomo logo (solanum)" className="h-32 md:h-46 w-auto" />
                         </div>
                         <p className="mt-2 text-center text-lg text-[#6e2e2b]">
                             Solanum chillin' by the fire

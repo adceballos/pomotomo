@@ -161,7 +161,7 @@ function Timer2() {
         
     <div className="relative flex items-center w-full">
         <div className="absolute left-1/2 transform -translate-x-1/2">
-            <h1 className="text-5xl">Pomotomo!</h1>
+            <h1 className="text-3xl md:text-5xl max-md:pr-12">Pomotomo!</h1>
         </div>
 
         <div className="ml-auto">
@@ -175,8 +175,8 @@ function Timer2() {
     <hr className="w-full border-2 border-[#6e2e2b]" />
 
     <div className="max-w-4xl mt-6">
-        <div className="flex justify-between px-8 mb-12">
-            <div className="relative w-92 h-92">
+        <div className="flex max-md:flex-col max-md:items-center md:justify-between px-8 mb-6 md:mb-12">
+            <div className="relative w-64 md:w-92 h-64 md:h-92">
                 <svg className="absolute top-0 left-0 w-full h-full" viewBox="0 0 100 100">
                     <circle
                         cx="50"
@@ -199,33 +199,33 @@ function Timer2() {
                         transform="rotate(-90 50 50)"
                     />
                 </svg>
-                <div className="flex items-center justify-center w-full h-full text-6xl md:text-8xl">
+                <div className="flex items-center justify-center w-full h-full text-7xl md:text-8xl">
                     {formatTime(timeLeft)}
                 </div>
             </div> 
 
-            <div className="flex flex-col justify-center gap-y-6">
+            <div className="flex flex-col justify-center max-md:items-center gap-y-3 md:gap-y-6 max-md:mt-4">
                 <p className="text-2xl md:text-4xl"><span className="text-[#6e2e2b]">STATUS: </span> {isRunning ? 'Running' : 'Stopped'}</p>
                 <p className="text-2xl md:text-4xl"><span className="text-[#6e2e2b]">PHASE: </span> {isPomodoro ? 'Pomodoro' : 'Break'}</p>
                 <p className="text-2xl md:text-4xl"><span className="text-[#6e2e2b]">START TIME:</span> {Math.floor(initialTime / 1000)} seconds</p>
             </div>
         </div>
 
-        <div className="flex gap-5 text-xl">
+        <div className="flex max-md:flex-col gap-3 md:gap-5 max-md:px-4 text-xl">
         <button onClick={handleStart} disabled={isRunning} className={`py-2 px-6 text-2xl border-3 border-[#1c1b19] text-[#eee0b4] bg-[#6a512d] ${isRunning ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'hover:bg-[#6e2e2b] hover:cursor-pointer transition-colors duration-200'} ${isNewUser ? 'animate-bounce' : ''}`}>Start</button>
-        <button onClick={handleStop} disabled={!isRunning} className={`py-2 px-6 text-2xl border-3 ml-4 border-[#1c1b19] text-[#eee0b4] bg-[#6a512d] ${!isRunning ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'hover:bg-[#6e2e2b] hover:cursor-pointer transition-colors duration-200'}`}>Stop</button>
-            <button onClick={handleReset} disabled={isNewUser} className={`py-2 px-6 text-2xl border-3 ml-4 border-[#1c1b19] text-[#eee0b4] bg-[#6a512d] ${isNewUser ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'hover:bg-[#6e2e2b] hover:cursor-pointer transition-colors duration-200'}`}>Reset</button>
-            <button onClick={handleFullReset} disabled={isNewUser} className={`py-2 px-6 text-2xl whitespace-nowrap border-3 ml-4 border-[#1c1b19] text-[#eee0b4] bg-[#6a512d] ${isNewUser ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'hover:bg-[#6e2e2b] hover:cursor-pointer transition-colors duration-200'}`}>Full Reset</button>
+        <button onClick={handleStop} disabled={!isRunning} className={`py-2 px-6 text-2xl border-3 md:ml-4 border-[#1c1b19] text-[#eee0b4] bg-[#6a512d] ${!isRunning ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'hover:bg-[#6e2e2b] hover:cursor-pointer transition-colors duration-200'}`}>Stop</button>
+            <button onClick={handleReset} disabled={isNewUser} className={`py-2 px-6 text-2xl border-3 md:ml-4 border-[#1c1b19] text-[#eee0b4] bg-[#6a512d] ${isNewUser ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'hover:bg-[#6e2e2b] hover:cursor-pointer transition-colors duration-200'}`}>Reset</button>
+            <button onClick={handleFullReset} disabled={isNewUser} className={`py-2 px-6 text-2xl whitespace-nowrap border-3 md:ml-4 border-[#1c1b19] text-[#eee0b4] bg-[#6a512d] ${isNewUser ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'hover:bg-[#6e2e2b] hover:cursor-pointer transition-colors duration-200'}`}>Full Reset</button>
             {autoPlayEnabled ? (
-            <button onClick={handleAutoPlay} disabled={isNewUser} className={`min-w-[14rem] py-2 px-6 text-2xl border-3 ml-4 border-[#1c1b19] text-[#eee0b4] bg-[#6a512d] ${isNewUser ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'hover:bg-[#6e2e2b] hover:cursor-pointer transition-colors duration-200'}`}>Auto Play: ON</button>
+            <button onClick={handleAutoPlay} disabled={isNewUser} className={`min-w-[14rem] py-2 px-6 text-2xl border-3 md:ml-4 border-[#1c1b19] text-[#eee0b4] bg-[#6a512d] ${isNewUser ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'hover:bg-[#6e2e2b] hover:cursor-pointer transition-colors duration-200'}`}>Auto Play: ON</button>
             ) : (
-            <button onClick={handleAutoPlay} disabled={isNewUser} className={`min-w-[14rem] py-2 px-6 text-2xl border-3 ml-4 border-[#1c1b19] text-[#eee0b4] bg-[#6a512d] ${isNewUser ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'hover:bg-[#6e2e2b] hover:cursor-pointer transition-colors duration-200'}`}>Auto Play: OFF</button>
+            <button onClick={handleAutoPlay} disabled={isNewUser} className={`min-w-[14rem] py-2 px-6 text-2xl border-3 md:ml-4 border-[#1c1b19] text-[#eee0b4] bg-[#6a512d] ${isNewUser ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'hover:bg-[#6e2e2b] hover:cursor-pointer transition-colors duration-200'}`}>Auto Play: OFF</button>
             )}
         </div>
 
-        <div className="flex py-10 mx-auto items-center justify-center gap-12 mt-6 min-h-[64px] transition-all duration-300">
+        <div className="flex py-4 md:py-10 mx-auto items-center justify-center gap-4 md:gap-12 mt-6 min-h-[64px] transition-all duration-300">
             {[...Array(4)].map((_, index) => (
-                <img key={index} src={tomatoIcon} alt="tomato" className={`w-auto h-24 transition-opacity duration-300 ${index < pomodoroCount ? 'opacity-100' : 'opacity-0'}`}/>
+                <img key={index} src={tomatoIcon} alt="tomato" className={`w-auto h-12 md:h-24 transition-opacity duration-300 ${index < pomodoroCount ? 'opacity-100' : 'opacity-0'}`}/>
             ))}
         </div>
     </div>

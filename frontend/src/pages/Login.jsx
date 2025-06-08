@@ -59,16 +59,16 @@ function Login() {
   return (
     <div className='min-h-screen'>
       <section className='flex flex-col justify-center items-center gap-y-2'>
-        <h1 className='flex items-center gap-1 text-6xl mt-16 py-4'>
+        <h1 className='flex items-center gap-1 text-4xl md:text-6xl mt-16 py-4'>
           <FaSignInAlt /> Login
         </h1>
-        <p className='text-3xl text-black mb-12'>
+        <p className='text-xl md:text-3xl text-black mb-12'>
           Login and start studying
         </p>
       </section>
 
   <section className='flex items-center justify-center'>
-  <form onSubmit={onSubmit} className="space-y-4 w-full max-w-md">
+  <form onSubmit={onSubmit} className="space-y-4 w-full max-w-md px-2">
       <div>
         <input
           type="email"

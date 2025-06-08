@@ -60,23 +60,23 @@ function Profile() {
     
     return (
         <div className="flex flex-col min-h-screen text-black mx-auto max-w-4xl">
-            <div className='flex border-4 border-[#6e2e2b] bg-gradient-to-r from-orange-100 via-orange-200 to-gray-100 w-full justify-center gap-x-16 h-82 max-h-82 mt-6 shadow-lg'>
+            <div className='flex max-md:flex-col border-4 border-[#6e2e2b] bg-gradient-to-r from-orange-100 via-orange-200 to-gray-100 w-full justify-center gap-x-16 md:h-82 md:max-h-82 mt-6 shadow-lg'>
                 <div className="relative flex-shrink-0 mt-8">
                     <img
                         src={PFP_IMAGES[user?.selectedPfp] || slum}
                         alt="Profile"
-                        className="w-auto h-48 md:h-64 rounded-full object-contain shadow-lg border-2 border-[#6e2e2b]"
+                        className="w-auto max-md:mx-auto h-64 rounded-full object-contain shadow-lg border-2 border-[#6e2e2b]"
                     />
                     <button
                         onClick={() => setShowPfpSelector(!showPfpSelector)}
-                        className="absolute top-0 right-0 p-2 bg-white rounded-full shadow hover:bg-gray-100"
+                        className="absolute top-0 right-3 md:right-0 p-2 bg-white rounded-full shadow hover:bg-gray-100"
                     >
                         <FaGear className="text-xl text-[#6e2e2b]" />
                     </button>
                 </div>
 
-                <div className='flex flex-col items-start gap-y-4 mt-16'>
-                    <div className='flex justify-between items-center w-full'>
+                <div className='flex flex-col items-start gap-y-4 mt-4 md:mt-16'>
+                    <div className='flex max-md:flex-col max-md:gap-y-4 justify-between items-center w-full'>
                         <h1 className='text-5xl truncate mt-2'>
                             {user.name}
                         </h1>
@@ -87,7 +87,7 @@ function Profile() {
                             </h2>
                         </div>
                     </div>
-                    <div className="relative bg-gray-100 p-4 rounded-md w-[28rem] shadow-lg border border-[#6e2e2b] min-h-[120px]">
+                    <div className="relative bg-gray-100 p-4 rounded-md w-full md:w-[28rem] shadow-lg border border-[#6e2e2b] min-h-[120px] max-md:rounded-b-none">
                         <div className="absolute top-1 right-1">
                             <button
                             onClick={() => setEditing(true)}
@@ -136,11 +136,11 @@ function Profile() {
             </div>
 
             <div className="flex flex-col border-4 border-[#6e2e2b] bg-gradient-to-r from-orange-100 via-orange-200 to-gray-100 w-full h-60 max-h-60 mt-6 shadow-lg">
-                <div className="bg-white h-12 flex items-center px-4 text-2xl tracking-wide border-b-2 border-[#6e2e2b]">
+                <div className="bg-white h-12 flex items-center px-2 md:px-4 text-lg md:text-2xl tracking-wide border-b-2 border-[#6e2e2b]">
                     Badges
                 </div>
 
-                <div className="flex flex-1 gap-16 items-center justify-center">
+                <div className="flex flex-1 gap-6 md:gap-16 items-center justify-center max-md:px-2">
                     {user?.questsCompleted?.map((questId) => {
                     const badge = BADGES[questId]
                     return badge ? (
@@ -153,13 +153,13 @@ function Profile() {
             </div>
 
             <div className="flex flex-col border-4 border-[#6e2e2b] bg-gradient-to-r from-orange-100 via-orange-200 to-gray-100 w-full mt-6 shadow-lg">
-                <div className="bg-white h-12 flex items-center px-4 text-2xl tracking-wide border-b-2 border-[#6e2e2b]">
+                <div className="bg-white h-12 flex items-center px-2 md:px-4 text-lg md:text-2xl tracking-wide border-b-2 border-[#6e2e2b]">
                     Weekly Study Report (seconds)
                 </div>
 
-                <div className="grid grid-cols-7 gap-4 px-6 py-4 text-center text-black">
+                <div className="grid grid-cols-1 md:grid-cols-7 gap-4 px-4 md:px-6 py-4 text-center text-black">
                     {last7Days.map(({ date, duration }) => (
-                    <div key={date} className="bg-white rounded-lg p-3 shadow-md border border-[#6e2e2b]">
+                    <div key={date} className="bg-white rounded-lg p-2 md:p-3 shadow-md border border-[#6e2e2b]">
                         <div className="tagesschrift text-sm text-gray-500 mb-2">{date.slice(5)}</div>
                         <div className="tagesschrift text-xl text-[#6e2e2b]">
                         {Math.round(duration / 1000)} s

@@ -34,7 +34,7 @@ function Goals() {
 
   return (
     <div className="min-h-screen text-black" id='tasks'>
-      <section className='flex items-center justify-center text-6xl text-black mb-12'>
+      <section className='flex items-center justify-center text-6xl text-black mb-6 md:mb-12 max-md:mt-12'>
         <h1>Tasks</h1>
       </section>
 
@@ -45,7 +45,7 @@ function Goals() {
             goals.map((goal) => (
               <GoalItem key={goal._id} goal={goal} />
             ))
-          ) : (<h3 className='text-center text-2xl'>You have not made any tasks</h3>)}
+          ) : (<h3 className='text-center text-lg md:text-2xl'>You have not made any tasks</h3>)}
       </section>
     </div>
   )
