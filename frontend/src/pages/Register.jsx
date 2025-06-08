@@ -76,8 +76,11 @@ function Register() {
             <h1 className='flex items-center gap-2 text-4xl md:text-6xl mt-16 py-4'>
                 <FaUser /> Register
             </h1>
-            <p className='text-xl md:text-3xl text-black mb-12'>
+            <p className='text-xl md:text-3xl text-black'>
                 Please create an account
+            </p>
+            <p className='max-w-2xl font-sans text-lg md:text-2xl text-center text-red-500 mb-12'>
+                <span className='underline'>Disclaimer:</span> This site is a demo. Please do <span className='font-bold'>NOT</span> enter any real or sensitive data. Accounts are for testing only.
             </p>
         </section>
 
